@@ -10,10 +10,8 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
-import { RoleApplication } from '../../core/application/ports/role-application.port';
-import { CreateRoleDto } from '../dtos/create-role.dto';
-import { UpdateRoleDto } from '../dtos/update-role.dto';
-import { RoleResponseDto } from '../dtos/role-response.dto';
+import { CreateRoleDto, RoleResponseDto, UpdateRoleDto } from '../dtos';
+import { RoleApplication } from '@/core/application/ports';
 
 @ApiTags('roles')
 @Controller('roles')

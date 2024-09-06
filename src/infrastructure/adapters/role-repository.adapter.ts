@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { RoleRepository } from '../../core/domain/ports/outbound/role-repository.port';
-import { Role } from '../../core/domain/entities/role.entity';
-import { RoleEntity } from '../persistence/role.entity';
+import { Role } from '@/core/domain/entities';
+import { RoleEntity } from '@/infrastructure/persistence';
+import { RoleRepository } from '@/core/domain/ports/outbound';
 
 @Injectable()
 export class RoleRepositoryAdapter implements RoleRepository {

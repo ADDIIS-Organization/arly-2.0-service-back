@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 
+
 @Catch()
 export class RoleExceptionFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
