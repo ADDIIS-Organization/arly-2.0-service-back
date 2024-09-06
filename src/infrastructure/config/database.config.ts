@@ -1,19 +1,18 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import * as dotenv from 'dotenv';
+import { ConfigService } from '@nestjs/config';
 
-dotenv.config();
-
-export const databaseConfig: TypeOrmModuleOptions = {
+export const getDatabaseConfig = (
+  configService: ConfigService,
+): TypeOrmModuleOptions => ({
   type: 'postgres',
-  host: process.env.DATABASE_HOST || 'localhost',
-  port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
-  username: process.env.DATABASE_USERNAME || 'postgres',
-  password: process.env.DATABASE_PASSWORD || '12',
-  database: process.env.DATABASE_NAME || 'tu_base_de_datos',
+  host: configService.get<string>('DATABASE_HOST', 'localhost'),
+  port: configService.get<number>('DATABASE_PORT', 5432),
+  username: configService.get<string>('DATABASE_USERNAME', 'postgres'),
+  password: configService.get<string>('DATABASE_PASSWORD', ''),
+  database: configService.get<string>('DATABASE_NAME', 'my_database'),
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  synchronize: process.env.NODE_ENV !== 'production',
-  ssl:
-    process.env.NODE_ENV === 'production'
-      ? { rejectUnauthorized: false }
-      : false,
-};
+  synchronize: configService.get<string>('NODE_ENV') !== 'production',
+  ssl: configService.get<string>('NODE_ENV') === 'production'
+    ? { rejectUnauthorized: false }
+    : false,
+});

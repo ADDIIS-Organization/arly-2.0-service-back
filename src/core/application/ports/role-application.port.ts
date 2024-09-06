@@ -1,4 +1,4 @@
-import { Role } from '../../domain/entities/role.entity';
+import { Role } from '@/core/domain/entities/role.entity';
 import { RoleResponseDto } from 'src/infrastructure/dtos/role-response.dto';
 
 /**
