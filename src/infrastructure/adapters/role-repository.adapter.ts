@@ -6,7 +6,7 @@ import { RoleEntity } from '@/infrastructure/persistence';
 import { RoleRepository } from '@/core/domain/ports/outbound';
 
 @Injectable()
-export class RoleRepositoryAdapter implements RoleRepository {
+export class  RoleRepositoryAdapter implements RoleRepository {
   constructor(
     @InjectRepository(RoleEntity)
     private repository: Repository<RoleEntity>,
@@ -51,4 +51,10 @@ export class RoleRepositoryAdapter implements RoleRepository {
     role.description = entity.description;
     return role;
   }
+
+  async findByName(name: string): Promise<Role | null> {
+    const roleEntity = await this.repository.findOne({ where: { name } });
+    return roleEntity ? this.toDomain(roleEntity) : null;  // Convert to domain model if found
+  }
+
 }

@@ -1,0 +1,14 @@
+[
+    {
+        "name": "superAdmin",
+        "description": "Super Administrator with full access"
+    },
+    {
+        "name": "admin",
+        "description": "Administrator with high-level access"
+    },
+    {
+        "name": "supervisor",
+        "description": "Supervisor with oversight capabilities"
+    }
+]

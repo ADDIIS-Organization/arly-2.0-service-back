@@ -1,7 +1,7 @@
-import { Role } from '../../domain/entities/role.entity';
-import { RoleApplication } from '../ports/role-application.port';
-import { RoleResponseDto } from '../../../infrastructure/dtos/role-response.dto';
-import { RoleService } from '../../domain/ports/inbound/role-service.port';
+import { RoleService } from '@/core/domain/ports/inbound';
+import { RoleResponseDto } from '@/infrastructure/dtos';
+import { Role } from '@/core/domain/entities';
+import { RoleApplication } from '../ports';
 
 export class RoleApplicationService implements RoleApplication {
   constructor(private roleService: RoleService) {}
