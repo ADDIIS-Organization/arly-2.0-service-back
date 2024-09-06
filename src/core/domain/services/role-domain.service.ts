@@ -1,6 +1,6 @@
-import { RoleService } from '../ports/inbound/role-service.port';
-import { RoleRepository } from '../ports/outbound/role-repository.port';
 import { Role } from '../entities/role.entity';
+import { RoleRepository } from '../ports/outbound/role-repository.port';
+import { RoleService } from '../ports/inbound/role-service.port';
 
 export class RoleDomainService implements RoleService {
   constructor(private repository: RoleRepository) {}

@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { RoleApplicationService } from '@/core/application/services';
 import { RoleController } from '../controllers/role.controller';
-import { RoleRepositoryAdapter } from '../adapters/role-repository.adapter';
-import { RoleDomainService } from '../../core/domain/services/role-domain.service';
-import { RoleApplicationService } from '../../core/application/services/role-application.service';
-import { RoleEntity } from '../persistence/role.entity';
+import { RoleDomainService } from '@/core/domain/services';
+import { RoleRepositoryAdapter } from '../adapters';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { RoleEntity } from '../persistence';
+import { Module } from '@nestjs/common';
 
 @Module({
   imports: [TypeOrmModule.forFeature([RoleEntity])],
