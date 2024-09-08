@@ -1,19 +1,37 @@
 import { Injectable } from '@nestjs/common';
 
 import { IUserApplicationPort } from '../ports/inbound/user-application.port';
-import { CreateUserDto, UserResponseDto } from '@/infrastructure/dtos/user';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  UserResponseDto,
+} from '@/infrastructure/dtos/user';
+import { IUserRepositoryPort } from '@/core/domain/ports/outbound';
 import { CrudApplicationService } from './common';
 import { User } from '@/core/domain/entities';
 
 @Injectable()
 export class UserApplicationService
-  extends CrudApplicationService<CreateUserDto, UserResponseDto>
+  extends CrudApplicationService<
+    User,
+    CreateUserDto,
+    UpdateUserDto,
+    UserResponseDto
+  >
   implements IUserApplicationPort
 {
+  protected toEntity(createDto: CreateUserDto): User {
+    throw new Error('Method not implemented.');
+  }
+  protected toUpdatedEntity(
+    id: number,
+    updateDto: UpdateUserDto,
+  ): Promise<User> {
+    throw new Error('Method not implemented.');
+  }
   constructor(
-    private readonly userDomainService: userDomainService,
-    private readonly userRepository: IUserRepositoryPort,
-  ) {
+    userDomainService: UserDomainService,
+    userRepository: IUserRepositoryPort) {
     super(userRepository);
   }
 
@@ -25,7 +43,7 @@ export class UserApplicationService
       email: user.email,
       username: user.username,
       roles: user.roles,
-      cedis: user.cedis
+      cedis: user.cedis,
     };
   }
 }

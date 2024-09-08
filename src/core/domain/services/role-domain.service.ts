@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateRoleDto } from '@/infrastructure/dtos/role';
 import { Role } from '../entities';
 
 /**
@@ -12,8 +11,19 @@ import { Role } from '../entities';
  */
 @Injectable()
 export class RoleDomainService {
-  createRole(name: string, description: string): CreateRoleDto {
-    // Lógica de negocio pura: creación del role
+  /**
+   * Creates a new Role entity.
+   *
+   * @param name - The name of the role.
+   * @param description - The description of the role.
+   * @returns The newly created Role entity.
+   */
+  createRole(name: string, description: string): Role {
+    // Lógica de negocio pura: crear una entidad de Role
     return Role.create(name, description);
   }
+
+  /**
+   * Additional domain logic could go here, such as validation, role-specific rules, etc.
+   */
 }

@@ -14,8 +14,8 @@ import { IBaseApplicationPort } from '@/core/application/ports/inbound/common';
 /**
  * Base CRUD Controller class for handling common CRUD operations.
  * @template T - The entity type.
- * @template CreateDto - The DTO type for creating entities.
- * @template UpdateDto - The DTO type for updating entities.
+ * @template CreateDto - The DTO type for creating the entity.
+ * @template UpdateDto - The DTO type for updating the entity.
  */
 export class BaseCRUDController<T, CreateDto, UpdateDto> {
   constructor(

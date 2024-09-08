@@ -20,6 +20,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload) {
-    return this.userApplicationService.findById(payload.sub); // Devuelve el usuario si el JWT es válido
+    return this.userApplicationService.getById(payload.sub); // Devuelve el usuario si el JWT es válido
   }
 }
