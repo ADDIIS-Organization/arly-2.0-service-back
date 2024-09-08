@@ -2,24 +2,32 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne,
   ManyToMany,
+  JoinTable,
   OneToMany,
 } from 'typeorm';
-import { UserEntity } from './user.entity';
-import { CediEntity } from './cedi.entity';
+
 import { CediUserRole } from './cedi-user-role.entity';
-@Entity('roles')
-export class RoleEntity {
+
+@Entity('users')
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
+  @Column({ unique: true })
+  email: string;
+
+  @Column({ unique: true })
+  username: string;
+
   @Column()
-  description: string;
+  password: string;
 
   // One-to-Many relationship with CediUserRole
-  @OneToMany(() => CediUserRole, (cediUserRole) => cediUserRole.role)
+  @OneToMany(() => CediUserRole, (cediUserRole) => cediUserRole.user)
   cediUserRoles: CediUserRole[];
 }
