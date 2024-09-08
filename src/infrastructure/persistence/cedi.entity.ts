@@ -1,39 +1,43 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { CediUserRole } from './';
 
-@Entity('cedis')
+import { CediUserRoleEntity } from './';
+
+@Entity('cedis') // Nombre de la tabla
 export class CediEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  nombre: string;
+  name: string;
 
   @Column()
-  departamento: string;
+  department: string;
 
   @Column()
-  municipio: string;
+  municipality: string;
 
   @Column()
-  direccion: string;
+  address: string;
 
   @Column()
-  telefono: string;
+  phone: string;
 
-  @Column()
-  email1: string;
+  @Column({ name: 'primary_email' })
+  primaryEmail: string;
 
-  @Column()
-  email2: string;
+  @Column({ name: 'secondary_email', nullable: true })
+  secondaryEmail: string; 
 
   @Column()
   supervisor: string;
 
   @Column()
-  empresa: string;
+  company: string;
 
   // One-to-Many relationship with CediUserRole
-  @OneToMany(() => CediUserRole, (cediUserRole) => cediUserRole.cedi)
-  cediUserRoles: CediUserRole[];
+  @OneToMany(
+    () => CediUserRoleEntity,
+    (cediUserRoleEntity) => cediUserRoleEntity.cedi,
+  )
+  cediUserRoleEntities: CediUserRoleEntity[];
 }

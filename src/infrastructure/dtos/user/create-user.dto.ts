@@ -1,22 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, IsNotEmpty, Length, Matches, IsArray } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, Length, Matches, IsArray, ValidateNested, ArrayNotEmpty } from 'class-validator';
+import { Type } from 'class-transformer';
+import { RoleCediAssignmentDto } from './role-cedi-assignment.dto';
 
 export class CreateUserDto {
   @ApiProperty({
     description: 'The name of the user',
     example: 'John Doe',
   })
-  @IsString() // Must be a string
-  @IsNotEmpty({ message: 'The name cannot be empty' }) // Should not be empty
-  @Length(2, 50, { message: 'The name must be between 2 and 50 characters' }) // Length restrictions
+  @IsString()
+  @IsNotEmpty({ message: 'The name cannot be empty' })
+  @Length(2, 50, { message: 'The name must be between 2 and 50 characters' })
   name: string;
 
   @ApiProperty({
     description: 'The email address of the user',
     example: 'john.doe@example.com',
   })
-  @IsEmail({}, { message: 'Invalid email format' }) // Must be a valid email format
-  @IsNotEmpty({ message: 'The email cannot be empty' }) // Email must not be empty
+  @IsEmail({}, { message: 'Invalid email format' })
+  @IsNotEmpty({ message: 'The email cannot be empty' })
   email: string;
 
   @ApiProperty({
@@ -25,8 +27,10 @@ export class CreateUserDto {
   })
   @IsString()
   @IsNotEmpty({ message: 'The username cannot be empty' })
-  @Length(4, 20, { message: 'The username must be between 4 and 20 characters' }) // Length for username
-  @Matches(/^[a-zA-Z0-9-_]+$/, { message: 'The username can only contain letters, numbers, hyphens, and underscores' }) // Regex to ensure only alphanumeric, hyphens, underscores
+  @Length(4, 20, { message: 'The username must be between 4 and 20 characters' })
+  @Matches(/^[a-zA-Z0-9-_]+$/, {
+    message: 'The username can only contain letters, numbers, hyphens, and underscores',
+  })
   username: string;
 
   @ApiProperty({
@@ -35,22 +39,16 @@ export class CreateUserDto {
   })
   @IsString()
   @IsNotEmpty({ message: 'The password cannot be empty' })
-  @Length(8, 100, { message: 'The password must be at least 8 characters long' }) // Minimum length for password
+  @Length(8, 100, { message: 'The password must be at least 8 characters long' })
   password: string;
 
   @ApiProperty({
-    description: 'The ID of the role assigned to the user',
-    example: 1,
+    description: 'List of role and Cedi combinations assigned to the user',
+    type: [RoleCediAssignmentDto],
   })
-  @IsNotEmpty({ message: 'Role must be specified' })
-  roleId: number; // This assumes you're sending the role by its ID
-
-  @ApiProperty({
-    description: 'List of IDs for the associated Cedi locations',
-    example: [1, 2],
-    type: [Number]
-  })
-  @IsArray({ message: 'Cedi must be an array of IDs' }) // Should be an array of Cedi IDs
-  @IsNotEmpty({ message: 'At least one Cedi must be specified' })
-  cediIds: number[]; // An array of Cedi IDs
+  @IsArray({ message: 'Role-Cedi assignments must be an array' })
+  @ArrayNotEmpty({ message: 'At least one Role-Cedi assignment must be provided' })
+  @ValidateNested({ each: true })
+  @Type(() => RoleCediAssignmentDto) // Necesario para que class-validator valide los elementos anidados
+  roleCediAssignments: RoleCediAssignmentDto[];
 }

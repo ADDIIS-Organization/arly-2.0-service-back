@@ -2,12 +2,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
   OneToMany,
 } from 'typeorm';
-import { UserEntity } from './user.entity';
-import { CediEntity } from './cedi.entity';
-import { CediUserRole } from './cedi-user-role.entity';
+
+import { CediUserRoleEntity, PermissionEntity } from './';
 @Entity('roles')
 export class RoleEntity {
   @PrimaryGeneratedColumn()
@@ -20,6 +18,10 @@ export class RoleEntity {
   description: string;
 
   // One-to-Many relationship with CediUserRole
-  @OneToMany(() => CediUserRole, (cediUserRole) => cediUserRole.role)
-  cediUserRoles: CediUserRole[];
+  @OneToMany(() => CediUserRoleEntity, (cediUserRoleEntity) => cediUserRoleEntity.role)
+  cediUserRoleEntities: CediUserRoleEntity[];
+
+  // One-to-Many relationship with PermissionEntity
+  @OneToMany(() => PermissionEntity, (permissionEntity) => permissionEntity.role)
+  permissionEntities: PermissionEntity[];
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PermissionRepository } from '@/core/domain/ports/outbound/permission.repository';
 
+import { IPermissionRepositoryPort } from '@/core/domain/ports/outbound';
 @Injectable()
-export class PermissionService {
-  constructor(private permissionRepository: PermissionRepository) {}
+export class PermissionApplicationService {
+  constructor(private permissionRepository: IPermissionRepositoryPort) {}
 
   async checkPermissions(roleId: number, requiredPermissions: string[]): Promise<boolean> {
     const permissions = await this.permissionRepository.findByRoleId(roleId);

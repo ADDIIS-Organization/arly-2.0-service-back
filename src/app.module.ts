@@ -1,10 +1,9 @@
-import { getDatabaseConfig } from './infrastructure/config';
-import { getSeederModules } from './infrastructure/utils';
-import { RoleModule } from './infrastructure/modules';
-
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
+
+import { RoleModule, UserModule } from './infrastructure/modules';
+import { getDatabaseConfig } from './infrastructure/config';
 
 @Module({
   imports: [
@@ -17,8 +16,9 @@ import { Module } from '@nestjs/common';
       useFactory: (configService: ConfigService) =>
         getDatabaseConfig(configService),
     }),
-    ...getSeederModules(),
+    // ...getSeederModules(),
     RoleModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

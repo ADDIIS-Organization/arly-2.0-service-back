@@ -13,7 +13,7 @@ export class AuthApplicationService {
   ) {}
 
   async validateUser(username: string, pass: string): Promise<User> {
-    const user = await this.userApplicationService.findByUsername(username);
+    const user = await this.userApplicationService.getByUsername(username);
     if (user && bcrypt.compareSync(pass, user.password)) {
       return user;
     }

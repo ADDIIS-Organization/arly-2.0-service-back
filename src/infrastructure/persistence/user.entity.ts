@@ -2,13 +2,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
-  ManyToMany,
-  JoinTable,
   OneToMany,
 } from 'typeorm';
 
-import { CediUserRole } from './cedi-user-role.entity';
+import { CediUserRoleEntity } from './';
 
 @Entity('users')
 export class UserEntity {
@@ -27,7 +24,7 @@ export class UserEntity {
   @Column()
   password: string;
 
-  // One-to-Many relationship with CediUserRole
-  @OneToMany(() => CediUserRole, (cediUserRole) => cediUserRole.user)
-  cediUserRoles: CediUserRole[];
+  // One-to-Many relationship with CediUserRoleEntity
+  @OneToMany(() => CediUserRoleEntity, (cediUserRoleEntity) => cediUserRoleEntity.user)
+  cediUserRoleEntities: CediUserRoleEntity[];
 }

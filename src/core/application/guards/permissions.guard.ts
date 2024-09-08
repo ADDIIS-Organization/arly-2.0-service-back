@@ -1,13 +1,14 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { PermissionService } from '@/core/application/services/permission.service';
+
+import { PermissionApplicationService } from '../services';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
   constructor(
-    private reflector: Reflector,
-    private permissionService: PermissionService,
+    private reflector: Reflector, // Used to get metadata from the handler
+    private permissionService: PermissionApplicationService,
     private jwtService: JwtService,
   ) {}
 

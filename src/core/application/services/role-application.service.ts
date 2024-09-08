@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import {
   CreateRoleDto,
@@ -23,6 +23,7 @@ export class RoleApplicationService
 {
   constructor(
     private readonly roleDomainService: RoleDomainService,
+    @Inject('IRoleRepositoryPort') // Usamos @Inject con el token del puerto
     private readonly roleRepository: IRoleRepositoryPort,
   ) {
     super(roleRepository);

@@ -10,7 +10,7 @@
     "sort-imports": "ts-node sort-imports.ts",
     "seed": "ts-node -r tsconfig-paths/register src/seeds/seed.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "nest start --watch",
     "start:dev": "cross-env NODE_ENV=development nest start --watch",
     "start:prod": "cross-env NODE_ENV=production node dist/main",
     "start:test": "cross-env NODE_ENV=test nest start",

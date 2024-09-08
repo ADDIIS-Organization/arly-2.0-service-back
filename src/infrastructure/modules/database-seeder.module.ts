@@ -1,10 +1,7 @@
 import { Module, OnModuleInit, Logger, forwardRef } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { RoleRepository } from '@/core/domain/ports/outbound';
-import { RoleRepositoryAdapter } from '@/infrastructure/adapters';
+import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
 import { seedRoles } from '@/infrastructure/seeds/role.seed';
-import { RoleEntity } from '@/infrastructure/persistence';
 import { RoleModule } from './';
 
 @Module({
@@ -17,7 +14,7 @@ export class DatabaseSeederModule implements OnModuleInit {
   private readonly logger = new Logger(DatabaseSeederModule.name);
 
   constructor(
-    private readonly roleRepository: RoleRepository, // Inject the role repository
+    private readonly roleRepository: IRoleRepositoryPort, // Inject the role repository
   ) {}
 
   async onModuleInit() {

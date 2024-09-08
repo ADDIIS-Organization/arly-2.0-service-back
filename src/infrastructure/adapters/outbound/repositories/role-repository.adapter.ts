@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Role } from '@/core/domain/entities';
-import { RoleEntity } from '@/infrastructure/persistence';
+
 import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
+import { RoleEntity } from '@/infrastructure/persistence';
+import { Role } from '@/core/domain/entities';
 
 @Injectable()
 export class RoleRepositoryAdapter implements IRoleRepositoryPort {
@@ -24,7 +25,15 @@ export class RoleRepositoryAdapter implements IRoleRepositoryPort {
 
   async findById(id: number): Promise<Role> {
     const role = await this.repository.findOne({ where: { id } });
-    return role ? this.toDomain(role) : null;
+    if (!role) {
+      throw new NotFoundException(`Role with id ${id} not found`);
+    }
+    return this.toDomain(role);
+  }
+
+  async findByName(name: string): Promise<Role | null> {
+    const roleEntity = await this.repository.findOne({ where: { name } });
+    return roleEntity ? this.toDomain(roleEntity) : null; // Convert to domain model if found
   }
 
   async update(id: number, role: Role): Promise<Role> {
@@ -45,15 +54,8 @@ export class RoleRepositoryAdapter implements IRoleRepositoryPort {
   }
 
   private toDomain(entity: RoleEntity): Role {
-    const role = new Role();
-    role.id = entity.id;
-    role.name = entity.name;
-    role.description = entity.description;
+    const { id, name, description } = entity;
+    const role = new Role(id, name, description);
     return role;
-  }
-
-  async findByName(name: string): Promise<Role | null> {
-    const roleEntity = await this.repository.findOne({ where: { name } });
-    return roleEntity ? this.toDomain(roleEntity) : null; // Convert to domain model if found
   }
 }
