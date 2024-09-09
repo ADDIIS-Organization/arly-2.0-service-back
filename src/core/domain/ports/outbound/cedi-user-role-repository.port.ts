@@ -4,5 +4,5 @@ import { IGenericRepositoryPort } from './common'; // Importar la interfaz gené
 // Heredamos de la interfaz genérica para las operaciones CRUD básicas
 export interface ICediUserRoleRepositoryPort extends IGenericRepositoryPort<CediUserRole> {
   createRelation(cediUserRole: CediUserRole): Promise<CediUserRole>;
-  // Los métodos CRUD vienen de la herencia de IGenericRepositoryPort
+  findByUserId(userId: number): Promise<CediUserRole[]>;
 }

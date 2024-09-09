@@ -51,17 +51,27 @@ export class CediUserRoleRepositoryAdapter
     return this.toDomain(relation);
   }
 
+  async findByUserId(userId: number): Promise<CediUserRole[]> {
+    const relations = await this.repository.find({
+      where: { user: { id: userId } },
+      relations: ['user', 'role', 'cedi'],
+    });
+    console.log(relations);
+    return relations.map((entity) => this.toDomain(entity));
+  }
+
   async delete(id: number): Promise<void> {
     await this.repository.delete(id);
   }
 
   // Mapeo de entidad de persistencia a entidad de dominio
   private toDomain(entity: CediUserRoleEntity): CediUserRole {
+    if (!entity) return null;
     return new CediUserRole(
       entity.id,
-      this.toUserDomain(entity.user), // Mapea de persistencia a dominio
-      this.toRoleDomain(entity.role), // Mapea de persistencia a dominio
-      this.toCediDomain(entity.cedi), // Mapea de persistencia a dominio
+      entity.user ? this.toUserDomain(entity.user) : null,
+      entity.role ? this.toRoleDomain(entity.role) : null,
+      entity.cedi ? this.toCediDomain(entity.cedi) : null
     );
   }
 

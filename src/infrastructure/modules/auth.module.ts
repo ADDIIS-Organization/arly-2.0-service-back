@@ -23,7 +23,10 @@ import { UserModule } from './';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthApplicationService, JwtStrategy],
+  providers: [
+    AuthApplicationService,
+    JwtStrategy,
+  ],
   exports: [AuthApplicationService],
 })
 export class AuthModule {}

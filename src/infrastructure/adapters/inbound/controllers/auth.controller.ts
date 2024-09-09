@@ -23,7 +23,7 @@ export class AuthController {
       loginDto.username,
       loginDto.password,
     );
-    console.log(user);
+    console.log("from authcontroller:", user);
     return this.authService.login(user);
   }
 }

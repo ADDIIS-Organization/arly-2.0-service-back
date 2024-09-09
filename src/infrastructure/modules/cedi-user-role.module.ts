@@ -3,17 +3,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CediUserRoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
 import { CediUserRoleEntity } from '../persistence';
-
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([CediUserRoleEntity]), // Importar la entidad
-  ],
+  imports: [TypeOrmModule.forFeature([CediUserRoleEntity])],
   providers: [
+    CediUserRoleRepositoryAdapter,
     {
-      provide: 'ICediUserRoleRepositoryPort',  // El puerto para el repositorio
-      useClass: CediUserRoleRepositoryAdapter, // Adaptador del repositorio
+      provide: 'ICediUserRoleRepositoryPort',
+      useClass: CediUserRoleRepositoryAdapter,
     },
   ],
-  exports: ['ICediUserRoleRepositoryPort'], // Exportar si es necesario
+  exports: ['ICediUserRoleRepositoryPort', CediUserRoleRepositoryAdapter],
 })
 export class CediUserRoleModule {}
