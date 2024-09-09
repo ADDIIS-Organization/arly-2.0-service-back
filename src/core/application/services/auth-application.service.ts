@@ -4,6 +4,7 @@ import { JwtPayload } from '../ports/inbound/jwt-payload.interface';
 import { User } from '@/core/domain/entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { UserApplicationService } from './user-application.service';
+import { UserResponseDto } from '@/infrastructure/dtos/user';
 
 @Injectable()
 export class AuthApplicationService {
@@ -13,7 +14,7 @@ export class AuthApplicationService {
   ) {}
 
   async validateUser(username: string, pass: string): Promise<User> {
-    const user = await this.userApplicationService.getByUsername(username);
+    const user: User = await this.userApplicationService.getByUsername(username);
     if (user && bcrypt.compareSync(pass, user.password)) {
       return user;
     }
@@ -24,7 +25,7 @@ export class AuthApplicationService {
     const payload: JwtPayload = {
       sub: user.id,
       email: user.email,
-      cediUserRoleIds: user.roles.map((role) => role.id),
+      cediUserRoleIds: user.cediUserRoleEntities.map((cur) => cur.id),
     };
     return {
       access_token: this.jwtService.sign(payload),

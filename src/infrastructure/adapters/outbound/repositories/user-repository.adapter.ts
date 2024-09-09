@@ -29,7 +29,7 @@ export class UserRepositoryAdapter implements IUserRepositoryPort {
   async findById(id: number): Promise<User> {
     const userEntity = await this.repository.findOne({ where: { id } });
     if (!userEntity) {
-      throw new NotFoundException(`User with id ${id} not found`);
+      return null;
     }
     return this.toDomain(userEntity);
   }

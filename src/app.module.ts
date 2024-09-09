@@ -2,8 +2,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
-import { RoleModule, UserModule } from './infrastructure/modules';
+import { AuthModule, RoleModule, UserModule } from './infrastructure/modules';
 import { getDatabaseConfig } from './infrastructure/config';
+import { CediModule } from './infrastructure/modules/cedi.module';
+import { CediUserRoleModule } from './infrastructure/modules/cedi-user-role.module';
 
 @Module({
   imports: [
@@ -19,6 +21,9 @@ import { getDatabaseConfig } from './infrastructure/config';
     // ...getSeederModules(),
     RoleModule,
     UserModule,
+    CediModule,
+    CediUserRoleModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

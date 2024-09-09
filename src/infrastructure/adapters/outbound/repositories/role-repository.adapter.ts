@@ -1,5 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
 import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
@@ -26,7 +26,7 @@ export class RoleRepositoryAdapter implements IRoleRepositoryPort {
   async findById(id: number): Promise<Role> {
     const role = await this.repository.findOne({ where: { id } });
     if (!role) {
-      throw new NotFoundException(`Role with id ${id} not found`);
+      return null;
     }
     return this.toDomain(role);
   }

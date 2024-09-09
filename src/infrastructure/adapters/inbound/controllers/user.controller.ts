@@ -44,6 +44,7 @@ export class UserController extends BaseCRUDController<
   })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
   async create(@Body() createDto: CreateUserDto): Promise<UserResponseDto> {
+    console.log("start debugging", createDto);
     return super.create(createDto);
   }
 

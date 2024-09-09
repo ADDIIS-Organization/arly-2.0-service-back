@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 
 import {
   UserResponseDto,
@@ -6,14 +7,9 @@ import {
   UpdateUserDto,
 } from '@/infrastructure/dtos/user';
 import {
-  RoleRepositoryAdapter,
-  CediRepositoryAdapter,
-} from '@/infrastructure/adapters/outbound/repositories';
-import {
   UserDomainService,
   CediUserRoleDomainService,
 } from '@/core/domain/services';
-import { CediUserRoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
 import {
   ICediRepositoryPort,
   ICediUserRoleRepositoryPort,
@@ -22,7 +18,7 @@ import {
 } from '@/core/domain/ports/outbound';
 import { IUserApplicationPort } from '../ports/inbound';
 import { CrudApplicationService } from './common';
-import { User } from '@/core/domain/entities';
+import { Role, User } from '@/core/domain/entities';
 
 @Injectable()
 export class UserApplicationService
@@ -36,7 +32,7 @@ export class UserApplicationService
 {
   constructor(
     private readonly userDomainService: UserDomainService,
-    private readonly cediUserRoleDomainService: CediUserRoleDomainService, // Nuevo servicio para manejar la creación de relaciones
+    private readonly cediUserRoleDomainService: CediUserRoleDomainService,
     @Inject('IUserRepositoryPort')
     private readonly userRepository: IUserRepositoryPort,
     @Inject('IRoleRepositoryPort')
@@ -53,6 +49,7 @@ export class UserApplicationService
     return this.userRepository.findByUserName(username);
   }
 
+  // Método para convertir DTO en entidad, ahora con hash de contraseña
   protected toEntity(createDto: CreateUserDto): User {
     return this.userDomainService.createUser(
       createDto.name,
@@ -62,6 +59,7 @@ export class UserApplicationService
     );
   }
 
+  // Método para actualizar una entidad
   protected async toUpdatedEntity(
     id: number,
     updateDto: UpdateUserDto,
@@ -75,46 +73,48 @@ export class UserApplicationService
   }
 
   // Método para crear un usuario
-  // Método para crear un usuario
-  async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {
-    // 1. Crear la entidad de usuario
-    const user = this.userDomainService.createUser(
-      createUserDto.name,
-      createUserDto.email,
-      createUserDto.username,
-      createUserDto.password,
-    );
+  async save(createUserDto: CreateUserDto): Promise<UserResponseDto> {
+    // 1. Hashear la contraseña
+    const hashedPassword = await this.hashPassword(createUserDto.password);
 
-    // 2. Guardar el usuario
+    // 2. Actualizar la contraseña en el DTO
+    createUserDto.password = hashedPassword;
+
+    // 3. Convertir el DTO a entidad
+    const user = this.toEntity(createUserDto);
+
+    // 4. Guardar el usuario
     const savedUser = await this.userRepository.save(user);
 
-    // 3. Iterar sobre roleCediAssignments para validar y crear relaciones
+    // 5. Validar y crear relaciones entre roles y cedis
     for (const assignment of createUserDto.roleCediAssignments) {
-      // 3.1 Validar si el rol existe
-      const role = await this.roleRepository.findById(assignment.roleId);
+      console.log('Assignment', assignment);
+      const role: Role = await this.roleRepository.findById(assignment.roleId);
       if (!role) {
         throw new Error(`Role with ID ${assignment.roleId} not found`);
       }
 
-      // 3.2 Validar si el Cedi existe
       const cedi = await this.cediRepository.findById(assignment.cediId);
       if (!cedi) {
         throw new Error(`Cedi with ID ${assignment.cediId} not found`);
       }
 
-      // 3.3 Crear la relación entre el usuario, rol y cedi
       const cediUserRole = this.cediUserRoleDomainService.createRelation(
         savedUser,
         role,
         cedi,
       );
-
-      // 3.4 Guardar la relación en el repositorio
       await this.cediUserRoleRepository.save(cediUserRole);
     }
 
-    // 4. Retornar el usuario con el formato adecuado (Response DTO)
+    // 6. Retornar la respuesta en formato DTO
     return this.toResponseDto(savedUser);
+  }
+
+  // Método para hashear la contraseña
+  private async hashPassword(password: string): Promise<string> {
+    const saltRounds = 10;
+    return bcrypt.hash(password, saltRounds);
   }
 
   protected toResponseDto(user: User): UserResponseDto {
@@ -123,8 +123,6 @@ export class UserApplicationService
       name: user.name,
       email: user.email,
       username: user.username,
-      roles: user.roles,
-      cedis: user.cedis,
     };
   }
 }

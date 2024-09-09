@@ -27,15 +27,4 @@ export class UserResponseDto {
   })
   username: string;
 
-  @ApiProperty({
-    description: 'The role assigned to the user',
-    type: Role, // Assumes you have a Role entity or class defined
-  })
-  roles: Role[];
-
-  @ApiProperty({
-    description: 'List of Cedi locations assigned to the user',
-    type: [Cedi], // Assumes you have a Cedi entity or class defined
-  })
-  cedis: Cedi[];
 }
