@@ -1,13 +1,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { RoleRepository } from '@/core/domain/ports/outbound';
+import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
 import { Role } from '@/core/domain/entities';
-import { Logger } from '@nestjs/common';
 import { IRoleSeed } from './interfaces';
+import { Logger } from '@nestjs/common';
 
 
-export async function seedRoles(roleRepository: RoleRepository) {
+export async function seedRoles(roleRepository: IRoleRepositoryPort) {
   const logger = new Logger('SeedRoles');
 
   // Load role seeds from external JSON file
