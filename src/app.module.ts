@@ -25,7 +25,7 @@ import { TenantModule } from './infrastructure/modules/tenant.module';
     CediModule,
     CediUserRoleModule,
     AuthModule,
-    TenantModule,  // Módulo que manejará la lógica de tenants
+    TenantModule,  // Módulo que manejará la lógica de tenants xd
   ],
   controllers: [],
   providers: [],
