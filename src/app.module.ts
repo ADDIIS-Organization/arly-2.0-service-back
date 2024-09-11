@@ -3,27 +3,29 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
 import { AuthModule, RoleModule, UserModule } from './infrastructure/modules';
-import { getDatabaseConfig } from './infrastructure/config';
-import { CediModule } from './infrastructure/modules/cedi.module';
-import { CediUserRoleModule } from './infrastructure/modules/cedi-user-role.module';
+import { CediModule, CediUserRoleModule } from './infrastructure/modules';
+import { createCentralDataSource } from './infrastructure/database'; // DataSource del esquema central
+import { TenantModule } from './infrastructure/modules/tenant.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true,
+      isGlobal: true,  // Acceso global a las variables de entorno
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule], // Ensure ConfigModule is available here
-      inject: [ConfigService], // Inject ConfigService to access environment variables
-      useFactory: (configService: ConfigService) =>
-        getDatabaseConfig(configService),
+      imports: [ConfigModule],  // Aseguramos que ConfigModule esté disponible
+      inject: [ConfigService],  // Inyectamos ConfigService para obtener la configuración
+      useFactory: (configService: ConfigService) => {
+        const centralDataSource = createCentralDataSource(configService);  // Inicializamos la conexión central
+        return centralDataSource.options;
+      },
     }),
-    // ...getSeederModules(),
     RoleModule,
     UserModule,
     CediModule,
     CediUserRoleModule,
-    AuthModule
+    AuthModule,
+    TenantModule,  // Módulo que manejará la lógica de tenants
   ],
   controllers: [],
   providers: [],

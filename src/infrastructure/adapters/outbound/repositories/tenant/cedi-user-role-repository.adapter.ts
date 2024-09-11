@@ -71,53 +71,15 @@ export class CediUserRoleRepositoryAdapter
       entity.id,
       entity.user ? this.toUserDomain(entity.user) : null,
       entity.role ? this.toRoleDomain(entity.role) : null,
-      entity.cedi ? this.toCediDomain(entity.cedi) : null
+      entity.cedi ? this.toCediDomain(entity.cedi) : null,
     );
-  }
-
-  // Mapeo de dominio a persistencia
-  private toUserEntity(user: User): UserEntity {
-    const userEntity = new UserEntity();
-    userEntity.id = user.id;
-    userEntity.name = user.name;
-    userEntity.email = user.email;
-    userEntity.username = user.username;
-    userEntity.password = user.password;
-    return userEntity;
-  }
-
-  private toRoleEntity(role: Role): RoleEntity {
-    const roleEntity = new RoleEntity();
-    roleEntity.id = role.id;
-    roleEntity.name = role.name;
-    roleEntity.description = role.description;
-    return roleEntity;
-  }
-
-  private toCediEntity(cedi: Cedi): CediEntity {
-    const cediEntity = new CediEntity();
-    cediEntity.id = cedi.id;
-    cediEntity.name = cedi.name;
-    cediEntity.department = cedi.department;
-    cediEntity.municipality = cedi.municipality;
-    cediEntity.address = cedi.address;
-    cediEntity.phone = cedi.phone;
-    cediEntity.primaryEmail = cedi.primaryEmail;
-    cediEntity.secondaryEmail = cedi.secondaryEmail;
-    cediEntity.supervisor = cedi.supervisor;
-    cediEntity.company = cedi.company;
-    return cediEntity;
   }
 
   // Mapeo de persistencia a dominio
   private toUserDomain(userEntity: UserEntity): User {
-    return new User(
-      userEntity.id,
-      userEntity.name,
-      userEntity.email,
-      userEntity.username,
-      userEntity.password,
-    );
+    return {
+      id: userEntity.id,
+    } as User;
   }
 
   private toRoleDomain(roleEntity: RoleEntity): Role {

@@ -7,7 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import { ModuleEntity, PermissionEntity } from './'; // Importar las entidades necesarias
+import { ModuleEntity, PermissionEntity } from '..'; // Importar las entidades necesarias
 
 @Entity('menu_items')
 export class MenuItemEntity {

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
-import { CediUserRoleEntity } from './';
+import { CediUserRoleEntity } from '..';
 
 @Entity('cedis') // Nombre de la tabla
 export class CediEntity {

@@ -1,5 +1,5 @@
 import { AuthApplicationService } from '@/core/application/services';
-import { LoginDto } from '@/infrastructure/dtos/auth/login.dto';
+import { LoginDto } from '@/infrastructure/dtos/tenant/auth/login.dto';
 import {
   Controller,
   Post,
