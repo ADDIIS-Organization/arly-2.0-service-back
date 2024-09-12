@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -23,6 +24,7 @@ import {
 } from '@/infrastructure/dtos/user';
 import { UserApplicationService } from '@/core/application/services';
 import { BaseCRUDController } from './common';
+import { PaginationDto } from '@/infrastructure/dtos/common';
 
 @ApiTags('users') // Swagger Tag para el controlador de usuarios
 @Controller('users')
@@ -68,8 +70,8 @@ export class UserController extends BaseCRUDController<
   @Get()
   @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({ status: 200, description: 'Return all users.' })
-  async getAll(): Promise<UserResponseDto[]> {
-    return super.getAll();
+  async getAll(@Query() paginationDto: PaginationDto): Promise<UserResponseDto[]> {
+    return super.getAll(paginationDto);
   }
 
   @Get(':id')

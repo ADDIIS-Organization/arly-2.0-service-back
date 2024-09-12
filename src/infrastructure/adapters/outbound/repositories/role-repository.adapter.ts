@@ -5,47 +5,23 @@ import { Repository } from 'typeorm';
 import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
 import { RoleEntity } from '@/infrastructure/persistence';
 import { Role } from '@/core/domain/entities';
+import { BaseRepositoryAdapter } from './common';
+
 
 @Injectable()
-export class RoleRepositoryAdapter implements IRoleRepositoryPort {
+export class RoleRepositoryAdapter
+  extends BaseRepositoryAdapter<RoleEntity, Role>
+  implements IRoleRepositoryPort
+{
   constructor(
     @InjectRepository(RoleEntity)
-    private repository: Repository<RoleEntity>,
-  ) {}
-
-  async save(role: Role): Promise<Role> {
-    const savedRole = await this.repository.save(this.toEntity(role));
-    return this.toDomain(savedRole);
+    repository: Repository<RoleEntity>,
+  ) {
+    super(repository);
   }
 
-  async findAll(): Promise<Role[]> {
-    const roles = await this.repository.find();
-    return roles.map((role) => this.toDomain(role));
-  }
-
-  async findById(id: number): Promise<Role> {
-    const role = await this.repository.findOne({ where: { id } });
-    if (!role) {
-      return null;
-    }
-    return this.toDomain(role);
-  }
-
-  async findByName(name: string): Promise<Role | null> {
-    const roleEntity = await this.repository.findOne({ where: { name } });
-    return roleEntity ? this.toDomain(roleEntity) : null; // Convert to domain model if found
-  }
-
-  async update(id: number, role: Role): Promise<Role> {
-    await this.repository.update(id, this.toEntity(role));
-    return this.findById(id);
-  }
-
-  async delete(id: number): Promise<void> {
-    await this.repository.delete(id);
-  }
-
-  private toEntity(role: Role): RoleEntity {
+ 
+  protected toEntity(role: Role): RoleEntity {
     const entity = new RoleEntity();
     entity.id = role.id;
     entity.name = role.name;
@@ -53,9 +29,13 @@ export class RoleRepositoryAdapter implements IRoleRepositoryPort {
     return entity;
   }
 
-  private toDomain(entity: RoleEntity): Role {
-    const { id, name, description } = entity;
-    const role = new Role(id, name, description);
-    return role;
+  protected toDomain(entity: RoleEntity): Role {
+    return new Role(entity.id, entity.name, entity.description);
+  }
+
+
+  async findByName(name: string): Promise<Role | null> {
+    const roleEntity = await this.repository.findOne({ where: { name } });
+    return roleEntity ? this.toDomain(roleEntity) : null;
   }
 }
