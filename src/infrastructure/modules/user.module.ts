@@ -15,6 +15,8 @@ import {
   RoleRepositoryAdapter,
   UserRepositoryAdapter,
 } from '../adapters/outbound/repositories';
+import { SearchService } from '@/core/application/services/common/search.service';
+import { TypeOrmSearchRepository } from '../adapters/outbound/repositories/common/typeorm-search.repository';
 
 @Module({
   imports: [
@@ -45,6 +47,8 @@ import {
       provide: 'IRoleRepositoryPort', // Token para el puerto del rol
       useClass: RoleRepositoryAdapter, // Implementación del adaptador del rol
     },
+    SearchService, // Registramos el servicio de búsqueda
+    { provide: 'SearchRepository', useClass: TypeOrmSearchRepository }, // Inyectamos el repositorio de búsqueda
   ],
   exports: ['IUserRepositoryPort', 'ICediUserRoleRepositoryPort', UserApplicationService], // Exportar si se necesita en otros módulos
 })

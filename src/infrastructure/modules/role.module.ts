@@ -7,20 +7,24 @@ import { RoleDomainService } from '@/core/domain/services';
 import { RoleRepositoryAdapter } from '../adapters/outbound/repositories';
 import { RoleEntity } from '../persistence';
 import { DatabaseSeederModule } from './';
+import { SearchService } from '@/core/application/services/common/search.service';
+import { TypeOrmSearchRepository } from '../adapters/outbound/repositories/common/typeorm-search.repository';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([RoleEntity]), // Importar la entidad RoleEntity
     // forwardRef(() => DatabaseSeederModule), // Usar si el módulo DatabaseSeeder es necesario aquí
   ],
-  controllers: [RoleController],  // Controladores que serán manejados por este módulo
+  controllers: [RoleController], // Controladores que serán manejados por este módulo
   providers: [
-    RoleApplicationService,  // Registrar RoleApplicationService como proveedor directamente
-    RoleDomainService,       // Registrar RoleDomainService
+    RoleApplicationService, // Registrar RoleApplicationService como proveedor directamente
+    RoleDomainService, // Registrar RoleDomainService
     {
-      provide: 'IRoleRepositoryPort',  // Token para el puerto del repositorio
+      provide: 'IRoleRepositoryPort', // Token para el puerto del repositorio
       useClass: RoleRepositoryAdapter, // Implementación del adaptador
     },
+    SearchService, // Registramos el servicio de búsqueda
+    { provide: 'SearchRepository', useClass: TypeOrmSearchRepository }, // Inyectamos el repositorio de búsqueda
   ],
   exports: ['IRoleRepositoryPort', RoleApplicationService], // Exportamos si se usa en otros módulos
 })

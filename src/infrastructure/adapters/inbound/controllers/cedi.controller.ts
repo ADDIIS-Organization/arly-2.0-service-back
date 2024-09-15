@@ -13,6 +13,7 @@ import {
     ApiBody,
     ApiOperation,
     ApiParam,
+    ApiQuery,
     ApiResponse,
     ApiTags,
   } from '@nestjs/swagger';
@@ -21,6 +22,9 @@ import {
   import { CediApplicationService } from '@/core/application/services';
   import { BaseCRUDController } from './common';
 import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
+import { SearchService } from '@/core/application/services/common/search.service';
+import { CediEntity } from '@/infrastructure/persistence';
+import { ApiDeleteOperation, ApiGetAllOperation, ApiPostOperation, ApiPutOperation, ApiSearchOperation } from '@/documentation/swagger/common/api-search.decorator';
   
   @ApiTags('cedis') // Swagger Tag para el controlador de cedis
   @Controller('cedis')
@@ -29,64 +33,48 @@ import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
     CreateCediDto,
     UpdateCediDto
   > {
-    constructor(cediApplicationService: CediApplicationService) {
+    constructor(
+      cediApplicationService: CediApplicationService,
+      private readonly searchService: SearchService,
+    ) {
       super(cediApplicationService);
     }
-  
+
     @Post()
-    @ApiBody({ type: CreateCediDto }) // Añadir el decorador @ApiBody para POST
-    @ApiOperation({ summary: 'Create a new Cedi' })
-    @ApiResponse({
-      status: 201,
-      description: 'The Cedi has been successfully created.',
-    })
-    @ApiResponse({ status: 400, description: 'Bad Request.' })
+   @ApiPostOperation( 'Cedi' , CreateCediDto)
     async create(@Body() createDto: CreateCediDto): Promise<CediResponseDto> {
       return super.create(createDto);
     }
-  
+
     @Put(':id')
-    @ApiBody({ type: UpdateCediDto }) // Añadir el decorador @ApiBody para PUT
-    @ApiOperation({ summary: 'Update a Cedi' })
-    @ApiParam({ name: 'id', type: 'number' })
-    @ApiResponse({
-      status: 200,
-      description: 'The Cedi has been successfully updated.',
-    })
-    @ApiResponse({ status: 400, description: 'Bad Request.' })
-    @ApiResponse({ status: 404, description: 'Cedi not found.' })
+    @ApiPutOperation( 'Cedi', UpdateCediDto)
     async update(
       @Param('id') id: number,
       @Body() updateDto: UpdateCediDto,
     ): Promise<CediResponseDto> {
       return super.update(id, updateDto);
     }
-  
+
     @Get()
-    @ApiOperation({ summary: 'Get all Cedis' })
-    @ApiResponse({ status: 200, description: 'Return all Cedis.' })
-    async getAll(@Query() paginationDto: PaginationDto): Promise<CediResponseDto[]> {
+    @ApiGetAllOperation( 'Cedi')
+    async getAll(
+      @Query() paginationDto: PaginationDto,
+    ): Promise<CediResponseDto[]> {
       return super.getAll(paginationDto);
     }
-  
-    @Get(':id')
-    @ApiOperation({ summary: 'Get a Cedi by id' })
-    @ApiParam({ name: 'id', type: 'number' })
-    @ApiResponse({ status: 200, description: 'Return the Cedi.' })
-    @ApiResponse({ status: 404, description: 'Cedi not found.' })
-    async getById(@Param('id') id: number): Promise<CediResponseDto> {
-      return super.getById(id);
+
+    
+    @Get('search')
+    @ApiSearchOperation( 'Cedi') // Usamos el decorador personalizado
+    async searchCedis(
+      @Query('field') field: string, // Campo en el que se realizará la búsqueda
+      @Query('term') term: string, // Término de búsqueda
+    ) {
+      // Usar el servicio de búsqueda para buscar en la entidad "CediEntity"
+      return this.searchService.search(CediEntity, field, term);
     }
-  
     @Delete(':id')
-    @HttpCode(204)
-    @ApiOperation({ summary: 'Delete a Cedi' })
-    @ApiParam({ name: 'id', type: 'number' })
-    @ApiResponse({
-      status: 204,
-      description: 'The Cedi has been successfully deleted.',
-    })
-    @ApiResponse({ status: 404, description: 'Cedi not found.' })
+    @ApiDeleteOperation( 'Cedi')
     async delete(@Param('id') id: number): Promise<void> {
       return super.delete(id);
     }
