@@ -6,6 +6,8 @@ import { RoleController } from '@/infrastructure/adapters/inbound/controllers/te
 import { RoleApplicationService } from '@/core/application/services/tenant';
 import { RoleDomainService } from '@/core/domain/services';
 import { RoleEntity } from '@/infrastructure/persistence';
+import { SearchService } from '@/core/application/services/common/search.service';
+import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common/typeorm-search.repository';
 
 @Module({
   imports: [
@@ -15,10 +17,14 @@ import { RoleEntity } from '@/infrastructure/persistence';
   providers: [
     RoleApplicationService, // Registrar RoleApplicationService como proveedor directamente
     RoleDomainService, // Registrar RoleDomainService
+    RoleApplicationService, // Registrar RoleApplicationService como proveedor directamente
+    RoleDomainService, // Registrar RoleDomainService
     {
       provide: 'IRoleRepositoryPort', // Token para el puerto del repositorio
       useClass: RoleRepositoryAdapter, // Implementación del adaptador
     },
+    SearchService, // Registramos el servicio de búsqueda
+    { provide: 'SearchRepository', useClass: TypeOrmSearchRepository }, // Inyectamos el repositorio de búsqueda
   ],
   exports: ['IRoleRepositoryPort', RoleApplicationService], // Exportamos si se usa en otros módulos
 })

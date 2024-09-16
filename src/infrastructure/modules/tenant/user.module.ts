@@ -49,6 +49,8 @@ import { UserController } from '@/infrastructure/adapters/inbound/controllers/te
       provide: 'IRoleRepositoryPort', // Token para el puerto del rol
       useClass: RoleRepositoryAdapter, // Implementación del adaptador del rol
     },
+    SearchService, // Registramos el servicio de búsqueda
+    { provide: 'SearchRepository', useClass: TypeOrmSearchRepository }, // Inyectamos el repositorio de búsqueda
   ],
   exports: [
     'IUserRepositoryPort',
