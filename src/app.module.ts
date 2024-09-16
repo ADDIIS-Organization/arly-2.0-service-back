@@ -1,6 +1,7 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 
 import { TenantModule } from './infrastructure/modules/tenant';
 import { createCentralDataSource } from './infrastructure/database'; // DataSource del esquema central

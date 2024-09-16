@@ -1,3 +1,4 @@
+import { PaginationDto } from './../../../dtos/common/pagination.dto';
 import {
   Body,
   Controller,
@@ -33,33 +34,21 @@ export class UserController extends BaseCRUDController<
   CreateUserDto,
   UpdateUserDto
 > {
-  constructor(userApplicationService: UserApplicationService) {
+  constructor(userApplicationService: UserApplicationService,
+    private readonly searchService: SearchService
+  ) {
     super(userApplicationService);
   }
 
   @Post()
-  @ApiBody({ type: CreateUserDto }) // Añadir el decorador @ApiBody para POST
-  @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse({
-    status: 201,
-    description: 'The user has been successfully created.',
-  })
-  @ApiResponse({ status: 400, description: 'Bad Request.' })
+  @ApiPostOperation ( 'User' , CreateUserDto)
   async create(@Body() createDto: CreateUserDto): Promise<UserResponseDto> {
     console.log("start debugging", createDto);
     return super.create(createDto);
   }
 
   @Put(':id')
-  @ApiBody({ type: UpdateUserDto }) // Añadir el decorador @ApiBody para PUT
-  @ApiOperation({ summary: 'Update a user' })
-  @ApiParam({ name: 'id', type: 'number' })
-  @ApiResponse({
-    status: 200,
-    description: 'The user has been successfully updated.',
-  })
-  @ApiResponse({ status: 400, description: 'Bad Request.' })
-  @ApiResponse({ status: 404, description: 'User not found.' })
+  @ApiPutOperation( 'User' , UpdateUserDto)
   async update(
     @Param('id') id: number,
     @Body() updateDto: UpdateUserDto,
@@ -68,30 +57,21 @@ export class UserController extends BaseCRUDController<
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all users' })
-  @ApiResponse({ status: 200, description: 'Return all users.' })
+  @ApiGetAllOperation( 'User' )
+ 
   async getAll(@Query() paginationDto: PaginationDto): Promise<UserResponseDto[]> {
     return super.getAll(paginationDto);
   }
-
-  @Get(':id')
-  @ApiOperation({ summary: 'Get a user by id' })
-  @ApiParam({ name: 'id', type: 'number' })
-  @ApiResponse({ status: 200, description: 'Return the user.' })
-  @ApiResponse({ status: 404, description: 'User not found.' })
-  async getById(@Param('id') id: number): Promise<UserResponseDto> {
-    return super.getById(id);
-  }
+ 
+@Get('search')
+@ApiSearchOperation( 'User' )
+async searchUsers( @Query('field') field: string, // Campo en el que se realizará la búsqueda
+      @Query('term') term: string){
+        return this.searchService.search(UserEntity,field, term);
+      }
 
   @Delete(':id')
-  @HttpCode(204)
-  @ApiOperation({ summary: 'Delete a user' })
-  @ApiParam({ name: 'id', type: 'number' })
-  @ApiResponse({
-    status: 204,
-    description: 'The user has been successfully deleted.',
-  })
-  @ApiResponse({ status: 404, description: 'User not found.' })
+ @ApiDeleteOperation('User' )
   async delete(@Param('id') id: number): Promise<void> {
     return super.delete(id);
   }
