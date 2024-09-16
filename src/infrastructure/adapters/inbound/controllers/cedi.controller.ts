@@ -7,6 +7,7 @@ import {
     Param,
     Post,
     Put,
+    Query,
   } from '@nestjs/common';
   import {
     ApiBody,
@@ -19,6 +20,7 @@ import {
   import { CreateCediDto, CediResponseDto, UpdateCediDto } from '@/infrastructure/dtos/cedi';
   import { CediApplicationService } from '@/core/application/services';
   import { BaseCRUDController } from './common';
+import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
   
   @ApiTags('cedis') // Swagger Tag para el controlador de cedis
   @Controller('cedis')
@@ -63,8 +65,8 @@ import {
     @Get()
     @ApiOperation({ summary: 'Get all Cedis' })
     @ApiResponse({ status: 200, description: 'Return all Cedis.' })
-    async getAll(): Promise<CediResponseDto[]> {
-      return super.getAll();
+    async getAll(@Query() paginationDto: PaginationDto): Promise<CediResponseDto[]> {
+      return super.getAll(paginationDto);
     }
   
     @Get(':id')

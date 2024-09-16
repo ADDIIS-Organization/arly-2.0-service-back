@@ -1,7 +1,8 @@
-import { Put, Delete, Body, Param, HttpCode } from '@nestjs/common';
+import { Put, Delete, Body, Param, HttpCode, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 
 import { IBaseApplicationPort } from '@/core/application/ports/inbound/common';
+import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
 
 /**
  * Base CRUD Controller class for handling common CRUD operations.
@@ -22,8 +23,8 @@ export class BaseCRUDController<T, CreateDto, UpdateDto> {
     return this.applicationService.save(createDto);
   }
 
-  async getAll(): Promise<T[]> {
-    return this.applicationService.getAll();
+  async getAll( @Query() paginationDto: PaginationDto): Promise<T[]> {
+    return this.applicationService.getAll(paginationDto);
   }
 
   async getById(id: number): Promise<T> {

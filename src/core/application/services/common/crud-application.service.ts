@@ -1,3 +1,4 @@
+import { PaginationDto } from './../../../../infrastructure/dtos/common/pagination.dto';
 import { IGenericRepositoryPort } from '@/core/domain/ports/outbound/common';
 
 // DTO to Entity conversion methods will be implemented by subclasses
@@ -11,8 +12,8 @@ export abstract class CrudApplicationService<Entity, CreateDto, UpdateDto, Respo
     return this.toResponseDto(savedEntity);
   }
 
-  async getAll(): Promise<ResponseDto[]> {
-    const entities = await this.repository.findAll();
+  async getAll(PaginationDto: PaginationDto): Promise<ResponseDto[]> {
+    const entities = await this.repository.findAll(PaginationDto);
     return entities.map((entity) => this.toResponseDto(entity));
   }
 

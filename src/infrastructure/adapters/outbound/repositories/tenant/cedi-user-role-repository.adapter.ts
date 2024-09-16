@@ -10,62 +10,44 @@ import {
 } from '@/infrastructure/persistence';
 import { ICediUserRoleRepositoryPort } from '@/core/domain/ports/outbound';
 import { Cedi, CediUserRole, Role, User } from '@/core/domain/entities';
+import { BaseRepositoryAdapter } from './common';
+
 
 @Injectable()
 export class CediUserRoleRepositoryAdapter
+  extends BaseRepositoryAdapter<CediUserRoleEntity, CediUserRole>
   implements ICediUserRoleRepositoryPort
 {
   constructor(
     @InjectRepository(CediUserRoleEntity)
-    private repository: Repository<CediUserRoleEntity>,
-  ) {}
-
-  async save(cediUserRole: CediUserRole): Promise<CediUserRole> {
-    return this.createRelation(cediUserRole);
+    protected readonly repository: Repository<CediUserRoleEntity>,
+  ) {
+    super(repository , ['user', 'role', 'cedi']); // Llamamos al constructor de la clase base
   }
 
-  async update(id: number, cediUserRole: CediUserRole): Promise<CediUserRole> {
-    const savedEntity = await this.repository.save(cediUserRole);
-    return this.toDomain(savedEntity);
-  }
-
-  async createRelation(cediUserRole: CediUserRole): Promise<CediUserRole> {
-    const savedEntity = await this.repository.save(cediUserRole);
-    return this.toDomain(savedEntity);
-  }
-
-  async findAll(): Promise<CediUserRole[]> {
-    const relations = await this.repository.find({
-      relations: ['user', 'role', 'cedi'],
-    });
-    return relations.map(this.toDomain);
-  }
-
-  async findById(id: number): Promise<CediUserRole> {
-    const relation = await this.repository.findOne({
-      where: { id },
-      relations: ['user', 'role', 'cedi'],
-    });
-    if (!relation)
-      throw new NotFoundException(`Relation with id ${id} not found`);
-    return this.toDomain(relation);
-  }
-
+  // Método adicional específico
   async findByUserId(userId: number): Promise<CediUserRole[]> {
     const relations = await this.repository.find({
       where: { user: { id: userId } },
       relations: ['user', 'role', 'cedi'],
     });
-    console.log(relations);
     return relations.map((entity) => this.toDomain(entity));
   }
-
-  async delete(id: number): Promise<void> {
-    await this.repository.delete(id);
+  async createRelation(cediUserRole: CediUserRole): Promise<CediUserRole> {
+    const savedEntity = await this.repository.save(cediUserRole);
+    return this.toDomain(savedEntity);
   }
 
-  // Mapeo de entidad de persistencia a entidad de dominio
-  private toDomain(entity: CediUserRoleEntity): CediUserRole {
+  protected toEntity(domain: CediUserRole): CediUserRoleEntity {
+    const entity = new CediUserRoleEntity();
+    entity.id = domain.id;
+    entity.user = domain.user ? this.toUserEntity(domain.user) : null;
+    entity.role = domain.role ? this.toRoleEntity(domain.role) : null;
+    entity.cedi = domain.cedi ? this.toCediEntity(domain.cedi) : null;
+    return entity;
+  }
+
+  protected toDomain(entity: CediUserRoleEntity): CediUserRole {
     if (!entity) return null;
     return new CediUserRole(
       entity.id,
@@ -75,7 +57,40 @@ export class CediUserRoleRepositoryAdapter
     );
   }
 
-  // Mapeo de persistencia a dominio
+  // Métodos auxiliares para mapear User, Role y Cedi
+  private toUserEntity(user: User): UserEntity {
+    const userEntity = new UserEntity();
+    userEntity.id = user.id;
+    userEntity.name = user.name;
+    userEntity.email = user.email;
+    userEntity.username = user.username;
+    userEntity.password = user.password;
+    return userEntity;
+  }
+
+  private toRoleEntity(role: Role): RoleEntity {
+    const roleEntity = new RoleEntity();
+    roleEntity.id = role.id;
+    roleEntity.name = role.name;
+    roleEntity.description = role.description;
+    return roleEntity;
+  }
+
+  private toCediEntity(cedi: Cedi): CediEntity {
+    const cediEntity = new CediEntity();
+    cediEntity.id = cedi.id;
+    cediEntity.name = cedi.name;
+    cediEntity.department = cedi.department;
+    cediEntity.municipality = cedi.municipality;
+    cediEntity.address = cedi.address;
+    cediEntity.phone = cedi.phone;
+    cediEntity.primaryEmail = cedi.primaryEmail;
+    cediEntity.secondaryEmail = cedi.secondaryEmail;
+    cediEntity.supervisor = cedi.supervisor;
+    cediEntity.company = cedi.company;
+    return cediEntity;
+  }
+
   private toUserDomain(userEntity: UserEntity): User {
     return {
       id: userEntity.id,

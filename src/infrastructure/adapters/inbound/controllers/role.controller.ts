@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
@@ -8,6 +8,7 @@ import {
 } from '@/infrastructure/dtos/role';
 import { RoleApplicationService } from '@/core/application/services';
 import { BaseCRUDController } from './common'; // Import IBaseApplicationPort
+import { PaginationDto } from '@/infrastructure/dtos/common';
 
 @ApiTags('roles')
 @Controller('roles')
@@ -52,8 +53,8 @@ export class RoleController extends BaseCRUDController<
   @Get()
   @ApiOperation({ summary: 'Get all roles' })
   @ApiResponse({ status: 200, description: 'Return all roles.' })
-  async getAll(): Promise<RoleResponseDto[]> {
-    return super.getAll();
+  async getAll(@Query() paginationDto: PaginationDto): Promise<RoleResponseDto[]> {
+    return super.getAll(paginationDto);
   }
 
   @Get(':id')
