@@ -1,4 +1,3 @@
-export * from './cedi-repository.adapter';
-export * from './cedi-user-role-repository.adapter';
-export * from './role-repository.adapter';
-export * from './user-repository.adapter';
+export * from './tenant-info-repository.adapter';
+export * from './tenant-repository.adapter';
+export * from './tenant';

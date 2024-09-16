@@ -1,17 +1,16 @@
+import { ExtractJwt, Strategy } from 'passport-jwt';
+
 import { PassportStrategy } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 
-import { UserApplicationService } from '@/core/application/services';
-import { JwtPayload } from '../ports/inbound/jwt-payload.interface';
-import { ExtractJwt, Strategy } from 'passport-jwt';
-
+import { TenantContextService } from '../services/tenant';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    private configService: ConfigService,
-    private userApplicationService: UserApplicationService,
-  ) {
+    private readonly tenantContextService: TenantContextService,
+    configService: ConfigService,
+  ){
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -19,7 +18,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload) {
-    return this.userApplicationService.getById(payload.sub); // Devuelve el usuario si el JWT es válido
+  async validate(payload: any) {
+    // Establecer el esquema del tenant
+    this.tenantContextService.setTenantSchema(payload.tenant);
+    return { userId: payload.sub, username: payload.username };
   }
 }

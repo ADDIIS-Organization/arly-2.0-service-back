@@ -2,7 +2,7 @@ import {
   CreateRoleDto,
   RoleResponseDto,
   UpdateRoleDto,
-} from '@/infrastructure/dtos/role';
+} from '@/infrastructure/dtos/tenant/role';
 import { IBaseApplicationPort } from './common';
 
 /**

@@ -2,30 +2,26 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
-import { AuthModule, RoleModule, UserModule } from './infrastructure/modules';
-import { getDatabaseConfig } from './infrastructure/config';
-import { CediModule } from './infrastructure/modules/cedi.module';
-import { CediUserRoleModule } from './infrastructure/modules/cedi-user-role.module';
+import { TenantModule } from './infrastructure/modules/tenant';
+import { createCentralDataSource } from './infrastructure/database'; // DataSource del esquema central
+import { CentralModule } from './infrastructure/modules/central';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    // Conexión al esquema central
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule], // Ensure ConfigModule is available here
-      inject: [ConfigService], // Inject ConfigService to access environment variables
-      useFactory: (configService: ConfigService) =>
-        getDatabaseConfig(configService),
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const centralDataSource = createCentralDataSource(configService);
+        return centralDataSource.options;
+      },
     }),
-    // ...getSeederModules(),
-    RoleModule,
-    UserModule,
-    CediModule,
-    CediUserRoleModule,
-    AuthModule
+    CentralModule,
+    TenantModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

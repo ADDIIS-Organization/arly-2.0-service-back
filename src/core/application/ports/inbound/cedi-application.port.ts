@@ -2,7 +2,7 @@ import {
   CreateCediDto,
   CediResponseDto,
   UpdateCediDto,
-} from '@/infrastructure/dtos/cedi';
+} from '@/infrastructure/dtos/tenant/cedi';
 import { IBaseApplicationPort } from './common';
 
 /**
