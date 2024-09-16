@@ -1,9 +1,10 @@
+import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '@/core/domain/entities';
+
+import { CreateUserDto } from '@/infrastructure/dtos/tenant/user';
 import { CentralUserEntity } from '@/infrastructure/persistence';
-import { CreateUserDto } from '@/infrastructure/dtos/user';
+import { User } from '@/core/domain/entities';
 
 @Injectable()
 export class CentralUserRepositoryAdapter {

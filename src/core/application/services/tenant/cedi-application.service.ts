@@ -4,7 +4,7 @@ import {
   CreateCediDto,
   UpdateCediDto,
   CediResponseDto,
-} from '@/infrastructure/dtos/cedi';
+} from '@/infrastructure/dtos/tenant/cedi';
 import { ICediRepositoryPort } from '@/core/domain/ports/outbound';
 import { CediDomainService } from '@/core/domain/services';
 import { ICediApplicationPort } from '../../ports/inbound';

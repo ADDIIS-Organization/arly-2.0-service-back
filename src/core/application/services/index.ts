@@ -1,1 +1,1 @@
-export * from './tenant-admin.service';
+export * from './central/tenant-admin.service';

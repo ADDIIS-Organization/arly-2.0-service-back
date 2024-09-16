@@ -4,7 +4,7 @@ import {
   CreateRoleDto,
   RoleResponseDto,
   UpdateRoleDto,
-} from '@/infrastructure/dtos/role';
+} from '@/infrastructure/dtos/tenant/role';
 import { IRoleApplicationPort } from '@/core/application/ports/inbound';
 import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
 import { RoleDomainService } from '@/core/domain/services';

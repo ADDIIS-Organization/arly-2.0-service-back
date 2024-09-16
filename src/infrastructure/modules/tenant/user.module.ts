@@ -17,8 +17,8 @@ import {
   CediUserRoleDomainService,
   UserDomainService,
 } from '@/core/domain/services';
-import { UserController } from '@/infrastructure/adapters/inbound/controllers';
 import { UserApplicationService } from '@/core/application/services/tenant';
+import { UserController } from '@/infrastructure/adapters/inbound/controllers/tenant';
 
 @Module({
   imports: [

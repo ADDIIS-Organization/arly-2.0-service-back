@@ -5,7 +5,7 @@ import {
   UserResponseDto,
   CreateUserDto,
   UpdateUserDto,
-} from '@/infrastructure/dtos/user';
+} from '@/infrastructure/dtos/tenant/user';
 import {
   UserDomainService,
   CediUserRoleDomainService,

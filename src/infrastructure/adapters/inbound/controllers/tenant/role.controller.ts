@@ -21,8 +21,8 @@ import {
   CreateRoleDto,
   RoleResponseDto,
   UpdateRoleDto,
-} from '@/infrastructure/dtos/role';
-import { BaseCRUDController } from './common'; // Import IBaseApplicationPort
+} from '@/infrastructure/dtos/tenant/role';
+import { BaseCRUDController } from '../common'; // Import IBaseApplicationPort
 import { PaginationDto } from '@/infrastructure/dtos/common';
 import { RoleApplicationService } from '@/core/application/services/tenant';
 

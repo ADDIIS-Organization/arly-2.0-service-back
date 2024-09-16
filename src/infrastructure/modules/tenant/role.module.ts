@@ -1,8 +1,8 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { RoleController } from '@/infrastructure/adapters/inbound/controllers';
+import { RoleController } from '@/infrastructure/adapters/inbound/controllers/tenant';
 import { RoleApplicationService } from '@/core/application/services/tenant';
 import { RoleDomainService } from '@/core/domain/services';
 import { RoleEntity } from '@/infrastructure/persistence';
@@ -10,14 +10,13 @@ import { RoleEntity } from '@/infrastructure/persistence';
 @Module({
   imports: [
     TypeOrmModule.forFeature([RoleEntity]), // Importar la entidad RoleEntity
-    // forwardRef(() => DatabaseSeederModule), // Usar si el módulo DatabaseSeeder es necesario aquí
   ],
-  controllers: [RoleController],  // Controladores que serán manejados por este módulo
+  controllers: [RoleController], // Controladores que serán manejados por este módulo
   providers: [
-    RoleApplicationService,  // Registrar RoleApplicationService como proveedor directamente
-    RoleDomainService,       // Registrar RoleDomainService
+    RoleApplicationService, // Registrar RoleApplicationService como proveedor directamente
+    RoleDomainService, // Registrar RoleDomainService
     {
-      provide: 'IRoleRepositoryPort',  // Token para el puerto del repositorio
+      provide: 'IRoleRepositoryPort', // Token para el puerto del repositorio
       useClass: RoleRepositoryAdapter, // Implementación del adaptador
     },
   ],
@@ -28,12 +27,12 @@ export class RoleModule {}
 /**
  * Cuando se habla de Tokens en NestJS, se refiere a la inyección de dependencias.
  * Token es un string que se usa para identificar un proveedor o un módulo.
- * 
+ *
  * Aqui la inversión de control se hace a través de la inyección de dependencias.
  * A continuación se muestra un ejemplo de cómo se usa un token para identificar un proveedor.
- * 
+ *
  * En el archivo src/core/application/services/role-application.service.ts, se usa el token 'IRoleRepositoryPort' para identificar el puerto del repositorio.
- * 
+ *
  * @Injectable()
  * export class RoleApplicationService
  *  extends CrudApplicationService<
@@ -51,5 +50,5 @@ export class RoleModule {}
  * ) {
  * super(roleRepository);
  * }
- * 
+ *
  */

@@ -21,10 +21,10 @@ import {
   CreateCediDto,
   CediResponseDto,
   UpdateCediDto,
-} from '@/infrastructure/dtos/cedi';
+} from '@/infrastructure/dtos/tenant/cedi';
 import { CediApplicationService } from '@/core/application/services/tenant';
 import { PaginationDto } from '@/infrastructure/dtos/common';
-import { BaseCRUDController } from './common';
+import { BaseCRUDController } from '../common';
 
 @ApiTags('cedis') // Swagger Tag para el controlador de cedis
 @Controller('cedis')
