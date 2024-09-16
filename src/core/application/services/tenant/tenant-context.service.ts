@@ -1,4 +1,4 @@
-import { DataSource } from 'typeorm';
+import { DataSource, EntityTarget } from 'typeorm';
 import { Request } from 'express';
 
 import { Injectable, Scope, Inject } from '@nestjs/common';
@@ -68,8 +68,12 @@ export class TenantContextService {
     return tenantId;
   }
 
-  async getRepository<Entity>(entity: new () => Entity) {
+  async getRepository<Entity>(entity: EntityTarget<Entity>) {
     const dataSource = await this.getDataSource();
     return dataSource.getRepository(entity);
   }
 }
+
+/**
+ * EntityTarget<Entity> es un tipo genérico que se utiliza para referenciar una entidad de TypeORM.
+ */

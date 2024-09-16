@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  HttpCode,
-} from '@nestjs/common';
+import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 import { AuthApplicationService } from '@/core/application/services/tenant';
@@ -13,17 +8,16 @@ export class AuthController {
   constructor(private authService: AuthApplicationService) {}
 
   @Post('login')
-  @HttpCode(200) // Retornamos código 200 en caso de éxito
-  @ApiOperation({ summary: 'User login' }) // Descripción en Swagger
-  @ApiBody({ type: LoginDto }) // Documentamos el cuerpo de la petición
-  @ApiResponse({ status: 200, description: 'Login successful' }) // Respuesta exitosa
-  @ApiResponse({ status: 401, description: 'Invalid credentials' }) // Credenciales inválidas
+  @HttpCode(200)
+  @ApiOperation({ summary: 'User login' })
+  @ApiBody({ type: LoginDto })
+  @ApiResponse({ status: 200, description: 'Login successful' })
+  @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(@Body() loginDto: LoginDto) {
     const user = await this.authService.validateUser(
       loginDto.username,
       loginDto.password,
     );
-    console.log("from authcontroller:", user);
-    return this.authService.login(user);
+    return this.authService.login(user, loginDto.tenantId);
   }
 }

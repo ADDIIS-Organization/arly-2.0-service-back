@@ -1,13 +1,13 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
+import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common';
 import { CediRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
 import { CediController } from '@/infrastructure/adapters/inbound/controllers/tenant';
 import { CediApplicationService } from '@/core/application/services/tenant';
+import { SearchService } from '@/core/application/services/common';
 import { CediDomainService } from '@/core/domain/services';
 import { CediEntity } from '@/infrastructure/persistence';
-import { SearchService } from '@/core/application/services/common/search.service';
-import { TypeOrmSearchRepository } from '../adapters/outbound/repositories/common/typeorm-search.repository';
 
 @Module({
   imports: [

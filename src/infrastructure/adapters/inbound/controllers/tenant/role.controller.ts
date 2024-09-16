@@ -3,16 +3,13 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Param,
   Post,
   Put,
   Query,
 } from '@nestjs/common';
 import {
-  ApiBody,
   ApiOperation,
-  ApiParam,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -25,6 +22,14 @@ import {
 import { BaseCRUDController } from '../common'; // Import IBaseApplicationPort
 import { PaginationDto } from '@/infrastructure/dtos/common';
 import { RoleApplicationService } from '@/core/application/services/tenant';
+import { SearchService } from '@/core/application/services/common';
+import {
+  ApiDeleteOperation,
+  ApiPostOperation,
+  ApiPutOperation,
+  ApiSearchOperation,
+} from '@/documentation/swagger/common/api-search.decorator';
+import { RoleEntity } from '@/infrastructure/persistence';
 
 @ApiTags('roles')
 @Controller('roles')
@@ -33,20 +38,21 @@ export class RoleController extends BaseCRUDController<
   CreateRoleDto,
   UpdateRoleDto
 > {
-  constructor(roleApplicationService: RoleApplicationService,
-    private readonly searchService: SearchService
+  constructor(
+    roleApplicationService: RoleApplicationService,
+    private readonly searchService: SearchService,
   ) {
     super(roleApplicationService);
   }
 
   @Post()
-  @ApiPostOperation( 'Role' , CreateRoleDto) 
+  @ApiPostOperation('Role', CreateRoleDto)
   async create(@Body() createDto: CreateRoleDto): Promise<RoleResponseDto> {
     return super.create(createDto);
   }
 
   @Put(':id')
-  @ApiPutOperation( 'Role' , UpdateRoleDto)
+  @ApiPutOperation('Role', UpdateRoleDto)
   async update(
     @Param('id') id: number,
     @Body() updateDto: UpdateRoleDto,
@@ -61,20 +67,19 @@ export class RoleController extends BaseCRUDController<
     @Query() paginationDto: PaginationDto,
   ): Promise<RoleResponseDto[]> {
     return super.getAll(paginationDto);
-
   }
 
-  
-
   @Get('search')
-  @ApiSearchOperation( 'Role' )
-  async searchRole(  @Query('field') field: string, // Campo en el que se realizará la búsqueda
-      @Query('term') term: string){
-        return this.searchService.search(RoleEntity,field, term);
-      }
+  @ApiSearchOperation('Role')
+  async searchRole(
+    @Query('field') field: string, // Campo en el que se realizará la búsqueda
+    @Query('term') term: string,
+  ) {
+    return this.searchService.search(RoleEntity, field, term);
+  }
 
   @Delete(':id')
-  @ApiDeleteOperation( 'Role' )
+  @ApiDeleteOperation('Role')
   async delete(@Param('id') id: number): Promise<void> {
     return super.delete(id);
   }

@@ -2,7 +2,7 @@ import {
   CreateUserDto,
   UserResponseDto,
   UpdateUserDto,
-} from '@/infrastructure/dtos/user';
+} from '@/infrastructure/dtos/tenant/user';
 import { IBaseApplicationPort } from './common';
 
 /**

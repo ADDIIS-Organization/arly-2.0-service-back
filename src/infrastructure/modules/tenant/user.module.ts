@@ -19,6 +19,8 @@ import {
 } from '@/core/domain/services';
 import { UserApplicationService } from '@/core/application/services/tenant';
 import { UserController } from '@/infrastructure/adapters/inbound/controllers/tenant';
+import { SearchService } from '@/core/application/services/common';
+import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common/typeorm-search.repository';
 
 @Module({
   imports: [

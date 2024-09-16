@@ -2,9 +2,10 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { PassportStrategy } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 import { TenantContextService } from '../services/tenant';
+import { JwtPayload } from '../ports/inbound';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -18,9 +19,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
+
+  async validate(payload: JwtPayload) {
+    const { tenantSchema } = payload;
+    if (!tenantSchema) {
+      throw new UnauthorizedException('Tenant schema missing in token');
+    }
+
     // Establecer el esquema del tenant
-    this.tenantContextService.setTenantSchema(payload.tenant);
-    return { userId: payload.sub, username: payload.username };
+    this.tenantContextService.setTenantSchema(tenantSchema);
+
+    // Devolver la información del usuario para adjuntarla a la solicitud
+    return { userId: payload.sub, email: payload.email };
   }
 }
