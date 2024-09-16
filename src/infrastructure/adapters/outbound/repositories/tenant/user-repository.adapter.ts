@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { TenantRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/tenant-repository.adapter';
-import { TenantContextService } from '@/core/application/services/tenant-context.service';
-import { User } from '@/core/domain/entities';
-import { IUserRepositoryPort } from '@/core/domain/ports/outbound';
 import { Repository } from 'typeorm';
-import { UserEntity } from '@/infrastructure/persistence';
+
+import { TenantRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
+import { CentralUserEntity, UserEntity } from '@/infrastructure/persistence';
+import { TenantContextService } from '@/core/application/services/tenant';
+import { IUserRepositoryPort } from '@/core/domain/ports/outbound';
+import { User } from '@/core/domain/entities';
 
 @Injectable()
 export class UserRepositoryAdapter implements IUserRepositoryPort {
@@ -14,14 +15,14 @@ export class UserRepositoryAdapter implements IUserRepositoryPort {
   ) {}
 
   // Obtener el repositorio dinámico de usuarios basado en el esquema del tenant
-  private async getRepository(): Promise<Repository<UserEntity>> {
+  private async getRepository(): Promise<Repository<CentralUserEntity>> {
     const schema = this.tenantContextService.getTenantSchema();  // Obtenemos el schema desde el contexto
     if (!schema) {
       throw new Error('Esquema del tenant no definido');
     }
 
     const dataSource = this.tenantRepository.getConnection(schema);  // Obtenemos el DataSource dinámico
-    return dataSource.getRepository(UserEntity);  // Obtenemos el repositorio dinámico
+    return dataSource.getRepository(CentralUserEntity);  // Obtenemos el repositorio dinámico
   }
 
   // Guardar usuario en la base de datos
@@ -41,11 +42,11 @@ export class UserRepositoryAdapter implements IUserRepositoryPort {
   // Buscar usuario por ID
   async findById(id: number): Promise<User | null> {
     const repository = await this.getRepository();
-    const userEntity = await repository.findOne({ where: { id } });
-    if (!userEntity) {
+    const centralUserEntity = await repository.findOne({ where: { id } });
+    if (!centralUserEntity) {
       return null;
     }
-    return this.toDomain(userEntity);
+    return this.toDomain(centralUserEntity);
   }
 
   // Actualizar usuario
@@ -69,14 +70,14 @@ export class UserRepositoryAdapter implements IUserRepositoryPort {
   }
 
   // Convertir de entidad de dominio a entidad de persistencia
-  private toEntity(user: User): UserEntity {
-    const entity = new UserEntity();
+  private toEntity(user: User): CentralUserEntity {
+    const entity = new CentralUserEntity();
     entity.id = user.id ?? undefined;  // Undefined permite que TypeORM genere el ID automáticamente
     return entity;
   }
 
   // Convertir de entidad de persistencia a entidad de dominio
-  private toDomain(entity: UserEntity): User {
+  private toDomain(entity: CentralUserEntity): User {
     const { id, name, email, username, password } = entity;
     return new User(id, name, email, username, password);  // Crear la entidad de dominio
   }

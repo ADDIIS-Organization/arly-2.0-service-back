@@ -1,6 +1,7 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { TenantRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/tenant-repository.adapter';
-import { TenantContextService } from '@/core/application/services/tenant-context.service';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+
+import { TenantRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
+import { TenantContextService } from '../services/tenant';
 
 @Injectable()
 export class TenantAuthGuard implements CanActivate {
@@ -14,7 +15,7 @@ export class TenantAuthGuard implements CanActivate {
     const clientId = request.headers['client-id'] || request.body.clientId;
 
     if (!clientId) {
-      throw new Error('No se proporcionó clientId');
+      throw new UnauthorizedException('Client ID is missing');
     }
 
     // Obtener el tenant desde la base de datos central
@@ -24,10 +25,7 @@ export class TenantAuthGuard implements CanActivate {
       throw new Error('Inquilino no encontrado');
     }
 
-    // Almacenamos el esquema en el contexto de AsyncLocalStorage
-    this.tenantContextService.run(tenant.schema, () => {
-      // Continuamos la ejecución con el esquema almacenado en el contexto
-    });
+    this.tenantContextService.setTenantSchema(tenant.schema);
 
     return true;
   }

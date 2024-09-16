@@ -22,9 +22,9 @@ import {
   UserResponseDto,
   UpdateUserDto,
 } from '@/infrastructure/dtos/user';
-import { UserApplicationService } from '@/core/application/services';
 import { BaseCRUDController } from './common';
 import { PaginationDto } from '@/infrastructure/dtos/common';
+import { UserApplicationService } from '@/core/application/services/tenant';
 
 @ApiTags('users') // Swagger Tag para el controlador de usuarios
 @Controller('users')

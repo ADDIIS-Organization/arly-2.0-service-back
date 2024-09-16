@@ -3,9 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CediRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
 import { CediController } from '@/infrastructure/adapters/inbound/controllers';
-import { CediApplicationService } from '@/core/application/services';
 import { CediDomainService } from '@/core/domain/services';
 import { CediEntity } from '@/infrastructure/persistence';
+import { CediApplicationService } from '@/core/application/services/tenant';
 
 @Module({
   imports: [

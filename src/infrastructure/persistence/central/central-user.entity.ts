@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
 
-import { Tenant } from '../';
+import { TenantEntity } from '../';
 
 @Entity('central_users')  // Esta tabla pertenece al esquema central
 export class CentralUserEntity {
@@ -20,6 +20,6 @@ export class CentralUserEntity {
   password: string;
 
   // Relación muchos-a-muchos con inquilinos
-  @ManyToMany(() => Tenant, (tenant) => tenant.users)
-  tenants: Tenant[];
+  @ManyToMany(() => TenantEntity, (tenant) => tenant.users)
+  tenants: TenantEntity[];
 }

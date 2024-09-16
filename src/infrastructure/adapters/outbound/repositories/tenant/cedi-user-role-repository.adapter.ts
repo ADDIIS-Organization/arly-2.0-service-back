@@ -7,10 +7,11 @@ import {
   UserEntity,
   RoleEntity,
   CediEntity,
+  CentralUserEntity,
 } from '@/infrastructure/persistence';
 import { ICediUserRoleRepositoryPort } from '@/core/domain/ports/outbound';
 import { Cedi, CediUserRole, Role, User } from '@/core/domain/entities';
-import { BaseRepositoryAdapter } from './common';
+import { BaseRepositoryAdapter } from '../common';
 
 
 @Injectable()
@@ -61,10 +62,10 @@ export class CediUserRoleRepositoryAdapter
   private toUserEntity(user: User): UserEntity {
     const userEntity = new UserEntity();
     userEntity.id = user.id;
-    userEntity.name = user.name;
-    userEntity.email = user.email;
-    userEntity.username = user.username;
-    userEntity.password = user.password;
+    // userEntity.name = user.name;
+    // userEntity.email = user.email;
+    // userEntity.username = user.username;
+    // userEntity.password = user.password;
     return userEntity;
   }
 

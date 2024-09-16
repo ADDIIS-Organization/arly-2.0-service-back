@@ -1,5 +1,3 @@
-import { AuthApplicationService } from '@/core/application/services';
-import { LoginDto } from '@/infrastructure/dtos/tenant/auth/login.dto';
 import {
   Controller,
   Post,
@@ -8,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
+import { AuthApplicationService } from '@/core/application/services/tenant';
+import { LoginDto } from '@/infrastructure/dtos/tenant/auth';
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthApplicationService) {}

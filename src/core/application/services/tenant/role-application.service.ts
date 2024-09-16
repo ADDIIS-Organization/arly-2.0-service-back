@@ -8,7 +8,7 @@ import {
 import { IRoleApplicationPort } from '@/core/application/ports/inbound';
 import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
 import { RoleDomainService } from '@/core/domain/services';
-import { CrudApplicationService } from './common';
+import { CrudApplicationService } from '../common';
 import { Role } from '@/core/domain/entities';
 
 @Injectable()

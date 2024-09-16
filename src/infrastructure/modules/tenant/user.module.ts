@@ -1,20 +1,24 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UserApplicationService } from '@/core/application/services';
-import { UserController } from '../adapters/inbound/controllers';
 import {
-  CediUserRoleDomainService,
-  UserDomainService,
-} from '@/core/domain/services';
-import { CediEntity, CediUserRoleEntity, RoleEntity, UserEntity } from '../persistence';
-import { DatabaseSeederModule } from './';
+  CediEntity,
+  CediUserRoleEntity,
+  RoleEntity,
+  UserEntity,
+} from '@/infrastructure/persistence';
 import {
   CediRepositoryAdapter,
   CediUserRoleRepositoryAdapter,
   RoleRepositoryAdapter,
   UserRepositoryAdapter,
-} from '../adapters/outbound/repositories';
+} from '@/infrastructure/adapters/outbound/repositories';
+import {
+  CediUserRoleDomainService,
+  UserDomainService,
+} from '@/core/domain/services';
+import { UserController } from '@/infrastructure/adapters/inbound/controllers';
+import { UserApplicationService } from '@/core/application/services/tenant';
 
 @Module({
   imports: [
@@ -46,6 +50,10 @@ import {
       useClass: RoleRepositoryAdapter, // Implementación del adaptador del rol
     },
   ],
-  exports: ['IUserRepositoryPort', 'ICediUserRoleRepositoryPort', UserApplicationService], // Exportar si se necesita en otros módulos
+  exports: [
+    'IUserRepositoryPort',
+    'ICediUserRoleRepositoryPort',
+    UserApplicationService,
+  ], // Exportar si se necesita en otros módulos
 })
 export class UserModule {}

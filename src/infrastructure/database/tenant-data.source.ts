@@ -1,7 +1,19 @@
+// src/infrastructure/database/tenant-data-source.ts
 import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import { CediUserRoleEntity, RoleEntity, UserEntity } from '../persistence';
-
+import {
+  BankReconciliationEntity,
+  BankTransactionEntity,
+  CediUserRoleEntity,
+  CediEntity,
+  DarsecInvoiceEntity,
+  MenuItemEntity,
+  ModuleEntity,
+  PermissionEntity,
+  RoleEntity,
+  TaxEntity,
+  UserEntity,
+} from '../persistence/tenant';
 
 export const createTenantDataSource = (schema: string, configService: ConfigService) => {
   return new DataSource({
@@ -11,12 +23,19 @@ export const createTenantDataSource = (schema: string, configService: ConfigServ
     username: configService.get<string>('DATABASE_USERNAME', 'postgres'),
     password: configService.get<string>('DATABASE_PASSWORD', ''),
     database: configService.get<string>('DATABASE_NAME', 'central_db'),
-    schema: schema,  // Cambia el esquema según el tenant
+    schema: schema, // Cambia el esquema dinámicamente según el tenant
     entities: [
-      UserEntity,
+      BankReconciliationEntity,
+      BankTransactionEntity,
+      CediUserRoleEntity,
+      CediEntity,
+      DarsecInvoiceEntity,
+      MenuItemEntity,
+      ModuleEntity,
+      PermissionEntity,
       RoleEntity,
-      CediUserRoleEntity
-        
+      TaxEntity,
+      UserEntity,
     ],
     synchronize: configService.get<string>('NODE_ENV') !== 'production',
   });

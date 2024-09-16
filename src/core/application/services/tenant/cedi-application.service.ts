@@ -5,10 +5,10 @@ import {
   UpdateCediDto,
   CediResponseDto,
 } from '@/infrastructure/dtos/cedi';
-import { ICediApplicationPort } from '../ports/inbound/';
 import { ICediRepositoryPort } from '@/core/domain/ports/outbound';
 import { CediDomainService } from '@/core/domain/services';
-import { CrudApplicationService } from './common';
+import { ICediApplicationPort } from '../../ports/inbound';
+import { CrudApplicationService } from '../common';
 import { Cedi } from '@/core/domain/entities';
 
 @Injectable()

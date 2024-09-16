@@ -1,12 +1,11 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { RoleApplicationService } from '@/core/application/services';
-import { RoleController } from '../adapters/inbound/controllers';
+import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
+import { RoleController } from '@/infrastructure/adapters/inbound/controllers';
+import { RoleApplicationService } from '@/core/application/services/tenant';
 import { RoleDomainService } from '@/core/domain/services';
-import { RoleRepositoryAdapter } from '../adapters/outbound/repositories';
-import { RoleEntity } from '../persistence';
-import { DatabaseSeederModule } from './';
+import { RoleEntity } from '@/infrastructure/persistence';
 
 @Module({
   imports: [

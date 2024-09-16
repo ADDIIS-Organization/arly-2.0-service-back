@@ -1,4 +1,4 @@
-import { DatabaseSeederModule } from '@/infrastructure/modules';
+import { DatabaseSeederModule } from '@/infrastructure/modules/tenant';
 import { NestFactory } from '@nestjs/core';
 
 async function bootstrap() {

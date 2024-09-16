@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RoleRepositoryAdapter } from '../adapters/outbound/repositories';
 import { RoleEntity } from '@/infrastructure/persistence';
 import { seedRoles } from '@/infrastructure/seeds';
+import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
 
 @Module({
   imports: [TypeOrmModule.forFeature([RoleEntity])],
@@ -16,8 +17,8 @@ import { seedRoles } from '@/infrastructure/seeds';
 })
 export class DatabaseInitModule implements OnModuleInit {
   constructor(
-    @Inject('RoleRepository')
-    private readonly roleRepository: RoleRepositoryAdapter,
+    @Inject('IRoleRepositoryPort')
+    private readonly roleRepository: IRoleRepositoryPort,
   ) {}
 
   async onModuleInit() {

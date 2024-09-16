@@ -1,8 +1,8 @@
 import { Module, OnModuleInit, Logger, forwardRef } from '@nestjs/common';
 
 import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
-import { seedRoles } from '@/infrastructure/seeds/role.seed';
-import { RoleModule } from './';
+import { seedRoles } from '@/infrastructure/seeds';
+import { RoleModule } from '.';
 
 @Module({
   imports: [

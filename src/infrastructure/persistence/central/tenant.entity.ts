@@ -7,10 +7,10 @@ export class TenantEntity {
   id: number;
 
   @Column()
-  name: string;  // Nombre del tenant
+  name: string;  // Nombre del tenant i.e. 'tenant1'
 
   @Column()
-  schema: string;  // Esquema asociado al tenant
+  schemaName: string; // Nombre del esquema en la base de datos i.e. 'tenant1'
 
   @ManyToMany(() => CentralUserEntity, (user) => user.tenants)
   @JoinTable({

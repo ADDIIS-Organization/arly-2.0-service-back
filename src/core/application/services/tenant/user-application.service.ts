@@ -16,8 +16,8 @@ import {
   IRoleRepositoryPort,
   IUserRepositoryPort,
 } from '@/core/domain/ports/outbound';
-import { IUserApplicationPort } from '../ports/inbound';
-import { CrudApplicationService } from './common';
+import { IUserApplicationPort } from '../../ports/inbound';
+import { CrudApplicationService } from '../common';
 import { Role, User } from '@/core/domain/entities';
 
 @Injectable()

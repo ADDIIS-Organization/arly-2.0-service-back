@@ -5,8 +5,7 @@ import { Repository } from 'typeorm';
 import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
 import { RoleEntity } from '@/infrastructure/persistence';
 import { Role } from '@/core/domain/entities';
-import { BaseRepositoryAdapter } from './common';
-
+import { BaseRepositoryAdapter } from '../common';
 
 @Injectable()
 export class RoleRepositoryAdapter
@@ -20,7 +19,6 @@ export class RoleRepositoryAdapter
     super(repository);
   }
 
- 
   protected toEntity(role: Role): RoleEntity {
     const entity = new RoleEntity();
     entity.id = role.id;
@@ -32,7 +30,6 @@ export class RoleRepositoryAdapter
   protected toDomain(entity: RoleEntity): Role {
     return new Role(entity.id, entity.name, entity.description);
   }
-
 
   async findByName(name: string): Promise<Role | null> {
     const roleEntity = await this.repository.findOne({ where: { name } });
