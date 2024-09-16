@@ -23,11 +23,13 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, document);
   app.useGlobalFilters(new RoleExceptionFilter());
   await app.listen(process.env.PORT || 3000);
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-    transformOptions: { enableImplicitConversion: true },
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  );
 }
 bootstrap();

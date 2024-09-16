@@ -8,10 +8,17 @@ import {
   TenantEntity,
   JobFailed,
 } from '../../persistence/central';
-import { TenantAdminService } from '@/core/application/services'
+import { TenantAdminService } from '@/core/application/services';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CentralUserEntity, CentralRoleEntity, TenantEntity, JobFailed])],
+  imports: [
+    TypeOrmModule.forFeature([
+      CentralUserEntity,
+      CentralRoleEntity,
+      TenantEntity,
+      JobFailed,
+    ]),
+  ],
   providers: [TenantAdminService],
   exports: [TypeOrmModule],
 })
