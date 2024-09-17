@@ -32,7 +32,7 @@ export class CreateTenantCommand {
 
     console.log(`Creando tenant con nombre: ${tenantName}`);
 
-    // Llamar a TenantAdminService para crear el tenant
+    // Paso 5. Llamar a TenantAdminService para crear el tenant
     try {
       await this.tenantAdminService.createTenant(tenantName);
       console.log('Tenant creado exitosamente.');

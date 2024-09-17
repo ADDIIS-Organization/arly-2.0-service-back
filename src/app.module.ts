@@ -22,7 +22,6 @@ import { CentralModule } from './infrastructure/modules/central';
     }),
     CentralModule,
     TenantModule,
-    TenantCommandModule
   ],
 })
 export class AppModule {}
