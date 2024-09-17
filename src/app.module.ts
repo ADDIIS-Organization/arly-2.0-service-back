@@ -1,9 +1,8 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
 
-import { TenantModule } from './infrastructure/modules/tenant';
+import { TenantCommandModule, TenantModule } from './infrastructure/modules/tenant';
 import { createCentralDataSource } from './infrastructure/database'; // DataSource del esquema central
 import { CentralModule } from './infrastructure/modules/central';
 
@@ -12,7 +11,7 @@ import { CentralModule } from './infrastructure/modules/central';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    // Conexión al esquema central
+    // Conexión al esquema central: central_schema
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -23,6 +22,7 @@ import { CentralModule } from './infrastructure/modules/central';
     }),
     CentralModule,
     TenantModule,
+    TenantCommandModule
   ],
 })
 export class AppModule {}

@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import {
   BankReconciliationEntity,
   BankTransactionEntity,
-  CediUserRoleEntity,
+  CediRoleUserEntity,
   CediEntity,
   DarsecInvoiceEntity,
   MenuItemEntity,
@@ -27,7 +27,7 @@ export const createTenantDataSource = (schema: string, configService: ConfigServ
     entities: [
       BankReconciliationEntity,
       BankTransactionEntity,
-      CediUserRoleEntity,
+      CediRoleUserEntity,
       CediEntity,
       DarsecInvoiceEntity,
       MenuItemEntity,

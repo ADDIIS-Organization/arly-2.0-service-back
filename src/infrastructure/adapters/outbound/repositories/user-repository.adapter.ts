@@ -7,16 +7,18 @@ import { CentralUserEntity, UserEntity } from '@/infrastructure/persistence';
 import { User } from '@/core/domain/entities';
 import { BaseRepositoryAdapter } from './common';
 
-
 @Injectable()
-export class UserRepositoryAdapter extends BaseRepositoryAdapter<CentralUserEntity, User> implements IUserRepositoryPort {
+export class UserRepositoryAdapter
+  extends BaseRepositoryAdapter<CentralUserEntity, User>
+  implements IUserRepositoryPort
+{
   constructor(
     @InjectRepository(CentralUserEntity)
-     repository: Repository<CentralUserEntity>,
+    repository: Repository<CentralUserEntity>,
   ) {
     super(repository); // Llamamos al constructor de la clase base
   }
- 
+
   async findByUserName(username: string): Promise<User | null> {
     const userEntity = await this.repository.findOne({ where: { username } });
     return userEntity ? this.toDomain(userEntity) : null;
@@ -29,7 +31,7 @@ export class UserRepositoryAdapter extends BaseRepositoryAdapter<CentralUserEnti
     entity.email = user.email;
     entity.username = user.username;
     entity.password = user.password;
-    // Relaciones como cediUserRoleEntities se gestionan automáticamente
+    // Relaciones como CediRoleUserEntities se gestionan automáticamente
     return entity;
   }
 

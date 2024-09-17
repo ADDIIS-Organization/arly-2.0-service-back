@@ -23,6 +23,6 @@ export class BankTransactionEntity {
   @Column()
   office: string;
 
-  @Column('double')
+  @Column('double precision')
   amount: number;
 }

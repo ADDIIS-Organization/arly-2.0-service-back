@@ -1,8 +1,8 @@
-import { CediUserRole, User, Role, Cedi } from '@/core/domain/entities';
+import { CediRoleUser, User, Role, Cedi } from '@/core/domain/entities';
 import { IGenericRepositoryPort } from './common'; // Importar la interfaz genérica
 
 // Heredamos de la interfaz genérica para las operaciones CRUD básicas
-export interface ICediUserRoleRepositoryPort extends IGenericRepositoryPort<CediUserRole> {
-  createRelation(cediUserRole: CediUserRole): Promise<CediUserRole>;
-  findByUserId(userId: number): Promise<CediUserRole[]>;
+export interface ICediRoleUserRepositoryPort extends IGenericRepositoryPort<CediRoleUser> {
+  createRelation(CediRoleUser: CediRoleUser): Promise<CediRoleUser>;
+  findByUserId(userId: number): Promise<CediRoleUser[]>;
 }

@@ -5,7 +5,7 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { CediUserRoleEntity, PermissionEntity } from '..';
+import { CediRoleUserEntity, PermissionEntity } from '..';
 @Entity('roles')
 export class RoleEntity {
   @PrimaryGeneratedColumn()
@@ -17,9 +17,9 @@ export class RoleEntity {
   @Column()
   description: string;
 
-  // One-to-Many relationship with CediUserRole
-  @OneToMany(() => CediUserRoleEntity, (cediUserRoleEntity) => cediUserRoleEntity.role)
-  cediUserRoleEntities: CediUserRoleEntity[];
+  // One-to-Many relationship with CediRoleUser
+  @OneToMany(() => CediRoleUserEntity, (CediRoleUserEntity) => CediRoleUserEntity.role)
+  CediRoleUserEntities: CediRoleUserEntity[];
 
   // One-to-Many relationship with PermissionEntity
   @OneToMany(() => PermissionEntity, (permissionEntity) => permissionEntity.role)

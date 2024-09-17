@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 
 import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common';
 import { CediRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { CediController } from '@/infrastructure/adapters/inbound/controllers/tenant';
+import { CediController } from '@/infrastructure/adapters/inbound/http/controllers/tenant';
 import { CediApplicationService } from '@/core/application/services/tenant';
 import { SearchService } from '@/core/application/services/common';
 import { CediDomainService } from '@/core/domain/services';

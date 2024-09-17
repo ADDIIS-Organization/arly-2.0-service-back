@@ -62,7 +62,7 @@ export class AuthApplicationService {
       sub: user.id,
       email: user.email,
       tenantId: tenant.id,
-      tenantSchema: tenant.schemaName,
+      tenantSchema: tenant.name,
     };
 
     const token = this.jwtService.sign(payload);

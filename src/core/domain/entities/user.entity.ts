@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
 import { IsEmail, IsString, MinLength } from 'class-validator';
 import { Role, Cedi } from './';
-import { CediUserRoleEntity } from '@/infrastructure/persistence';
+import { CediRoleUserEntity } from '@/infrastructure/persistence';
 
 export class User {
   @Expose()
@@ -24,7 +24,7 @@ export class User {
   // Contraseña, ya debe ser hasheada antes de llegar aquí
   public password: string;
 
-  public cediUserRoleEntities: CediUserRoleEntity[];
+  public CediRoleUserEntities: CediRoleUserEntity[];
 
   constructor(
     id: number | null,

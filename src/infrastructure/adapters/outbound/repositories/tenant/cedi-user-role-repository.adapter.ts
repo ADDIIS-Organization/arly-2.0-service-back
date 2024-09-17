@@ -3,44 +3,44 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import {
-  CediUserRoleEntity,
+  CediRoleUserEntity,
   UserEntity,
   RoleEntity,
   CediEntity,
   CentralUserEntity,
 } from '@/infrastructure/persistence';
-import { ICediUserRoleRepositoryPort } from '@/core/domain/ports/outbound';
-import { Cedi, CediUserRole, Role, User } from '@/core/domain/entities';
+import { ICediRoleUserRepositoryPort } from '@/core/domain/ports/outbound';
+import { Cedi, CediRoleUser, Role, User } from '@/core/domain/entities';
 import { BaseRepositoryAdapter } from '../common';
 
 
 @Injectable()
-export class CediUserRoleRepositoryAdapter
-  extends BaseRepositoryAdapter<CediUserRoleEntity, CediUserRole>
-  implements ICediUserRoleRepositoryPort
+export class CediRoleUserRepositoryAdapter
+  extends BaseRepositoryAdapter<CediRoleUserEntity, CediRoleUser>
+  implements ICediRoleUserRepositoryPort
 {
   constructor(
-    @InjectRepository(CediUserRoleEntity)
-    protected readonly repository: Repository<CediUserRoleEntity>,
+    @InjectRepository(CediRoleUserEntity)
+    protected readonly repository: Repository<CediRoleUserEntity>,
   ) {
     super(repository , ['user', 'role', 'cedi']); // Llamamos al constructor de la clase base
   }
 
   // Método adicional específico
-  async findByUserId(userId: number): Promise<CediUserRole[]> {
+  async findByUserId(userId: number): Promise<CediRoleUser[]> {
     const relations = await this.repository.find({
       where: { user: { id: userId } },
       relations: ['user', 'role', 'cedi'],
     });
     return relations.map((entity) => this.toDomain(entity));
   }
-  async createRelation(cediUserRole: CediUserRole): Promise<CediUserRole> {
-    const savedEntity = await this.repository.save(cediUserRole);
+  async createRelation(CediRoleUser: CediRoleUser): Promise<CediRoleUser> {
+    const savedEntity = await this.repository.save(CediRoleUser);
     return this.toDomain(savedEntity);
   }
 
-  protected toEntity(domain: CediUserRole): CediUserRoleEntity {
-    const entity = new CediUserRoleEntity();
+  protected toEntity(domain: CediRoleUser): CediRoleUserEntity {
+    const entity = new CediRoleUserEntity();
     entity.id = domain.id;
     entity.user = domain.user ? this.toUserEntity(domain.user) : null;
     entity.role = domain.role ? this.toRoleEntity(domain.role) : null;
@@ -48,9 +48,9 @@ export class CediUserRoleRepositoryAdapter
     return entity;
   }
 
-  protected toDomain(entity: CediUserRoleEntity): CediUserRole {
+  protected toDomain(entity: CediRoleUserEntity): CediRoleUser {
     if (!entity) return null;
-    return new CediUserRole(
+    return new CediRoleUser(
       entity.id,
       entity.user ? this.toUserDomain(entity.user) : null,
       entity.role ? this.toRoleDomain(entity.role) : null,

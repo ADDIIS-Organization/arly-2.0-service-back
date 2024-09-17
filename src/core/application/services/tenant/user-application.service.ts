@@ -8,11 +8,11 @@ import {
 } from '@/infrastructure/dtos/tenant/user';
 import {
   UserDomainService,
-  CediUserRoleDomainService,
+  CediRoleUserDomainService,
 } from '@/core/domain/services';
 import {
   ICediRepositoryPort,
-  ICediUserRoleRepositoryPort,
+  ICediRoleUserRepositoryPort,
   IRoleRepositoryPort,
   IUserRepositoryPort,
 } from '@/core/domain/ports/outbound';
@@ -32,15 +32,15 @@ export class UserApplicationService
 {
   constructor(
     private readonly userDomainService: UserDomainService,
-    private readonly cediUserRoleDomainService: CediUserRoleDomainService,
+    private readonly CediRoleUserDomainService: CediRoleUserDomainService,
     @Inject('IUserRepositoryPort')
     private readonly userRepository: IUserRepositoryPort,
     @Inject('IRoleRepositoryPort')
     private readonly roleRepository: IRoleRepositoryPort,
     @Inject('ICediRepositoryPort')
     private readonly cediRepository: ICediRepositoryPort,
-    @Inject('ICediUserRoleRepositoryPort')
-    private readonly cediUserRoleRepository: ICediUserRoleRepositoryPort,
+    @Inject('ICediRoleUserRepositoryPort')
+    private readonly CediRoleUserRepository: ICediRoleUserRepositoryPort,
   ) {
     super(userRepository);
   }
@@ -99,12 +99,12 @@ export class UserApplicationService
         throw new Error(`Cedi with ID ${assignment.cediId} not found`);
       }
 
-      const cediUserRole = this.cediUserRoleDomainService.createRelation(
+      const CediRoleUser = this.CediRoleUserDomainService.createRelation(
         savedUser,
         role,
         cedi,
       );
-      await this.cediUserRoleRepository.save(cediUserRole);
+      await this.CediRoleUserRepository.save(CediRoleUser);
     }
 
     // 6. Retornar la respuesta en formato DTO

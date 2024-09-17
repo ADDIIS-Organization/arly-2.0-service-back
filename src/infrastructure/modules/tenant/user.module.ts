@@ -3,29 +3,29 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import {
   CediEntity,
-  CediUserRoleEntity,
+  CediRoleUserEntity,
   RoleEntity,
   UserEntity,
 } from '@/infrastructure/persistence';
 import {
   CediRepositoryAdapter,
-  CediUserRoleRepositoryAdapter,
+  CediRoleUserRepositoryAdapter,
   RoleRepositoryAdapter,
   UserRepositoryAdapter,
 } from '@/infrastructure/adapters/outbound/repositories';
 import {
-  CediUserRoleDomainService,
+  CediRoleUserDomainService,
   UserDomainService,
 } from '@/core/domain/services';
 import { UserApplicationService } from '@/core/application/services/tenant';
-import { UserController } from '@/infrastructure/adapters/inbound/controllers/tenant';
+import { UserController } from '@/infrastructure/adapters/inbound/http/controllers/tenant';
 import { SearchService } from '@/core/application/services/common';
 import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common/typeorm-search.repository';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]), // Importar la entidad UserEntity
-    TypeOrmModule.forFeature([CediUserRoleEntity]), // Importar la entidad CediUserRoleEntity
+    TypeOrmModule.forFeature([CediRoleUserEntity]), // Importar la entidad CediRoleUserEntity
     TypeOrmModule.forFeature([CediEntity]), // Importar la entidad CediEntity
     TypeOrmModule.forFeature([RoleEntity]), // Importar la entidad UserEntity
     // forwardRef(() => DatabaseSeederModule), // Usar si el módulo DatabaseSeeder es necesario aquí
@@ -34,14 +34,14 @@ import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repo
   providers: [
     UserApplicationService, // Registrar UserApplicationService como proveedor directamente
     UserDomainService, // Registrar UserDomainService
-    CediUserRoleDomainService,
+    CediRoleUserDomainService,
     {
       provide: 'IUserRepositoryPort', // Token para el puerto del repositorio
       useClass: UserRepositoryAdapter, // Implementación del adaptador del repositorio
     },
     {
-      provide: 'ICediUserRoleRepositoryPort', // Token para el puerto de la relación
-      useClass: CediUserRoleRepositoryAdapter, // Implementación del adaptador de la relación
+      provide: 'ICediRoleUserRepositoryPort', // Token para el puerto de la relación
+      useClass: CediRoleUserRepositoryAdapter, // Implementación del adaptador de la relación
     },
     {
       provide: 'ICediRepositoryPort', // Token para el puerto del Cedi
@@ -56,7 +56,7 @@ import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repo
   ],
   exports: [
     'IUserRepositoryPort',
-    'ICediUserRoleRepositoryPort',
+    'ICediRoleUserRepositoryPort',
     UserApplicationService,
   ], // Exportar si se necesita en otros módulos
 })

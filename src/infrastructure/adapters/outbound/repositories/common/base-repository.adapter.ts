@@ -1,4 +1,4 @@
-import { Repository,  FindOptionsWhere } from 'typeorm';
+import { Repository, FindOptionsWhere } from 'typeorm';
 import { PaginationDto } from '@/infrastructure/dtos/common';
 
 export interface BaseEntity {
@@ -6,7 +6,7 @@ export interface BaseEntity {
 }
 
 export abstract class BaseRepositoryAdapter<Entity extends BaseEntity, Domain> {
-   constructor(
+  constructor(
     protected readonly repository: Repository<Entity>,
     protected readonly relations: string[] = [], // Lista de relaciones opcional
   ) {}
@@ -22,15 +22,15 @@ export abstract class BaseRepositoryAdapter<Entity extends BaseEntity, Domain> {
     const entities = await this.repository.find({
       skip: offset,
       take: limit,
-      relations : this.relations
+      relations: this.relations,
     });
     return entities.map((entity) => this.toDomain(entity));
   }
 
-  async findById(id: number ): Promise<Domain> {
+  async findById(id: number): Promise<Domain> {
     const entity = await this.repository.findOne({
       where: { id } as FindOptionsWhere<Entity>,
-      relations: this.relations
+      relations: this.relations,
     });
     if (!entity) {
       return null;
@@ -44,7 +44,7 @@ export abstract class BaseRepositoryAdapter<Entity extends BaseEntity, Domain> {
     // Correctly cast entity to align with expected update type
     await this.repository.update(
       id,
-      entity as any // Type assertion helps ensure type compatibility
+      entity as any, // Type assertion helps ensure type compatibility
     );
 
     return this.findById(id);

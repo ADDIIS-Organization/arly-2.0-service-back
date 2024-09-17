@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
-import { CediUserRoleEntity } from '..';
+import { CediRoleUserEntity } from '..';
 
 @Entity('cedis') // Nombre de la tabla
 export class CediEntity {
@@ -34,10 +34,10 @@ export class CediEntity {
   @Column()
   company: string;
 
-  // One-to-Many relationship with CediUserRole
+  // One-to-Many relationship with CediRoleUser
   @OneToMany(
-    () => CediUserRoleEntity,
-    (cediUserRoleEntity) => cediUserRoleEntity.cedi,
+    () => CediRoleUserEntity,
+    (CediRoleUserEntity) => CediRoleUserEntity.cedi,
   )
-  cediUserRoleEntities: CediUserRoleEntity[];
+  CediRoleUserEntities: CediRoleUserEntity[];
 }

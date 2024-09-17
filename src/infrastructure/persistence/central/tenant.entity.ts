@@ -6,11 +6,8 @@ export class TenantEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  name: string;  // Nombre del tenant i.e. 'tenant1'
-
-  @Column()
-  schemaName: string; // Nombre del esquema en la base de datos i.e. 'tenant1'
+  @Column({ unique: true })
+  name: string;  // Nombre del tenant i.e. 'country_code_guuid'
 
   @ManyToMany(() => CentralUserEntity, (user) => user.tenants)
   @JoinTable({

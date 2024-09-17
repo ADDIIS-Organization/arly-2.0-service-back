@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
 import { User, Role, Cedi } from './';
 
-export class CediUserRole {
+export class CediRoleUser {
   @Expose()
   public readonly id: number | null; // El ID es null hasta que se persista en la base de datos
 
@@ -21,9 +21,9 @@ export class CediUserRole {
     this.cedi = cedi;
   }
 
-  // Método de fábrica para crear un nuevo CediUserRole sin ID
-  static create(user: User, role: Role, cedi: Cedi): CediUserRole {
-    return new CediUserRole(null, user, role, cedi); // El ID se asignará cuando se persista
+  // Método de fábrica para crear un nuevo CediRoleUser sin ID
+  static create(user: User, role: Role, cedi: Cedi): CediRoleUser {
+    return new CediRoleUser(null, user, role, cedi); // El ID se asignará cuando se persista
   }
 
   // Método para actualizar la relación (si hubiera campos modificables)

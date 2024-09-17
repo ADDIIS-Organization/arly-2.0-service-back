@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { RoleController } from '@/infrastructure/adapters/inbound/controllers/tenant';
+import { RoleController } from '@/infrastructure/adapters/inbound/http/controllers/tenant';
 import { RoleApplicationService } from '@/core/application/services/tenant';
 import { RoleDomainService } from '@/core/domain/services';
 import { RoleEntity } from '@/infrastructure/persistence';

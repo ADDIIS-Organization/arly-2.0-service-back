@@ -6,7 +6,6 @@ import {
   CentralUserEntity,
   CentralRoleEntity,
   TenantEntity,
-  JobFailed,
 } from '../../persistence/central';
 import { TenantAdminService } from '@/core/application/services';
 
@@ -16,7 +15,6 @@ import { TenantAdminService } from '@/core/application/services';
       CentralUserEntity,
       CentralRoleEntity,
       TenantEntity,
-      JobFailed,
     ]),
   ],
   providers: [TenantAdminService],

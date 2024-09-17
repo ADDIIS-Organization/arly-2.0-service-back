@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common';
 import {
   BankReconciliationEntity,
   BankTransactionEntity,
-  CediUserRoleEntity,
+  CediRoleUserEntity,
   CediEntity,
   DarsecInvoiceEntity,
   MenuItemEntity,
@@ -21,7 +21,7 @@ import { TenantContextService } from '@/core/application/services/tenant';
     TypeOrmModule.forFeature([
       BankReconciliationEntity,
       BankTransactionEntity,
-      CediUserRoleEntity,
+      CediRoleUserEntity,
       CediEntity,
       DarsecInvoiceEntity,
       MenuItemEntity,
@@ -31,7 +31,6 @@ import { TenantContextService } from '@/core/application/services/tenant';
       TaxEntity,
       UserEntity,
     ]),
-    // Importar otros módulos específicos del tenant si es necesario
   ],
   providers: [TenantContextService],
   exports: [TypeOrmModule],
