@@ -61,8 +61,4 @@ Tenant creado exitosamente.
 
 - El tenant debe crearse en una base de datos PostgreSQL.
 - Asegúrate de que los nombres de país y estado sean correctos, ya que no se podrán modificar una vez creado el tenant.
-- Si ocurre un error durante el proceso, la transacción será revertida, y ningún cambio será aplicado.
-
-## Conclusión
-
-Con estos pasos, deberías ser capaz de crear un nuevo tenant de forma sencilla y eficiente. Si tienes alguna duda o problema durante el proceso, no dudes en contactar al equipo de desarrollo." > create-tenant.md
+- Si ocurre un error durante el proceso, la transacción será revertida, y ningún cambio será aplicado. Esto pues se aplico patron de diseño de transacciones.
