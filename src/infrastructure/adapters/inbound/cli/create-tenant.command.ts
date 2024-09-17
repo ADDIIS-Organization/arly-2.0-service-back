@@ -1,43 +1,54 @@
-import * as readlineSync from 'readline-sync'; // Para solicitar inputs por consola
-import { v4 as uuidv4 } from 'uuid'; // Generar un GUID
-import { Injectable } from '@nestjs/common';
+import * as readlineSync from 'readline-sync';  // Usar directamente
 import { Command } from 'nestjs-command';
 
+import { Injectable } from '@nestjs/common';
+
 import { TenantAdminService } from '@/core/application/services';
+import { TenantNameBuilder } from '.';
 
 @Injectable()
 export class CreateTenantCommand {
-  constructor(private readonly tenantAdminService: TenantAdminService) {}
+  constructor(
+    private readonly tenantAdminService: TenantAdminService,
+    private readonly tenantNameBuilder: TenantNameBuilder
+  ) {}
 
   @Command({
-    command: 'create:tenant', // Nombre del comando
+    command: 'create:tenant',
     describe: 'Crea un nuevo tenant solicitando país y estado, y generando un GUID',
   })
   async create() {
-    // Paso 1. Solicitar los datos por consola
-    const country = readlineSync.question('Ingrese el país: ');
-    let state = readlineSync.question('Ingrese el estado (o N si no aplica): ');
+    console.log("Iniciando la creación del tenant...");
 
-    // Paso 2. Si no hay estado, establecer como 'dc' (distrito capital)
-    if (state.toUpperCase() === 'N') {
-      state = 'dc';
-    }
-
-    // Paso 3. Generar automáticamente un GUID
-    const guid = uuidv4();
-
-    // Paso 4. Crear el nombre del tenant combinando país, estado y GUID
-
-    const tenantName = `${country}_${state}_${guid}`;
-
-    console.log(`Creando tenant con nombre: ${tenantName}`);
-
-    // Paso 5. Llamar a TenantAdminService para crear el tenant
     try {
+      // Paso 1. Obtener la entrada del usuario
+      const { country, state } = this.getUserInput();
+
+      // Paso 2. Generar el nombre del tenant de manera declarativa
+      const tenantName = this.tenantNameBuilder.buildTenantName(country, state);
+
+      console.log(`Creando tenant con nombre: ${tenantName}`);
+
+      // Paso 3. Llamar a TenantAdminService para crear el tenant
       await this.tenantAdminService.createTenant(tenantName);
       console.log('Tenant creado exitosamente.');
     } catch (error) {
       console.error(`Error al crear el tenant: ${error.message}`);
     }
+  }
+
+  /**
+   * Method to gather input from the user
+   */
+  private getUserInput(): { country: string, state: string } {
+    const country = readlineSync.question('Ingrese el país: ');
+    let state = readlineSync.question('Ingrese el estado (o N si no aplica): ');
+
+    // Verificar si el estado es "N" y asignar 'dc'
+    if (state.toUpperCase() === 'N') {
+      state = 'dc';
+    }
+
+    return { country, state };
   }
 }
