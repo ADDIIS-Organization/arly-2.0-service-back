@@ -1,0 +1,132 @@
+[
+    {
+        "name": "Usuarios",
+        "route": "/configuracion/usuarios",
+        "moduleName": "Configuración"
+    },
+    {
+        "name": "Roles",
+        "route": "/configuracion/usuarios/roles",
+        "moduleName": "Configuración",
+        "parentName": "Usuarios"
+    },
+    {
+        "name": "Todos",
+        "route": "/configuracion/usuarios/todos",
+        "moduleName": "Configuración",
+        "parentName": "Usuarios"
+    },
+    {
+        "name": "Conciliación bancaria",
+        "route": "/financiero/conciliacion-bancaria",
+        "moduleName": "Financiero"
+    },
+    {
+        "name": "Arly 1.0",
+        "route": "/financiero/arly-1.0",
+        "moduleName": "Financiero"
+    },
+    {
+        "name": "Cartera",
+        "route": "/financiero/cartera",
+        "moduleName": "Financiero"
+    },
+    {
+        "name": "Facturas",
+        "route": "/financiero/facturas",
+        "moduleName": "Financiero"
+    },
+    {
+        "name": "Recibidas",
+        "route": "/financiero/facturas/recibidas",
+        "moduleName": "Financiero",
+        "parentName": "Facturas"
+    },
+    {
+        "name": "Anuladas",
+        "route": "/financiero/facturas/anuladas",
+        "moduleName": "Financiero",
+        "parentName": "Facturas"
+    },
+    {
+        "name": "Gastos",
+        "route": "/financiero/gastos",
+        "moduleName": "Financiero"
+    },
+    {
+        "name": "Registro",
+        "route": "/financiero/gastos/registro",
+        "moduleName": "Financiero",
+        "parentName": "Gastos"
+    },
+    {
+        "name": "Pendientes",
+        "route": "/financiero/gastos/pendientes",
+        "moduleName": "Financiero",
+        "parentName": "Gastos"
+    },
+    {
+        "name": "Aprobados",
+        "route": "/financiero/gastos/aprobados",
+        "moduleName": "Financiero",
+        "parentName": "Gastos"
+    },
+    {
+        "name": "Clientes retenedores",
+        "route": "/maestros/clientes-retenedores",
+        "moduleName": "Maestros"
+    },
+    {
+        "name": "Precio Material",
+        "route": "/maestros/precio-material",
+        "moduleName": "Maestros"
+    },
+    {
+        "name": "CEDIS",
+        "route": "/maestros/cedis",
+        "moduleName": "Maestros"
+    },
+    {
+        "name": "Centros de costo",
+        "route": "/maestros/centros-costo",
+        "moduleName": "Maestros"
+    },
+    {
+        "name": "Suministro",
+        "route": "/maestros/suministro",
+        "moduleName": "Maestros"
+    },
+    {
+        "name": "PREGUNTAR",
+        "route": "/revisiones/preguntar",
+        "moduleName": "Revisiones"
+    },
+    {
+        "name": "Productividad",
+        "route": "/material/productividad",
+        "moduleName": "Material"
+    },
+    {
+        "name": "Despacho",
+        "route": "/material/despacho",
+        "moduleName": "Material"
+    },
+    {
+        "name": "Registro",
+        "route": "/material/despacho/registro",
+        "moduleName": "Material",
+        "parentName": "Despacho"
+    },
+    {
+        "name": "Pendientes",
+        "route": "/material/despacho/pendientes",
+        "moduleName": "Material",
+        "parentName": "Despacho"
+    },
+    {
+        "name": "Aprobados",
+        "route": "/material/despacho/aprobados",
+        "moduleName": "Material",
+        "parentName": "Despacho"
+    }
+]

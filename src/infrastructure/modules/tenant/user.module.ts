@@ -24,11 +24,12 @@ import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repo
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity]), // Importar la entidad UserEntity
-    TypeOrmModule.forFeature([CediRoleUserEntity]), // Importar la entidad CediRoleUserEntity
-    TypeOrmModule.forFeature([CediEntity]), // Importar la entidad CediEntity
-    TypeOrmModule.forFeature([RoleEntity]), // Importar la entidad UserEntity
-    // forwardRef(() => DatabaseSeederModule), // Usar si el módulo DatabaseSeeder es necesario aquí
+    TypeOrmModule.forFeature([
+      UserEntity,
+      CediRoleUserEntity,
+      CediEntity,
+      RoleEntity,
+    ]), // Importar la entidad UserEntity
   ],
   controllers: [UserController], // Controladores que serán manejados por este módulo
   providers: [
@@ -58,6 +59,6 @@ import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repo
     'IUserRepositoryPort',
     'ICediRoleUserRepositoryPort',
     UserApplicationService,
-  ], // Exportar si se necesita en otros módulos
+  ],
 })
 export class UserModule {}

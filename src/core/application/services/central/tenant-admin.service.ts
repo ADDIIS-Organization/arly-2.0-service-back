@@ -8,11 +8,28 @@ import {
   CentralUserEntity,
   TenantEntity,
 } from '@/infrastructure/persistence/central';
-import { RoleRepositoryAdapter, CediRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { RoleEntity, UserEntity, CediEntity, CediRoleUserEntity } from '@/infrastructure/persistence';
+import {
+  RoleRepositoryAdapter,
+  CediRepositoryAdapter,
+} from '@/infrastructure/adapters/outbound/repositories';
+import {
+  RoleEntity,
+  UserEntity,
+  CediEntity,
+  CediRoleUserEntity,
+} from '@/infrastructure/persistence';
 import { createTenantDataSource } from '@/infrastructure/database';
-import { IRoleRepositoryPort, ICediRepositoryPort } from '@/core/domain/ports/outbound';
-import { seedRoles, seedCedis } from '@/infrastructure/seeds/tenant';
+import {
+  IRoleRepositoryPort,
+  ICediRepositoryPort,
+} from '@/core/domain/ports/outbound';
+import {
+  seedRoles,
+  seedCedis,
+  seedModules,
+} from '@/infrastructure/seeds/tenant';
+import { seedMenuItems } from '@/infrastructure/seeds/tenant/menu-item.seed';
+import { seedPermissions } from '@/infrastructure/seeds/tenant/permission.seed';
 
 @Injectable()
 export class TenantAdminService {
@@ -50,7 +67,7 @@ export class TenantAdminService {
       const tenantDataSource = await this.initializeTenantSchema(tenantName);
 
       console.log('Ejecutando seeders...');
-      await this.runSeeders(tenantDataSource);
+      await this.runSeeders(tenantDataSource, tenantName);
     } catch (error) {
       console.error('Error en la transacción: ', error);
 
@@ -82,25 +99,24 @@ export class TenantAdminService {
     return tenantDataSource;
   }
 
-  private async runSeeders(tenantDataSource: DataSource): Promise<void> {
+  private async runSeeders(
+    tenantDataSource: DataSource,
+    tenantName: string,
+  ): Promise<void> {
     console.log('Ejecutando seeders...');
-
-    const roleRepository = tenantDataSource.getRepository(RoleEntity);
-    const roleRepositoryAdapter: IRoleRepositoryPort =
-      new RoleRepositoryAdapter(roleRepository);
-    await seedRoles(roleRepositoryAdapter);
-
-    const cediRepository = tenantDataSource.getRepository(CediEntity);
-    const cediRepositoryAdapter: ICediRepositoryPort =
-      new CediRepositoryAdapter(cediRepository);
-    await seedCedis(cediRepositoryAdapter);
-
-    await this.seedUsers(tenantDataSource);
-
+    await seedModules(tenantDataSource);
+    await seedMenuItems(tenantDataSource);
+    await seedRoles(tenantDataSource);
+    await seedPermissions(tenantDataSource);
+    await seedCedis(tenantDataSource);
+    await this.seedUsers(tenantDataSource, tenantName);
     console.log('Seeders ejecutados correctamente.');
   }
 
-  private async seedUsers(tenantDataSource: DataSource): Promise<void> {
+  private async seedUsers(
+    tenantDataSource: DataSource,
+    tenantName: string,
+  ): Promise<void> {
     console.log('Creando usuarios en el tenant...');
 
     const userRepository = tenantDataSource.getRepository(UserEntity);
@@ -108,39 +124,81 @@ export class TenantAdminService {
       this.centralDataSource.getRepository(CentralUserEntity);
     const roleRepository = tenantDataSource.getRepository(RoleEntity);
     const cediRepository = tenantDataSource.getRepository(CediEntity);
-    const cediRoleUserRepository = tenantDataSource.getRepository(CediRoleUserEntity);
+    const cediRoleUserRepository =
+      tenantDataSource.getRepository(CediRoleUserEntity);
+    const tenantRepository = this.centralDataSource.getRepository(TenantEntity);
 
-    const superAdminRole = await roleRepository.findOne({ where: { name: 'superAdmin' } });
-    const adminRole = await roleRepository.findOne({ where: { name: 'admin' } });
-    const supervisorRole = await roleRepository.findOne({ where: { name: 'supervisor' } });
-
-    const defaultCedi = await cediRepository.findOne({ where: { name: 'CEDI Principal' } });
-
-    const centralUser1 = await this.ensureCentralUser(centralUserRepository, {
-      name: 'Super Admin',
-      email: 'superadmin@example.com',
-      username: 'superadmin',
-      password: await this.hashPassword('password123'),
+    const superAdminRole = await roleRepository.findOne({
+      where: { name: 'superAdmin' },
+    });
+    const adminRole = await roleRepository.findOne({
+      where: { name: 'admin' },
+    });
+    const supervisorRole = await roleRepository.findOne({
+      where: { name: 'supervisor' },
     });
 
-    const centralUser2 = await this.ensureCentralUser(centralUserRepository, {
-      name: 'Admin',
-      email: 'admin@example.com',
-      username: 'admin',
-      password: await this.hashPassword('password123'),
+    const defaultCedi = await cediRepository.findOne({
+      where: { name: 'CEDI Principal' },
+    });
+    const newTenant = await tenantRepository.findOne({
+      where: { name: tenantName },
     });
 
-    const centralUser3 = await this.ensureCentralUser(centralUserRepository, {
-      name: 'Supervisor',
-      email: 'supervisor@example.com',
-      username: 'supervisor',
-      password: await this.hashPassword('password123'),
-    });
+    const centralUser1 = await this.ensureCentralUser(
+      centralUserRepository,
+      {
+        name: 'Super Admin',
+        email: 'superadmin@example.com',
+        username: 'superadmin',
+        password: await this.hashPassword('password123'),
+      },
+      newTenant,
+    );
 
-    await this.createUserWithRoleAndCedi(userRepository, cediRoleUserRepository, centralUser1, superAdminRole, defaultCedi);
-    await this.createUserWithRoleAndCedi(userRepository, cediRoleUserRepository, centralUser2, adminRole, defaultCedi);
-    await this.createUserWithRoleAndCedi(userRepository, cediRoleUserRepository, centralUser3, supervisorRole, defaultCedi);
+    const centralUser2 = await this.ensureCentralUser(
+      centralUserRepository,
+      {
+        name: 'Admin',
+        email: 'admin@example.com',
+        username: 'admin',
+        password: await this.hashPassword('password123'),
+      },
+      newTenant,
+    );
 
+    const centralUser3 = await this.ensureCentralUser(
+      centralUserRepository,
+      {
+        name: 'Supervisor',
+        email: 'supervisor@example.com',
+        username: 'supervisor',
+        password: await this.hashPassword('password123'),
+      },
+      newTenant,
+    );
+
+    await this.createUserWithRoleAndCedi(
+      userRepository,
+      cediRoleUserRepository,
+      centralUser1,
+      superAdminRole,
+      defaultCedi,
+    );
+    await this.createUserWithRoleAndCedi(
+      userRepository,
+      cediRoleUserRepository,
+      centralUser2,
+      adminRole,
+      defaultCedi,
+    );
+    await this.createUserWithRoleAndCedi(
+      userRepository,
+      cediRoleUserRepository,
+      centralUser3,
+      supervisorRole,
+      defaultCedi,
+    );
     console.log('Usuarios creados y roles asignados.');
   }
 
@@ -149,12 +207,12 @@ export class TenantAdminService {
     cediRoleUserRepository: Repository<CediRoleUserEntity>,
     centralUser: CentralUserEntity,
     role: RoleEntity,
-    cedi: CediEntity
+    cedi: CediEntity,
   ): Promise<void> {
     const tenantUser = userRepository.create({
       centralUserId: centralUser.id,
     });
-    await userRepository.save(tenantUser);
+    await userRepository.save(tenantUser); // Guardamos el usuario en el tenant, esto ya en base de datos del tenant
 
     const cediRoleUser = cediRoleUserRepository.create({
       user: tenantUser,
@@ -172,17 +230,26 @@ export class TenantAdminService {
       username: string;
       password: string;
     },
+    tenant: TenantEntity, // Pasamos tenant aquí
   ): Promise<CentralUserEntity> {
     let user = await centralUserRepository.findOne({
       where: { email: userData.email },
+      relations: ['tenants'], // Aseguramos cargar la relación con tenants
     });
 
     if (!user) {
       console.log(`Creando usuario central: ${userData.name}`);
       user = centralUserRepository.create(userData);
+      user.tenants = [tenant]; // Asociamos el nuevo tenant
       await centralUserRepository.save(user);
     } else {
       console.log(`Usuario central ${userData.name} ya existe.`);
+
+      // Verificamos si el tenant ya está asociado, si no, lo agregamos
+      if (!user.tenants.some((t) => t.id === tenant.id)) {
+        user.tenants.push(tenant); // Añadimos el tenant
+        await centralUserRepository.save(user); // Guardamos la relación actualizada
+      }
     }
 
     return user;

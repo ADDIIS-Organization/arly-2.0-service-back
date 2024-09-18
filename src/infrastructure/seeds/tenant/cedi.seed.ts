@@ -1,13 +1,20 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+import { DataSource } from 'typeorm';
 import { ICediRepositoryPort } from '@/core/domain/ports/outbound';
 import { Cedi } from '@/core/domain/entities';
 import { ICediSeed } from './interfaces';
 import { Logger } from '@nestjs/common';
+import { CediEntity } from '@/infrastructure/persistence';
+import { CediRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
 
-export async function seedCedis(cediRepository: ICediRepositoryPort) {
+export async function seedCedis(dataSource: DataSource) {
   const logger = new Logger('SeedCedis');
+
+  // Get the CEDI repository
+  const roleRepository = dataSource.getRepository(CediEntity);
+  const cediRepository = new CediRepositoryAdapter(roleRepository);
 
   // Load CEDI seeds from external JSON file
   const seedFilePath = path.join(__dirname, './data/cedi-seeds.json');

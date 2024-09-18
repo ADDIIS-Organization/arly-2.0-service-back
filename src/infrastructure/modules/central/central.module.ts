@@ -7,8 +7,6 @@ import {
   CentralRoleEntity,
   TenantEntity,
 } from '../../persistence/central';
-import { TenantAdminService } from '@/core/application/services';
-import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
 
 @Module({
   imports: [
