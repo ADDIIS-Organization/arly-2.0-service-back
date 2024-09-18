@@ -12,6 +12,6 @@ export class UserEntity {
   CediRoleUserEntities: CediRoleUserEntity[];
 
   // Simplemente almacenar el ID del usuario central, sin crear una relación entre esquemas
-  @Column({ nullable: true })
+  @Column({ nullable: true, name: 'central_user_id' })
   centralUserId: number;  // ID de referencia al usuario en el esquema central
 }
