@@ -7,6 +7,7 @@ import {
   CentralRoleEntity,
   TenantEntity,
 } from '../../persistence/central';
+import { AuthModule } from '../tenant';
 
 @Module({
   imports: [
