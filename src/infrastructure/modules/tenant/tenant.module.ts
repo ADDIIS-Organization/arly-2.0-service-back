@@ -18,6 +18,7 @@ import {
 import { CreateTenantCommand } from '@/infrastructure/adapters/inbound/cli';
 import { TenantContextService } from '@/core/application/services/tenant';
 import { TenantAdminService } from '@/core/application/services';
+import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
 
 @Module({
   imports: [
@@ -36,7 +37,15 @@ import { TenantAdminService } from '@/core/application/services';
       UserEntity,
     ]),
   ],
-  providers: [TenantContextService, CreateTenantCommand, TenantAdminService],
+  providers: [
+    TenantContextService,
+    CreateTenantCommand,
+    TenantAdminService,
+    {
+      provide: 'IRoleRepositoryPort',
+      useClass: RoleRepositoryAdapter,
+    },
+  ],
   exports: [TypeOrmModule],
 })
 export class TenantModule {}

@@ -1,0 +1,24 @@
+[
+    {
+        "name": "CEDI Principal",
+        "department": "Departamento Central",
+        "municipality": "Municipio Principal",
+        "address": "Calle Principal 123",
+        "phone": "123-456-7890",
+        "primaryEmail": "principal@cedi.com",
+        "secondaryEmail": "info@cedi.com",
+        "supervisor": "Juan Pérez",
+        "company": "Empresa Principal S.A."
+    },
+    {
+        "name": "CEDI Secundario",
+        "department": "Departamento Secundario",
+        "municipality": "Municipio Secundario",
+        "address": "Avenida Secundaria 456",
+        "phone": "098-765-4321",
+        "primaryEmail": "secundario@cedi.com",
+        "secondaryEmail": "contacto@cedi.com",
+        "supervisor": "María González",
+        "company": "Empresa Secundaria S.A."
+    }
+]

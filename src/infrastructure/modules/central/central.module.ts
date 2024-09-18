@@ -8,6 +8,7 @@ import {
   TenantEntity,
 } from '../../persistence/central';
 import { TenantAdminService } from '@/core/application/services';
+import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { TenantAdminService } from '@/core/application/services';
       TenantEntity,
     ]),
   ],
-  providers: [TenantAdminService],
+  providers: [],
   exports: [TypeOrmModule],
 })
 export class CentralModule {}

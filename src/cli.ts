@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule, {
-    logger: false, // Opcional: para no mostrar logs innecesarios al ejecutar el comando
+    logger: ['log', 'error', 'warn', 'debug', 'verbose'],
   });
 
   try {

@@ -11,7 +11,8 @@ export class CreateTenantCommand {
 
   @Command({
     command: 'create:tenant', // Nombre del comando
-    describe: 'Crea un nuevo tenant solicitando país y estado, y generando un GUID',
+    describe:
+      'Crea un nuevo tenant solicitando país y estado, y generando un GUID',
   })
   async create() {
     // Paso 1. Solicitar los datos por consola
@@ -35,7 +36,7 @@ export class CreateTenantCommand {
     }
   }
 
-  private getUserInput(): { country: string, state: string } {
+  private getUserInput(): { country: string; state: string } {
     const country = readlineSync.question('Ingrese el país: ');
     let state = readlineSync.question('Ingrese el estado (o N si no aplica): ');
 

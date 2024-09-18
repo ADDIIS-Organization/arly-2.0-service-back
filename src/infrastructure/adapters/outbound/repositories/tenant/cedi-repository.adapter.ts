@@ -19,6 +19,11 @@ export class CediRepositoryAdapter
     super(repository); // Llamamos al constructor de la clase base
   }
 
+  async findByName(name: string): Promise<Cedi | null> {
+    const entity = await this.repository.findOne({ where: { name } });
+    return entity ? this.toDomain(entity) : null;
+  }
+
   protected toEntity(cedi: Cedi): CediEntity {
     const entity = new CediEntity();
     entity.id = cedi.id;

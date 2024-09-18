@@ -6,7 +6,6 @@ import { Role } from '@/core/domain/entities';
 import { IRoleSeed } from './interfaces';
 import { Logger } from '@nestjs/common';
 
-
 export async function seedRoles(roleRepository: IRoleRepositoryPort) {
   const logger = new Logger('SeedRoles');
 
