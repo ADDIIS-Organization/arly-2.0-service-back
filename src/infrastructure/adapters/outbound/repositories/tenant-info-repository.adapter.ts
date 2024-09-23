@@ -6,7 +6,6 @@ import { TenantEntity } from '@/infrastructure/persistence';
 @Injectable()
 export class TenantInfoRepositoryAdapter {
   constructor(
-    @InjectRepository(TenantEntity)
     private readonly tenantRepository: Repository<TenantEntity>,
   ) {}
 

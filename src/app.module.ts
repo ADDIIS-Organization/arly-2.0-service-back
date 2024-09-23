@@ -2,9 +2,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
-import { AuthModule, TenantCommandModule, TenantModule } from './infrastructure/modules/tenant';
 import { createCentralDataSource } from './infrastructure/database'; // DataSource del esquema central
 import { CentralModule } from './infrastructure/modules/central';
+import { TenantModule } from './infrastructure/modules/tenant';
 
 @Module({
   imports: [
@@ -20,7 +20,6 @@ import { CentralModule } from './infrastructure/modules/central';
         return centralDataSource.options;
       },
     }),
-    AuthModule,
     CentralModule,
     TenantModule,
   ],

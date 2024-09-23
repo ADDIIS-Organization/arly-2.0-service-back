@@ -12,6 +12,7 @@ function loadEnv() {
 async function bootstrap() {
   loadEnv();
   const app = await NestFactory.create(AppModule);
+  // app.enableCors();
   // Configuración de Swagger
   const config = new DocumentBuilder()
     .setTitle('Arly 2.0 API')

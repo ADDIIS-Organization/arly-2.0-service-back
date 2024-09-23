@@ -8,11 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import {
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   CreateRoleDto,

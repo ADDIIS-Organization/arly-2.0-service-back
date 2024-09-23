@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
 import { TenantRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { CentralUserEntity, UserEntity } from '@/infrastructure/persistence';
 import { TenantContextService } from '@/core/application/services/tenant';
 import { IUserRepositoryPort } from '@/core/domain/ports/outbound';
+import { CentralUserEntity } from '@/infrastructure/persistence';
 import { User } from '@/core/domain/entities';
 
 @Injectable()

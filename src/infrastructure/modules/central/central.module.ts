@@ -1,23 +1,12 @@
-// src/infrastructure/modules/central/central.module.ts
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 
-import {
-  CentralUserEntity,
-  CentralRoleEntity,
-  TenantEntity,
-} from '../../persistence/central';
-import { AuthModule } from '../tenant';
+import { CentralRoleModule, CentralUserModule, CentralTenantModule } from './';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      CentralUserEntity,
-      CentralRoleEntity,
-      TenantEntity,
-    ]),
+    CentralRoleModule,
+    CentralUserModule,
+    CentralTenantModule,
   ],
-  providers: [],
-  exports: [TypeOrmModule],
 })
 export class CentralModule {}

@@ -3,13 +3,13 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
 import { CreateUserDto } from '@/infrastructure/dtos/tenant/user';
-import { CentralUserEntity } from '@/infrastructure/persistence';
+import { CentralUserEntity } from '@/infrastructure/persistence/central/central-user.entity';
 import { User } from '@/core/domain/entities';
 
 @Injectable()
 export class CentralUserRepositoryAdapter {
   constructor(
-    @InjectRepository(CentralUserEntity)
+    @InjectRepository(CentralUserEntity)  // Asegúrate de agregar @InjectRepository
     private readonly centralUserRepository: Repository<CentralUserEntity>,
   ) {}
 
@@ -20,9 +20,18 @@ export class CentralUserRepositoryAdapter {
     return this.toDomain(savedUser);
   }
 
+  // Nuevo método para encontrar usuario por email incluyendo los tenants
+  async findByEmailWithTenants(email: string): Promise<CentralUserEntity> {
+    const user = await this.centralUserRepository.findOne({
+      where: { email },
+      relations: ['tenants'],
+    });
+    return user;
+  }
+
   // Convertir de entidad de persistencia a entidad de dominio
   private toDomain(entity: CentralUserEntity): User {
     const { id, name, email, username, password } = entity;
-    return new User(id, name, email, username, password);  // Crear la entidad de dominio
+    return new User(id, name, email, username, password);
   }
 }

@@ -1,17 +1,29 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PassportModule } from '@nestjs/passport';
 import { forwardRef, Module } from '@nestjs/common';
+import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 
-import { AuthApplicationService } from '@/core/application/services/tenant';
+import { AuthController } from '@/infrastructure/adapters/inbound/http/controllers/central';
+import {
+  AuthApplicationService,
+  TenantContextService,
+} from '@/core/application/services/tenant';
 import { JwtStrategy } from '@/core/application/strategies';
-import { UserModule } from '.';
-import { AuthController } from '@/infrastructure/adapters/inbound/http/controllers/central/auth.controller';
+import { CentralUserModule } from '../central';
+import { TenantSharedModule, UserModule } from '.';
+
+console.log('auth: ConfigModule', ConfigModule);
+console.log('auth: UserModule', UserModule);
+console.log('auth: PassportModule', PassportModule);
+console.log('auth: JwtModule', JwtModule);
+console.log('auth: CentralUserModule', CentralUserModule);
+console.log('auth: TenantSharedModule', TenantSharedModule);
 
 @Module({
   imports: [
     ConfigModule,
     forwardRef(() => UserModule),
+    forwardRef(() => TenantSharedModule),
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -21,12 +33,10 @@ import { AuthController } from '@/infrastructure/adapters/inbound/http/controlle
         signOptions: { expiresIn: '1h' },
       }),
     }),
+    CentralUserModule,
   ],
   controllers: [AuthController],
-  providers: [
-    AuthApplicationService,
-    JwtStrategy,
-  ],
+  providers: [AuthApplicationService, JwtStrategy],
   exports: [AuthApplicationService],
 })
 export class AuthModule {}

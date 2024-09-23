@@ -17,10 +17,11 @@ import {
   CediRoleUserDomainService,
   UserDomainService,
 } from '@/core/domain/services';
-import { UserApplicationService } from '@/core/application/services/tenant';
+import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common';
 import { UserController } from '@/infrastructure/adapters/inbound/http/controllers/tenant';
+import { UserApplicationService } from '@/core/application/services/tenant';
 import { SearchService } from '@/core/application/services/common';
-import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common/typeorm-search.repository';
+import { TenantSharedModule } from './tenant-shared.module';
 
 @Module({
   imports: [
@@ -30,30 +31,31 @@ import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repo
       CediEntity,
       RoleEntity,
     ]), // Importar la entidad UserEntity
+    TenantSharedModule, // Asegúrate de importar este módulo para proporcionar TenantRepositoryAdapter y TenantContextService
   ],
-  controllers: [UserController], // Controladores que serán manejados por este módulo
+  controllers: [UserController],
   providers: [
-    UserApplicationService, // Registrar UserApplicationService como proveedor directamente
-    UserDomainService, // Registrar UserDomainService
+    UserApplicationService,
+    UserDomainService,
     CediRoleUserDomainService,
     {
-      provide: 'IUserRepositoryPort', // Token para el puerto del repositorio
-      useClass: UserRepositoryAdapter, // Implementación del adaptador del repositorio
+      provide: 'IUserRepositoryPort',
+      useClass: UserRepositoryAdapter,
     },
     {
-      provide: 'ICediRoleUserRepositoryPort', // Token para el puerto de la relación
-      useClass: CediRoleUserRepositoryAdapter, // Implementación del adaptador de la relación
+      provide: 'ICediRoleUserRepositoryPort',
+      useClass: CediRoleUserRepositoryAdapter,
     },
     {
-      provide: 'ICediRepositoryPort', // Token para el puerto del Cedi
-      useClass: CediRepositoryAdapter, // Implementación del adaptador del Cedi
+      provide: 'ICediRepositoryPort',
+      useClass: CediRepositoryAdapter,
     },
     {
-      provide: 'IRoleRepositoryPort', // Token para el puerto del rol
-      useClass: RoleRepositoryAdapter, // Implementación del adaptador del rol
+      provide: 'IRoleRepositoryPort',
+      useClass: RoleRepositoryAdapter,
     },
-    SearchService, // Registramos el servicio de búsqueda
-    { provide: 'SearchRepository', useClass: TypeOrmSearchRepository }, // Inyectamos el repositorio de búsqueda
+    { provide: 'SearchRepository', useClass: TypeOrmSearchRepository },
+    SearchService,
   ],
   exports: [
     'IUserRepositoryPort',
