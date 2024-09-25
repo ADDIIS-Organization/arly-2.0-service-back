@@ -1,3 +1,4 @@
+import { Arly1SedeEntity, DetalleTurnoEntity, EmpleadoEntity } from '@/infrastructure/persistence/tenant/arly1';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class MuelleTurnoResponseDto {
@@ -216,4 +217,9 @@ export class MuelleTurnoResponseDto {
     nullable: true,
   })
   idmuelle: number | null;
+
+
+  sede: Arly1SedeEntity;
+  colaboradores: EmpleadoEntity[];
+  detalles: DetalleTurnoEntity[];
 }

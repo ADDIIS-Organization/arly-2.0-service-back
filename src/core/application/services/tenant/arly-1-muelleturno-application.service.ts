@@ -22,6 +22,7 @@ export class Arly1MuelleturnoApplicationService
   ): Promise<MuelleTurnoResponseDto[]> {
     const entities =
       await this.arly1MuelleturnoRepository.findAll(PaginationDto);
+      
     return entities.map((entity) => this.MuelleTurnoMapper.toResponseDto(entity));
   }
 

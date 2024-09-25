@@ -29,6 +29,8 @@ export class Arly1DetalleturnoApplicationService
   async getById(iddetalleturno: number): Promise<DetalleTurnoResponseDto[]> {
     const detallesTurno: DetalleTurno[] =
       await this.arly1DetalleturnoRepository.findById(iddetalleturno);
+      console.log(detallesTurno[0].turno.sede);
+
     if (!detallesTurno.length) {
       throw new Error('Detalle Turno not found');
     }

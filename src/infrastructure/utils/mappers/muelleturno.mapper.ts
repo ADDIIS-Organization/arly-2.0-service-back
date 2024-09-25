@@ -1,6 +1,6 @@
 import { MuelleTurno } from "@/core/domain/entities";
 import { MuelleTurnoResponseDto } from "@/infrastructure/dtos/tenant/arly-1";
-import { MuelleTurnoEntity } from "@/infrastructure/persistence";
+import { MuelleTurnoEntity } from "@/infrastructure/persistence/tenant/arly1";
 
 export class MuelleTurnoMapper {
   public toResponseDto(muelleTurno: MuelleTurno): MuelleTurnoResponseDto {
@@ -36,6 +36,9 @@ export class MuelleTurnoMapper {
       estado: muelleTurno.estado,
       idempresa: muelleTurno.idempresa,
       idmuelle: muelleTurno.idmuelle,
+      sede: muelleTurno.sede,
+      colaboradores: muelleTurno.colaboradores,
+      detalles: muelleTurno.detalles,
     };
   }
   public toDomain(entity: MuelleTurnoEntity): MuelleTurno {
@@ -53,7 +56,7 @@ export class MuelleTurnoMapper {
       entity.minutos,
       entity.fechainicio,
       entity.horainicio,
-      entity.fechafin,
+      entity.fechafin, 
       entity.horafin,
       entity.valoriva,
       entity.porcentajeretencion,
@@ -67,7 +70,7 @@ export class MuelleTurnoMapper {
       entity.nombreclienteinventario,
       entity.direccionclienteinventario,
       entity.telefonoclienteinventario,
-      entity.placa,
+      entity.placa, 
       entity.nombreconductor,
       entity.telefonoconductor,
       entity.idusuarioregistra,
@@ -84,6 +87,10 @@ export class MuelleTurnoMapper {
       entity.idformapago_eliminar,
       entity.fechaterminado,
       entity.horaterminado,
+      entity.sede ,
+      entity.colaboradores,
+      entity.detalles,
+
     );
   }
 }

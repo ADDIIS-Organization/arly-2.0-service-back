@@ -2,7 +2,8 @@ import { MuelleTurno } from "@/core/domain/entities";
 import { IArly1MuelleturnoRepositoryPort } from "@/core/domain/ports/outbound";
 
 import { PaginationDto } from "@/infrastructure/dtos/common";
-import { MuelleTurnoEntity } from "@/infrastructure/persistence";
+import { MuelleTurnoEntity } from "@/infrastructure/persistence/tenant/arly1";
+
 import { MuelleTurnoMapper } from "@/infrastructure/utils/mappers/muelleturno.mapper";
 ;
 import { Injectable } from "@nestjs/common";
@@ -24,6 +25,7 @@ export class Arly1MuelleturnoRepositoryAdapter
     const entities = await this.repository.find({
       skip: offset,
       take: limit,
+      relations: ['sede', 'colaboradores', 'detalles'],
     });
     return entities.map((entity) => this.muelleTurnoMapper.toDomain(entity));
   }
@@ -31,6 +33,7 @@ export class Arly1MuelleturnoRepositoryAdapter
   
     const entity = await this.repository.findOne({
       where: { idturno } as FindOptionsWhere<MuelleTurnoEntity>,
+      relations: ['sede', 'colaboradores', 'detalles'],
     });
    
     if (!entity) {

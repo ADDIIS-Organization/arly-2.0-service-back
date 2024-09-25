@@ -4,9 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import {
+  Arly1SedeEntity,
   DetalleTurnoEntity,
+  EmpleadoEntity,
+  MuelleColaboradorTurnoEntity,
   MuelleTurnoEntity,
-} from '@/infrastructure/persistence';
+} from '@/infrastructure/persistence/tenant/arly1';
 import {
   Arly1DetalleturnoApplicationService,
   Arly1MuelleturnoApplicationService,
@@ -34,14 +37,26 @@ import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.ma
         username: configService.get<string>('DATABASE_SECUNDARY_USERNAME'),
         password: configService.get<string>('DATABASE_SECUNDARY_PASSWORD'),
         database: configService.get<string>('DATABASE_SECUNDARY_NAME'),
-        entities: [MuelleTurnoEntity, DetalleTurnoEntity], // Asegúrate de que tus entidades estén bien registradas
+        entities: [
+          MuelleTurnoEntity,
+          DetalleTurnoEntity,
+          Arly1SedeEntity,
+          EmpleadoEntity,
+          MuelleColaboradorTurnoEntity,
+        ], // Asegúrate de que tus entidades estén bien registradas
         synchronize: false,
       }),
     }),
 
     // Registrar la entidad para el DataSource específico
     TypeOrmModule.forFeature(
-      [MuelleTurnoEntity, DetalleTurnoEntity],
+      [
+        MuelleTurnoEntity,
+        DetalleTurnoEntity,
+        Arly1SedeEntity,
+        EmpleadoEntity,
+        MuelleColaboradorTurnoEntity,
+      ],
       'ARLY1_DATA_SOURCE',
     ),
   ],

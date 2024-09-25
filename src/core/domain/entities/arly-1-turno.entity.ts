@@ -1,3 +1,4 @@
+import { Arly1SedeEntity, DetalleTurnoEntity, EmpleadoEntity, MuelleColaboradorTurnoEntity } from '@/infrastructure/persistence/tenant/arly1';
 import { Expose } from 'class-transformer';
 import { IsString, IsNumber, IsOptional, IsEmail } from 'class-validator';
 
@@ -206,6 +207,13 @@ export class MuelleTurno {
   @IsString()
   public horaterminado: string | null;
 
+  @Expose()
+  public sede: Arly1SedeEntity;
+ @Expose()
+  public colaboradores: EmpleadoEntity[];
+
+  @Expose()
+  public detalles : DetalleTurnoEntity[];
   constructor(
     idturno: number | null,
     idcliente: number | null,
@@ -251,6 +259,10 @@ export class MuelleTurno {
     idformapago_eliminar: number | null,
     fechterminado: Date | null,
     horaterminado: string | null,
+    sede: Arly1SedeEntity | null,
+    colaboradores: EmpleadoEntity[] | null,
+    detalles: DetalleTurnoEntity[] | null,
+    
   ) {
     this.idturno = idturno;
     this.idcliente = idcliente;
@@ -296,5 +308,8 @@ export class MuelleTurno {
     this.idformapago_eliminar = idformapago_eliminar;
     this.fechterminado = fechterminado;
     this.horaterminado = horaterminado;
+    this.sede = sede;
+    this.colaboradores = colaboradores;
+    this.detalles = detalles;
   }
 }

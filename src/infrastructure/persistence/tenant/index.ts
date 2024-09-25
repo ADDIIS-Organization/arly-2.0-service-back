@@ -9,5 +9,3 @@ export * from './cedi.entity';
 export * from './role.entity';
 export * from './user.entity';
 export * from './tax.entity';
-export * from './arly1-muelleturno.entity';
-export * from './arly1-detalleturno.entity';

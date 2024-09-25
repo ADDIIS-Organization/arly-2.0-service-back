@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { MuelleTurnoEntity } from "./arly1-muelleturno.entity";
 
+
 @Entity('muelledetalleturno')
 export class DetalleTurnoEntity {
   @PrimaryGeneratedColumn()

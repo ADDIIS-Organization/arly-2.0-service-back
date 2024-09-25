@@ -23,7 +23,7 @@ export class Arly1MuelleturnoController {
   @Get(':id')
   @ApiGetByIdOperation('MuelleTurno')
   async getById(@Param('id') id: number): Promise<MuelleTurnoResponseDto> {
-    console.log({id} + 'desde el controller')
+    
     return this.arly1MuelleturnoApplicationService.getById(id);
   }
 }

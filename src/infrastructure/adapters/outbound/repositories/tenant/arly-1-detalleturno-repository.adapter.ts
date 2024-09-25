@@ -2,7 +2,8 @@ import { DetalleTurno } from "@/core/domain/entities";
 import { IArly1DetalleturnoRepositoryPort } from "@/core/domain/ports/outbound/arly-1-detalleturno-repository.port";
 
 import { PaginationDto } from "@/infrastructure/dtos/common";
-import { DetalleTurnoEntity } from "@/infrastructure/persistence";
+import { DetalleTurnoEntity } from "@/infrastructure/persistence/tenant/arly1";
+
 import { MuelleTurnoMapper } from "@/infrastructure/utils/mappers/muelleturno.mapper";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -31,7 +32,7 @@ export class Arly1DetalleturnoRepositoryAdapter implements IArly1DetalleturnoRep
   async findById(muelleTurnoId: number): Promise<DetalleTurno[]> {
   const entities = await this.repository.find({
   where: {  idturno: muelleTurnoId  } as FindOptionsWhere<DetalleTurnoEntity>,
-  relations: ['muelleTurno'],
+  relations: ['muelleTurno', 'muelleTurno.sede', 'muelleTurno.colaboradores'],
 });
 
 if (!entities || entities.length === 0) {
