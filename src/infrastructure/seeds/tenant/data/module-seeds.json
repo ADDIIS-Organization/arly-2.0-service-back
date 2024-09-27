@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Configuración",
+        "icon": "cog"
+    },
+    {
+        "name": "Financiero",
+        "icon": "dollar-sign"
+    },
+    {
+        "name": "Maestros",
+        "icon": "database"
+    },
+    {
+        "name": "Revisiones",
+        "icon": "search"
+    },
+    {
+        "name": "Material",
+        "icon": "box"
+    }
+]

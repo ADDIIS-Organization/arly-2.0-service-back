@@ -1,34 +1,32 @@
-/**
- * Represents a Role entity.
- */
+import { Expose } from 'class-transformer';
+import { IsString, IsNotEmpty } from 'class-validator';
+
 export class Role {
-  id: number;
-  name: string;
-  description: string;
+  @Expose()
+  public readonly id: number | null; // El ID es null si no ha sido persistido
 
-  /**
-   * Creates a new Role entity.
-   *
-   * @param name - The name of the role.
-   * @param description - The description of the role.
-   * @returns The newly created Role entity.
-   */
-  static create(name: string, description: string): Role {
-    const role = new Role();
-    role.name = name;
-    role.description = description;
-    return role;
-  }
+  @Expose()
+  @IsString()
+  @IsNotEmpty()
+  public name: string;
 
-  /**
-   * Updates the role with the given name and description.
-   *
-   * @param name - The new name for the role.
-   * @param description - The new description for the role.
-   * @returns void
-   */
-  update(name: string, description: string): void {
+  @Expose()
+  public description: string;
+
+  constructor(id: number | null, name: string, description: string) {
+    this.id = id;
     this.name = name;
     this.description = description;
+  }
+
+  // Método de fábrica para crear un nuevo Role
+  static create(name: string, description: string): Role {
+    return new Role(null, name, description); // El ID es null hasta que se persista
+  }
+
+  // Método para actualizar la entidad Role
+  update(name?: string, description?: string): void {
+    if (name) this.name = name;
+    if (description) this.description = description;
   }
 }

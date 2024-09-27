@@ -1,1 +1,1 @@
-export * from './role-application.service';
+export * from './central/tenant-admin.service';
