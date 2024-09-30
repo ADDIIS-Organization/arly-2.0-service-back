@@ -4,8 +4,9 @@ import {
   Column,
   OneToMany,
 } from 'typeorm';
+import { CediRoleUserEntity } from './cedi-user-role.entity';
+import { PermissionEntity } from './permission.entity';
 
-import { CediRoleUserEntity, PermissionEntity } from '..';
 @Entity('roles')
 export class RoleEntity {
   @PrimaryGeneratedColumn()

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-
-import { Cedi } from '../entities';
+import { Cedi } from '../entities/cedi.entity';
 
 /**
  * Represents a service for managing Cedis in the domain layer.

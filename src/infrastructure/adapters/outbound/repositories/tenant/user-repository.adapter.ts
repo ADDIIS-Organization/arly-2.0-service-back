@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
-import { TenantRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { TenantContextService } from '@/core/application/services/tenant';
-import { IUserRepositoryPort } from '@/core/domain/ports/outbound';
-import { CentralUserEntity } from '@/infrastructure/persistence';
-import { User } from '@/core/domain/entities';
+import { TenantContextService } from '@/core/application/services/tenant/tenant-context.service';
+import { CentralUserEntity } from '@/infrastructure/persistence/central/central-user.entity';
+import { IUserRepositoryPort } from '@/core/domain/ports/outbound/user-repository.port';
+import { TenantRepositoryAdapter } from '../tenant-repository.adapter';
+import { User } from '@/core/domain/entities/user.entity';
+
+
 
 @Injectable()
 export class UserRepositoryAdapter implements IUserRepositoryPort {

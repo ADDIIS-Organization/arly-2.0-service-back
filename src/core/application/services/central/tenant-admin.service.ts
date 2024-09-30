@@ -4,32 +4,19 @@ import { DataSource, Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 
-import {
-  CentralUserEntity,
-  TenantEntity,
-} from '@/infrastructure/persistence/central';
-import {
-  RoleRepositoryAdapter,
-  CediRepositoryAdapter,
-} from '@/infrastructure/adapters/outbound/repositories';
-import {
-  RoleEntity,
-  UserEntity,
-  CediEntity,
-  CediRoleUserEntity,
-} from '@/infrastructure/persistence';
-import { createTenantDataSource } from '@/infrastructure/database';
-import {
-  IRoleRepositoryPort,
-  ICediRepositoryPort,
-} from '@/core/domain/ports/outbound';
-import {
-  seedRoles,
-  seedCedis,
-  seedModules,
-} from '@/infrastructure/seeds/tenant';
-import { seedMenuItems } from '@/infrastructure/seeds/tenant/menu-item.seed';
+
+import { CediRoleUserEntity } from '@/infrastructure/persistence/tenant/cedi-user-role.entity';
+import { CentralUserEntity } from '@/infrastructure/persistence/central/central-user.entity';
+import { createTenantDataSource } from '@/infrastructure/database/tenant-data.source';
+import { TenantEntity } from '@/infrastructure/persistence/central/tenant.entity';
 import { seedPermissions } from '@/infrastructure/seeds/tenant/permission.seed';
+import { seedMenuItems } from '@/infrastructure/seeds/tenant/menu-item.seed';
+import { UserEntity } from '@/infrastructure/persistence/tenant/user.entity';
+import { RoleEntity } from '@/infrastructure/persistence/tenant/role.entity';
+import { CediEntity } from '@/infrastructure/persistence/tenant/cedi.entity';
+import { seedModules } from '@/infrastructure/seeds/tenant/module.seed';
+import { seedRoles } from '@/infrastructure/seeds/tenant/role.seed';
+import { seedCedis } from '@/infrastructure/seeds/tenant/cedi.seed';
 
 @Injectable()
 export class TenantAdminService {

@@ -1,9 +1,11 @@
-import * as fs from 'fs';
-import * as path from 'path';
 import { DataSource, Repository } from 'typeorm';
-import { MenuItemEntity, ModuleEntity } from '@/infrastructure/persistence/tenant';
 import { Logger } from '@nestjs/common';
+import * as path from 'path';
+import * as fs from 'fs';
+
 import { IMenuItemSeed } from './interfaces/menu-item-seed.interface';
+import { MenuItemEntity } from '@/infrastructure/persistence/tenant/menu-item.entity';
+import { ModuleEntity } from '@/infrastructure/persistence/tenant/module.entity';
 
 export async function seedMenuItems(dataSource: DataSource): Promise<void> {
   const logger = new Logger('SeedMenuItems');

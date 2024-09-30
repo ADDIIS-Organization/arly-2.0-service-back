@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
-import { CediRoleUserEntity } from '..';
+import { CediRoleUserEntity } from './cedi-user-role.entity';
 
 @Entity('cedis') // Nombre de la tabla
 export class CediEntity {
@@ -26,7 +26,7 @@ export class CediEntity {
   primaryEmail: string;
 
   @Column({ name: 'secondary_email', nullable: true })
-  secondaryEmail: string; 
+  secondaryEmail: string;
 
   @Column()
   supervisor: string;

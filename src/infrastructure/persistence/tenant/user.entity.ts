@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, OneToMany, Column } from 'typeorm';  // Importamos el usuario central
 
-import { CediRoleUserEntity } from './';
+import { CediRoleUserEntity } from './cedi-user-role.entity';
 
 @Entity('users')  // Esta tabla pertenece al esquema del inquilino
 export class UserEntity {

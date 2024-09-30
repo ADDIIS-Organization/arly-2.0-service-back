@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
-import { CentralUserEntity } from '.';
+import { CentralUserEntity } from './central-user.entity';
 
 @Entity('central_roles')  // Roles específicos del esquema central
 export class CentralRoleEntity {

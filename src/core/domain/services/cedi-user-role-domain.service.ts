@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-
-import { CediRoleUser, User, Role, Cedi } from '@/core/domain/entities';
+import { CediRoleUser } from '../entities/cedi-user-role.entity';
+import { User } from '../entities/user.entity';
+import { Role } from '../entities/role.entity';
+import { Cedi } from '../entities/cedi.entity';
 
 /**
  * Servicio de dominio encargado de gestionar la relación Cedi-User-Role.

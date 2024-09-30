@@ -1,7 +1,6 @@
+import { CediRoleUserEntity } from '@/infrastructure/persistence/tenant/cedi-user-role.entity';
 import { Expose } from 'class-transformer';
 import { IsEmail, IsString, MinLength } from 'class-validator';
-import { Role, Cedi } from './';
-import { CediRoleUserEntity } from '@/infrastructure/persistence';
 
 export class User {
   @Expose()

@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
 import { Like, EntityManager } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 
-import { SearchPort } from '@/core/application/ports/inbound';
+import { SearchPort } from '@/core/application/ports/inbound/common/search.port';
 
 @Injectable()
 export class TypeOrmSearchRepository implements SearchPort {

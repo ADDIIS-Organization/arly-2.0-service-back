@@ -6,8 +6,8 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-
-import { ModuleEntity, PermissionEntity } from '..'; // Importar las entidades necesarias
+import { ModuleEntity } from './module.entity';
+import { PermissionEntity } from './permission.entity';
 
 @Entity('menu_items')
 export class MenuItemEntity {

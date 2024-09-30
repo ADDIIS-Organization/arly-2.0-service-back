@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
-import { TenantEntity } from '@/infrastructure/persistence';
+import { TenantEntity } from '@/infrastructure/persistence/central/tenant.entity';
 @Injectable()
 export class TenantInfoRepositoryAdapter {
   constructor(

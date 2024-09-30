@@ -1,5 +1,5 @@
+import { IGenericRepositoryPort } from '@/core/domain/ports/outbound/common/generic-repository.port';
 import { PaginationDto } from './../../../../infrastructure/dtos/common/pagination.dto';
-import { IGenericRepositoryPort } from '@/core/domain/ports/outbound/common';
 
 // DTO to Entity conversion methods will be implemented by subclasses
 export abstract class CrudApplicationService<Entity, CreateDto, UpdateDto, ResponseDto> {

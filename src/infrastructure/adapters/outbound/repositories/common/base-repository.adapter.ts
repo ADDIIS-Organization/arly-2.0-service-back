@@ -1,5 +1,5 @@
+import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
 import { Repository, FindOptionsWhere } from 'typeorm';
-import { PaginationDto } from '@/infrastructure/dtos/common';
 
 export interface BaseEntity {
   id?: number;

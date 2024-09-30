@@ -1,18 +1,15 @@
 import { CommandModule } from 'nestjs-command';
 import { Module } from '@nestjs/common';
 
-import {
-  AuthModule,
-  CediModule,
-  CediRoleUserModule,
-  RoleModule,
-  TenantSharedModule,
-  UserModule,
-} from './';
-import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { CreateTenantCommand } from '@/infrastructure/adapters/inbound/cli';
-import { TenantContextService } from '@/core/application/services/tenant';
-import { TenantAdminService } from '@/core/application/services';
+import { CreateTenantCommand } from '@/infrastructure/adapters/inbound/cli/create-tenant.command';
+import { TenantContextService } from '@/core/application/services/tenant/tenant-context.service';
+import { TenantAdminService } from '@/core/application/services/central/tenant-admin.service';
+import { CediRoleUserModule } from './cedi-role-user.module';
+import { TenantSharedModule } from './tenant-shared.module';
+import { AuthModule } from './auth.module';
+import { CediModule } from './cedi.module';
+import { RoleModule } from './role.module';
+import { UserModule } from './user.module';
 
 console.log('AuthModule:', AuthModule);
 console.log('CediModule:', CediModule);

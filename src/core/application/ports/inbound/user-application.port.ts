@@ -1,9 +1,7 @@
-import {
-  CreateUserDto,
-  UserResponseDto,
-  UpdateUserDto,
-} from '@/infrastructure/dtos/tenant/user';
-import { IBaseApplicationPort } from './common';
+import { UserResponseDto } from "@/infrastructure/dtos/tenant/user/user-response.dto";
+import { CreateUserDto } from "@/infrastructure/dtos/tenant/user/create-user.dto";
+import { UpdateUserDto } from "@/infrastructure/dtos/tenant/user/update-role.dto";
+import { IBaseApplicationPort } from "./common/crud-application.port";
 
 /**
  * IUserApplicationPort interface represents the contract for managing users in the application.

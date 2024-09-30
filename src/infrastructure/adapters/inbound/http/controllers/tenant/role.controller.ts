@@ -11,21 +11,19 @@ import {
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  CreateRoleDto,
-  RoleResponseDto,
-  UpdateRoleDto,
-} from '@/infrastructure/dtos/tenant/role';
-import { BaseCRUDController } from '../common'; // Import IBaseApplicationPort
-import { PaginationDto } from '@/infrastructure/dtos/common';
-import { RoleApplicationService } from '@/core/application/services/tenant';
-import { SearchService } from '@/core/application/services/common';
-import {
   ApiDeleteOperation,
   ApiPostOperation,
   ApiPutOperation,
   ApiSearchOperation,
 } from '@/documentation/swagger/common/api-search.decorator';
-import { RoleEntity } from '@/infrastructure/persistence';
+import { RoleApplicationService } from '@/core/application/services/tenant/role-application.service';
+import { RoleResponseDto } from '@/infrastructure/dtos/tenant/role/role-response.dto';
+import { CreateRoleDto } from '@/infrastructure/dtos/tenant/role/create-role.dto';
+import { UpdateRoleDto } from '@/infrastructure/dtos/tenant/role/update-role.dto';
+import { SearchService } from '@/core/application/services/common/search.service';
+import { RoleEntity } from '@/infrastructure/persistence/tenant/role.entity';
+import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
+import { BaseCRUDController } from '../common/base-crud.controller';
 
 @ApiTags('roles')
 @Controller('roles')

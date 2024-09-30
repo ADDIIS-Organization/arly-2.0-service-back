@@ -2,10 +2,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
-import { ICediRepositoryPort } from '@/core/domain/ports/outbound';
-import { CediEntity } from '@/infrastructure/persistence';
-import { BaseRepositoryAdapter } from '../common';
-import { Cedi } from '@/core/domain/entities'; 
+import { ICediRepositoryPort } from '@/core/domain/ports/outbound/cedi-repository.port';
+import { CediEntity } from '@/infrastructure/persistence/tenant/cedi.entity';
+import { BaseRepositoryAdapter } from '../common/base-repository.adapter';
+import { Cedi } from '@/core/domain/entities/cedi.entity';
 
 @Injectable()
 export class CediRepositoryAdapter

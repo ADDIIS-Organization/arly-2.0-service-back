@@ -1,6 +1,8 @@
 import { FindOptionsWhere, Repository } from 'typeorm';
-import { TenantRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { TenantContextService } from '@/core/application/services/tenant';
+
+import { TenantContextService } from '@/core/application/services/tenant/tenant-context.service';
+import { TenantRepositoryAdapter } from '../tenant-repository.adapter';
+
 
 interface BaseEntity {
   id?: number;

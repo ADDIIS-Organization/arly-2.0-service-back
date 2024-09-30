@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
-import { CentralUserEntity } from '..';
+import { CentralUserEntity } from './central-user.entity';
 
 @Entity('tenants')  // Esta tabla pertenece al esquema central
 export class TenantEntity {

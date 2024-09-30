@@ -1,13 +1,13 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
+import { CediEntity } from '@/infrastructure/persistence/tenant/cedi.entity';
+import { CediController } from '@/infrastructure/adapters/inbound/http/controllers/tenant/cedi.controller';
+import { CediApplicationService } from '@/core/application/services/tenant/cedi-application.service';
+import { CediDomainService } from '@/core/domain/services/cedi-domain.service';
+import { CediRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/tenant/cedi-repository.adapter';
+import { SearchService } from '@/core/application/services/common/search.service';
+import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common/typeorm-search.repository';
 
-import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common';
-import { CediRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { CediController } from '@/infrastructure/adapters/inbound/http/controllers/tenant';
-import { CediApplicationService } from '@/core/application/services/tenant';
-import { SearchService } from '@/core/application/services/common';
-import { CediDomainService } from '@/core/domain/services';
-import { CediEntity } from '@/infrastructure/persistence';
 
 @Module({
   imports: [

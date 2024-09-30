@@ -17,14 +17,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import {
-  CreateCediDto,
-  CediResponseDto,
-  UpdateCediDto,
-} from '@/infrastructure/dtos/tenant/cedi';
-import { CediApplicationService } from '@/core/application/services/tenant';
-import { PaginationDto } from '@/infrastructure/dtos/common';
-import { BaseCRUDController } from '../common';
+import { CediApplicationService } from '@/core/application/services/tenant/cedi-application.service';
+import { CediResponseDto } from '@/infrastructure/dtos/tenant/cedi/cedi-response.dto';
+import { CreateCediDto } from '@/infrastructure/dtos/tenant/cedi/create-cedi.dto';
+import { UpdateCediDto } from '@/infrastructure/dtos/tenant/cedi/update-cedi.dto';
+import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
+import { BaseCRUDController } from '../common/base-crud.controller';
 
 @ApiTags('cedis') // Swagger Tag para el controlador de cedis
 @Controller('cedis')

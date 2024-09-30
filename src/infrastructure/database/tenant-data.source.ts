@@ -1,19 +1,17 @@
 // src/infrastructure/database/tenant-data-source.ts
 import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import {
-  BankReconciliationEntity,
-  BankTransactionEntity,
-  CediRoleUserEntity,
-  CediEntity,
-  DarsecInvoiceEntity,
-  MenuItemEntity,
-  ModuleEntity,
-  PermissionEntity,
-  RoleEntity,
-  TaxEntity,
-  UserEntity,
-} from '../persistence/tenant';
+import { BankReconciliationEntity } from '../persistence/tenant/bank-reconciliations.entity';
+import { BankTransactionEntity } from '../persistence/tenant/bank-transactions.entity';
+import { DarsecInvoiceEntity } from '../persistence/tenant/darsec-invoices.entity';
+import { CediRoleUserEntity } from '../persistence/tenant/cedi-user-role.entity';
+import { PermissionEntity } from '../persistence/tenant/permission.entity';
+import { MenuItemEntity } from '../persistence/tenant/menu-item.entity';
+import { ModuleEntity } from '../persistence/tenant/module.entity';
+import { CediEntity } from '../persistence/tenant/cedi.entity';
+import { RoleEntity } from '../persistence/tenant/role.entity';
+import { UserEntity } from '../persistence/tenant/user.entity';
+import { TaxEntity } from '../persistence/tenant/tax.entity';
 
 export const createTenantDataSource = (schema: string, configService: ConfigService) => {
   return new DataSource({

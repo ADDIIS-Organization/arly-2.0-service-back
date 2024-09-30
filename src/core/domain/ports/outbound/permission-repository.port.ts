@@ -1,5 +1,5 @@
-import { IGenericRepositoryPort } from './common';
-import { Permission } from '../../entities';
+import { IGenericRepositoryPort } from "./common/generic-repository.port";
+import { Permission } from "../../entities/permission.entity";
 
 export interface IPermissionRepositoryPort extends IGenericRepositoryPort<Permission> {
   /**

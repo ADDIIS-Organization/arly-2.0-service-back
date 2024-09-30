@@ -2,10 +2,10 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 
-import { CentralUserRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/central';
-import { CentralUserEntity, TenantEntity } from '@/infrastructure/persistence';
-import { JwtPayload } from '../../ports/inbound';
-
+import { CentralUserRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/central/central-user-repository.adapter';
+import { CentralUserEntity } from '@/infrastructure/persistence/central/central-user.entity';
+import { TenantEntity } from '@/infrastructure/persistence/central/tenant.entity';
+import { JwtPayload } from '../../ports/inbound/jwt-payload.interface';
 @Injectable()
 export class AuthApplicationService {
   constructor(

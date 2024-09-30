@@ -1,13 +1,13 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
-import { DataSource } from 'typeorm';
-import { ICediRepositoryPort } from '@/core/domain/ports/outbound';
-import { Cedi } from '@/core/domain/entities';
-import { ICediSeed } from './interfaces';
 import { Logger } from '@nestjs/common';
-import { CediEntity } from '@/infrastructure/persistence';
-import { CediRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
+import { DataSource } from 'typeorm';
+import * as path from 'path';
+import * as fs from 'fs';
+
+import { CediRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/tenant/cedi-repository.adapter';
+import { CediEntity } from '@/infrastructure/persistence/tenant/cedi.entity';
+import { ICediSeed } from './interfaces/cedi-seed.interface';
+import { Cedi } from '@/core/domain/entities/cedi.entity';
+
 
 export async function seedCedis(dataSource: DataSource) {
   const logger = new Logger('SeedCedis');

@@ -1,10 +1,9 @@
 import { DataSource, Repository } from 'typeorm';
-import {
-  PermissionEntity,
-  RoleEntity,
-  MenuItemEntity,
-} from '@/infrastructure/persistence/tenant';
 import { Logger } from '@nestjs/common';
+
+import { PermissionEntity } from '@/infrastructure/persistence/tenant/permission.entity';
+import { MenuItemEntity } from '@/infrastructure/persistence/tenant/menu-item.entity';
+import { RoleEntity } from '@/infrastructure/persistence/tenant/role.entity';
 
 export async function seedPermissions(dataSource: DataSource): Promise<void> {
   const logger = new Logger('SeedPermissions');

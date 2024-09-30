@@ -1,7 +1,7 @@
+import { TenantRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/tenant-repository.adapter';
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { TenantContextService } from '../services/tenant/tenant-context.service';
 
-import { TenantRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { TenantContextService } from '../services/tenant';
 
 @Injectable()
 export class TenantAuthGuard implements CanActivate {

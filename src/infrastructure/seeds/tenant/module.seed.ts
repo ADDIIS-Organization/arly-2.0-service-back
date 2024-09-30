@@ -3,9 +3,8 @@ import * as fs from 'fs';
 
 import { DataSource, Repository } from 'typeorm';
 import { Logger } from '@nestjs/common';
-
-import { ModuleEntity } from '@/infrastructure/persistence/tenant';
-import { IModuleSeed } from './interfaces';
+import { ModuleEntity } from '@/infrastructure/persistence/tenant/module.entity';
+import { IModuleSeed } from './interfaces/module-seed.interface';
 
 
 export async function seedModules(dataSource: DataSource): Promise<void> {

@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { RoleController } from '@/infrastructure/adapters/inbound/http/controllers/tenant';
-import { RoleApplicationService } from '@/core/application/services/tenant';
-import { RoleDomainService } from '@/core/domain/services';
-import { RoleEntity } from '@/infrastructure/persistence';
-import { SearchService } from '@/core/application/services/common/search.service';
 import { TypeOrmSearchRepository } from '@/infrastructure/adapters/outbound/repositories/common/typeorm-search.repository';
+import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/tenant/role-repository.adapter';
+import { RoleController } from '@/infrastructure/adapters/inbound/http/controllers/tenant/role.controller';
+import { RoleApplicationService } from '@/core/application/services/tenant/role-application.service';
+import { SearchService } from '@/core/application/services/common/search.service';
+import { RoleDomainService } from '@/core/domain/services/role-domain.service';
+import { RoleEntity } from '@/infrastructure/persistence/tenant/role.entity';
 
 @Module({
   imports: [

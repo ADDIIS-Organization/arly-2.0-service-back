@@ -1,11 +1,10 @@
-import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
+import { DataSource } from 'typeorm';
 
-import {
-  CentralUserEntity,
-  CentralRoleEntity,
-  TenantEntity,
-} from '../persistence/central';
+import { CentralUserEntity } from '../persistence/central/central-user.entity';
+import { CentralRoleEntity } from '../persistence/central/central-role.entity';
+import { TenantEntity } from '../persistence/central/tenant.entity';
+
 
 export const createCentralDataSource = (configService: ConfigService) => {
   return new DataSource({

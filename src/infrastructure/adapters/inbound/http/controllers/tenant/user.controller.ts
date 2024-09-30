@@ -1,31 +1,15 @@
-import { PaginationDto } from '@/infrastructure/dtos/common';
 import {
   Body,
   Controller,
   Delete,
   Get,
-  HttpCode,
   Param,
   Post,
   Put,
   Query,
 } from '@nestjs/common';
-import {
-  ApiBody,
-  ApiOperation,
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 
-import {
-  CreateUserDto,
-  UserResponseDto,
-  UpdateUserDto,
-} from '@/infrastructure/dtos/tenant/user';
-import { UserApplicationService } from '@/core/application/services/tenant';
-import { SearchService } from '@/core/application/services/common/';
-import { BaseCRUDController } from '../common';
 import {
   ApiDeleteOperation,
   ApiGetAllOperation,
@@ -33,7 +17,14 @@ import {
   ApiPutOperation,
   ApiSearchOperation,
 } from '@/documentation/swagger/common/api-search.decorator';
-import { UserEntity } from '@/infrastructure/persistence';
+import { BaseCRUDController } from '../common/base-crud.controller';
+import { UserResponseDto } from '@/infrastructure/dtos/tenant/user/user-response.dto';
+import { CreateUserDto } from '@/infrastructure/dtos/tenant/user/create-user.dto';
+import { UpdateUserDto } from '@/infrastructure/dtos/tenant/user/update-role.dto';
+import { UserApplicationService } from '@/core/application/services/tenant/user-application.service';
+import { SearchService } from '@/core/application/services/common/search.service';
+import { UserEntity } from '@/infrastructure/persistence/tenant/user.entity';
+import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
 
 @ApiTags('users') // Swagger Tag para el controlador de usuarios
 @Controller('users')

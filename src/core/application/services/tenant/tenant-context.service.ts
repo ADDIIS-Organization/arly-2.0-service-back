@@ -5,7 +5,7 @@ import { Injectable, Scope, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { REQUEST } from '@nestjs/core';
 
-import { createTenantDataSource } from '@/infrastructure/database';
+import { createTenantDataSource } from '@/infrastructure/database/tenant-data.source';
 
 @Injectable({ scope: Scope.REQUEST })
 export class TenantContextService {

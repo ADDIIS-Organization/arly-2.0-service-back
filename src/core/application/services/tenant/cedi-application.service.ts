@@ -1,15 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import {
-  CreateCediDto,
-  UpdateCediDto,
-  CediResponseDto,
-} from '@/infrastructure/dtos/tenant/cedi';
-import { ICediRepositoryPort } from '@/core/domain/ports/outbound';
-import { CediDomainService } from '@/core/domain/services';
-import { ICediApplicationPort } from '../../ports/inbound';
-import { CrudApplicationService } from '../common';
-import { Cedi } from '@/core/domain/entities';
+import { ICediRepositoryPort } from '@/core/domain/ports/outbound/cedi-repository.port';
+import { CediResponseDto } from '@/infrastructure/dtos/tenant/cedi/cedi-response.dto';
+import { CreateCediDto } from '@/infrastructure/dtos/tenant/cedi/create-cedi.dto';
+import { UpdateCediDto } from '@/infrastructure/dtos/tenant/cedi/update-cedi.dto';
+import { ICediApplicationPort } from '../../ports/inbound/cedi-application.port';
+import { CediDomainService } from '@/core/domain/services/cedi-domain.service';
+import { CrudApplicationService } from '../common/crud-application.service';
+import { Cedi } from '@/core/domain/entities/cedi.entity';
+
 
 @Injectable()
 export class CediApplicationService

@@ -1,7 +1,6 @@
-import { Put, Delete, Body, Param, HttpCode, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { Query } from '@nestjs/common';
 
-import { IBaseApplicationPort } from '@/core/application/ports/inbound/common';
+import { IBaseApplicationPort } from '@/core/application/ports/inbound/common/crud-application.port';
 import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
 
 /**

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { IPermissionRepositoryPort } from '@/core/domain/ports/outbound';
+import { IPermissionRepositoryPort } from '@/core/domain/ports/outbound/permission-repository.port';
 @Injectable()
 export class PermissionApplicationService {
   constructor(private permissionRepository: IPermissionRepositoryPort) {}

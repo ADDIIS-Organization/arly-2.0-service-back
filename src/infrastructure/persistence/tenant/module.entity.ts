@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-import { MenuItemEntity } from '..'; // Importar la entidad MenuItem
+import { MenuItemEntity } from './menu-item.entity';
 
 @Entity('modules')
 export class ModuleEntity {

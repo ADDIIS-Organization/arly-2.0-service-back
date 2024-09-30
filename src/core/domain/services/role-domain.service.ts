@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-
-import { Role } from '../entities';
+import { Role } from '../entities/role.entity';
 
 /**
  * Represents a service for managing roles in the domain.

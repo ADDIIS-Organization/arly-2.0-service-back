@@ -1,11 +1,12 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import { DataSource } from 'typeorm';
-import { IRoleSeed } from './interfaces';
 import { Logger } from '@nestjs/common';
-import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
-import { RoleEntity } from '@/infrastructure/persistence';
-import { Role } from '@/core/domain/entities';
+import { DataSource } from 'typeorm';
+import * as path from 'path';
+import * as fs from 'fs';
+
+import { RoleRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/tenant/role-repository.adapter';
+import { RoleEntity } from '@/infrastructure/persistence/tenant/role.entity';
+import { IRoleSeed } from './interfaces/role-seed.interface';
+import { Role } from '@/core/domain/entities/role.entity';
 
 export async function seedRoles(dataSource: DataSource) {
   const logger = new Logger('SeedRoles');

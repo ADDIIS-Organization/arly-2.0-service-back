@@ -1,5 +1,7 @@
 import { Expose } from 'class-transformer';
-import { User, Role, Cedi } from './';
+import { User } from './user.entity';
+import { Role } from './role.entity';
+import { Cedi } from './cedi.entity';
 
 export class CediRoleUser {
   @Expose()

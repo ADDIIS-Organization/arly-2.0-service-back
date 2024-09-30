@@ -1,15 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import {
-  CreateRoleDto,
-  RoleResponseDto,
-  UpdateRoleDto,
-} from '@/infrastructure/dtos/tenant/role';
-import { IRoleApplicationPort } from '@/core/application/ports/inbound';
-import { IRoleRepositoryPort } from '@/core/domain/ports/outbound';
-import { RoleDomainService } from '@/core/domain/services';
-import { CrudApplicationService } from '../common';
-import { Role } from '@/core/domain/entities';
+import { IRoleRepositoryPort } from '@/core/domain/ports/outbound/role-repository.port';
+import { RoleResponseDto } from '@/infrastructure/dtos/tenant/role/role-response.dto';
+import { CreateRoleDto } from '@/infrastructure/dtos/tenant/role/create-role.dto';
+import { UpdateRoleDto } from '@/infrastructure/dtos/tenant/role/update-role.dto';
+import { IRoleApplicationPort } from '../../ports/inbound/role-application.port';
+import { RoleDomainService } from '@/core/domain/services/role-domain.service';
+import { CrudApplicationService } from '../common/crud-application.service';
+import { Role } from '@/core/domain/entities/role.entity';
 
 @Injectable()
 export class RoleApplicationService

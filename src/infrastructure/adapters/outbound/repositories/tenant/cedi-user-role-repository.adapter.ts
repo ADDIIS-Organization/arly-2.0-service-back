@@ -1,17 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { BaseRepositoryAdapter } from '../common/base-repository.adapter';
+import { CediRoleUserEntity } from '@/infrastructure/persistence/tenant/cedi-user-role.entity';
+import { CediRoleUser } from '@/core/domain/entities/cedi-user-role.entity';
+import { ICediRoleUserRepositoryPort } from '@/core/domain/ports/outbound/cedi-user-role-repository.port';
+import { User } from '@/core/domain/entities/user.entity';
+import { UserEntity } from '@/infrastructure/persistence/tenant/user.entity';
+import { Role } from '@/core/domain/entities/role.entity';
+import { RoleEntity } from '@/infrastructure/persistence/tenant/role.entity';
+import { Cedi } from '@/core/domain/entities/cedi.entity';
+import { CediEntity } from '@/infrastructure/persistence/tenant/cedi.entity';
 
-import {
-  CediRoleUserEntity,
-  UserEntity,
-  RoleEntity,
-  CediEntity,
-  CentralUserEntity,
-} from '@/infrastructure/persistence';
-import { ICediRoleUserRepositoryPort } from '@/core/domain/ports/outbound';
-import { Cedi, CediRoleUser, Role, User } from '@/core/domain/entities';
-import { BaseRepositoryAdapter } from '../common';
 
 
 @Injectable()

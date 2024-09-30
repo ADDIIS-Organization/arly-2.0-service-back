@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'; // Generar un GUID
 import { Injectable } from '@nestjs/common';
 import { Command } from 'nestjs-command';
 
-import { TenantAdminService } from '@/core/application/services';
+import { TenantAdminService } from '@/core/application/services/central/tenant-admin.service';
 
 @Injectable()
 export class CreateTenantCommand {

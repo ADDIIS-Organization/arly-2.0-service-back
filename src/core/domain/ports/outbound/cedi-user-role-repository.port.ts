@@ -1,5 +1,5 @@
-import { CediRoleUser, User, Role, Cedi } from '@/core/domain/entities';
-import { IGenericRepositoryPort } from './common'; // Importar la interfaz genérica
+import { IGenericRepositoryPort } from "./common/generic-repository.port";
+import { CediRoleUser } from "../../entities/cedi-user-role.entity";
 
 // Heredamos de la interfaz genérica para las operaciones CRUD básicas
 export interface ICediRoleUserRepositoryPort extends IGenericRepositoryPort<CediRoleUser> {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import { createTenantDataSource } from '@/infrastructure/database';
+import { createTenantDataSource } from '@/infrastructure/database/tenant-data.source';
 
 @Injectable()
 export class TenantRepositoryAdapter {

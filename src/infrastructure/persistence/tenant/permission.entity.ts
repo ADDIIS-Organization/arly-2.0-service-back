@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
-
-import { RoleEntity, MenuItemEntity } from '..'; // Importar la entidad Role
+import { RoleEntity } from './role.entity';
+import { MenuItemEntity } from './menu-item.entity';
 
 @Entity('permissions')
 export class PermissionEntity {

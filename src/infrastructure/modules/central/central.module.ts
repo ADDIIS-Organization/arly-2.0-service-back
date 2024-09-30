@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 
-import { CentralRoleModule, CentralUserModule, CentralTenantModule } from './';
-
+import { CentralRoleModule } from './central-role.module';
+import { CentralTenantModule } from './central-tenant.module';
+import { CentralUserModule } from './central-user.module';
 @Module({
   imports: [
     CentralRoleModule,

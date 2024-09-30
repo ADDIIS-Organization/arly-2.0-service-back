@@ -1,24 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
-import {
-  UserResponseDto,
-  CreateUserDto,
-  UpdateUserDto,
-} from '@/infrastructure/dtos/tenant/user';
-import {
-  UserDomainService,
-  CediRoleUserDomainService,
-} from '@/core/domain/services';
-import {
-  ICediRepositoryPort,
-  ICediRoleUserRepositoryPort,
-  IRoleRepositoryPort,
-  IUserRepositoryPort,
-} from '@/core/domain/ports/outbound';
-import { IUserApplicationPort } from '../../ports/inbound';
-import { CrudApplicationService } from '../common';
-import { Role, User } from '@/core/domain/entities';
+import { ICediRoleUserRepositoryPort } from '@/core/domain/ports/outbound/cedi-user-role-repository.port';
+import { CediRoleUserDomainService } from '@/core/domain/services/cedi-user-role-domain.service';
+import { IUserRepositoryPort } from '@/core/domain/ports/outbound/user-repository.port';
+import { IRoleRepositoryPort } from '@/core/domain/ports/outbound/role-repository.port';
+import { ICediRepositoryPort } from '@/core/domain/ports/outbound/cedi-repository.port';
+import { UserResponseDto } from '@/infrastructure/dtos/tenant/user/user-response.dto';
+import { CreateUserDto } from '@/infrastructure/dtos/tenant/user/create-user.dto';
+import { UpdateUserDto } from '@/infrastructure/dtos/tenant/user/update-role.dto';
+import { IUserApplicationPort } from '../../ports/inbound/user-application.port';
+import { UserDomainService } from '@/core/domain/services/user-domain.service';
+import { CrudApplicationService } from '../common/crud-application.service';
+import { User } from '@/core/domain/entities/user.entity';
+import { Role } from '@/core/domain/entities/role.entity';
 
 @Injectable()
 export class UserApplicationService
@@ -40,7 +35,7 @@ export class UserApplicationService
     @Inject('ICediRepositoryPort')
     private readonly cediRepository: ICediRepositoryPort,
     @Inject('ICediRoleUserRepositoryPort')
-    private readonly CediRoleUserRepository: ICediRoleUserRepositoryPort,
+    private readonly cediRoleUserRepository: ICediRoleUserRepositoryPort,
   ) {
     super(userRepository);
   }
@@ -104,7 +99,7 @@ export class UserApplicationService
         role,
         cedi,
       );
-      await this.CediRoleUserRepository.save(CediRoleUser);
+      await this.cediRoleUserRepository.save(CediRoleUser);
     }
 
     // 6. Retornar la respuesta en formato DTO

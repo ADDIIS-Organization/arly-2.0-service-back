@@ -3,14 +3,12 @@ import { forwardRef, Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 
-import { AuthController } from '@/infrastructure/adapters/inbound/http/controllers/central';
-import {
-  AuthApplicationService,
-  TenantContextService,
-} from '@/core/application/services/tenant';
-import { JwtStrategy } from '@/core/application/strategies';
-import { CentralUserModule } from '../central';
-import { TenantSharedModule, UserModule } from '.';
+import { AuthController } from '@/infrastructure/adapters/inbound/http/controllers/central/auth.controller';
+import { AuthApplicationService } from '@/core/application/services/tenant/auth-application.service';
+import { JwtStrategy } from '@/core/application/strategies/jwt.strategy';
+import { CentralUserModule } from '../central/central-user.module';
+import { TenantSharedModule } from './tenant-shared.module';
+import { UserModule } from './user.module';
 
 console.log('auth: ConfigModule', ConfigModule);
 console.log('auth: UserModule', UserModule);

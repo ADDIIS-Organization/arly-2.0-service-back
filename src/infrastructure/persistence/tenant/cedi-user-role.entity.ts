@@ -1,6 +1,7 @@
 import { Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
-
-import { UserEntity, RoleEntity, CediEntity } from '.';
+import { UserEntity } from './user.entity';
+import { RoleEntity } from './role.entity';
+import { CediEntity } from './cedi.entity';
 
 @Entity('cedi_role_user')
 export class CediRoleUserEntity {
