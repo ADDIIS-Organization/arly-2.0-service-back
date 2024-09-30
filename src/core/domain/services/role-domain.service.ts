@@ -1,27 +1,28 @@
+import { Injectable } from '@nestjs/common';
 import { Role } from '../entities/role.entity';
-import { RoleRepository } from '../ports/outbound/role-repository.port';
-import { RoleService } from '../ports/inbound/role-service.port';
 
-export class RoleDomainService implements RoleService {
-  constructor(private repository: RoleRepository) {}
-
-  async create(role: Role): Promise<Role> {
-    return this.repository.save(role);
+/**
+ * Represents a service for managing roles in the domain.
+ * 
+ * This file is intended for the business logic of the application.
+ * In the case of createRole, it is a pure business logic operation. We
+ * just create a new role with the given name and description. But 
+ */
+@Injectable()
+export class RoleDomainService {
+  /**
+   * Creates a new Role entity.
+   *
+   * @param name - The name of the role.
+   * @param description - The description of the role.
+   * @returns The newly created Role entity.
+   */
+  createRole(name: string, description: string): Role {
+    // Lógica de negocio pura: crear una entidad de Role
+    return Role.create(name, description);
   }
 
-  async findAll(): Promise<Role[]> {
-    return this.repository.findAll();
-  }
-
-  async findById(id: number): Promise<Role> {
-    return this.repository.findById(id);
-  }
-
-  async update(id: number, role: Role): Promise<Role> {
-    return this.repository.update(id, role);
-  }
-
-  async delete(id: number): Promise<void> {
-    return this.repository.delete(id);
-  }
+  /**
+   * Additional domain logic could go here, such as validation, role-specific rules, etc.
+   */
 }

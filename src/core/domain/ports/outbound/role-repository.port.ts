@@ -1,10 +1,7 @@
-import { Role } from '../../entities/role.entity';
+import { Role } from "../../entities/role.entity";
+import { IGenericRepositoryPort } from "./common/generic-repository.port";
 
-export interface RoleRepository {
-  save(role: Role): Promise<Role>;
-  findAll(): Promise<Role[]>;
-  findById(id: number): Promise<Role>;
-  update(id: number, role: Role): Promise<Role>;
-  delete(id: number): Promise<void>;
+
+export interface IRoleRepositoryPort extends IGenericRepositoryPort<Role> {
   findByName(name: string): Promise<Role | null>;
 }
