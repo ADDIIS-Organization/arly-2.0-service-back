@@ -90,3 +90,17 @@ export function ApiGetAllOperation(  entityName: string) {
     }),
   )
 }
+export function ApiGetByIdOperation(  entityName: string) {
+  return applyDecorators(
+    ApiOperation({ summary: `Get a ${entityName}` }),
+    ApiParam({ name: 'id', type: 'number' }),
+    ApiResponse({
+      status: 200,
+      description: `Return the ${entityName}.`,
+    }),
+    ApiResponse({
+      status: 404,
+      description: `The ${entityName} not found.`,
+    }),
+  )
+}

@@ -20,6 +20,7 @@ import { TenantModule } from './infrastructure/modules/tenant/tenant.module';
         return centralDataSource.options;
       },
     }),
+    // AuthModule,
     CentralModule,
     TenantModule,
   ],
