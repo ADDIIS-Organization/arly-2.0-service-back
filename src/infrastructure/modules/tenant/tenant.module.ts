@@ -10,6 +10,7 @@ import { AuthModule } from './auth.module';
 import { CediModule } from './cedi.module';
 import { RoleModule } from './role.module';
 import { UserModule } from './user.module';
+import { ExcelFileModule } from './excel-file.module';
 
 console.log('AuthModule:', AuthModule);
 console.log('CediModule:', CediModule);
@@ -26,6 +27,7 @@ console.log('UserModule:', UserModule);
     RoleModule,
     AuthModule,
     CediRoleUserModule,
+    ExcelFileModule
   ],
   providers: [
     TenantContextService,
