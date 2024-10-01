@@ -11,6 +11,8 @@ import { CediModule } from './cedi.module';
 import { RoleModule } from './role.module';
 import { UserModule } from './user.module';
 import { ExcelFileModule } from './excel-file.module';
+import { Arly1Module } from './arly-1.module';
+import { BankTransactionModule } from './bank-transaction.module';
 
 console.log('AuthModule:', AuthModule);
 console.log('CediModule:', CediModule);
@@ -18,6 +20,7 @@ console.log('CediRoleUserModule:', CediRoleUserModule);
 console.log('RoleModule:', RoleModule);
 console.log('TenantSharedModule:', TenantSharedModule);
 console.log('UserModule:', UserModule);
+console.log('Arly1Module:', Arly1Module);
 @Module({
   imports: [
     TenantSharedModule,
@@ -27,7 +30,9 @@ console.log('UserModule:', UserModule);
     RoleModule,
     AuthModule,
     CediRoleUserModule,
-    ExcelFileModule
+    ExcelFileModule,
+    Arly1Module,
+    BankTransactionModule
   ],
   providers: [
     TenantContextService,

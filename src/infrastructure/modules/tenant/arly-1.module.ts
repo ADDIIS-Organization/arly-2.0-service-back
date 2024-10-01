@@ -15,7 +15,7 @@ import {
   Arly1MuelleturnoApplicationService,
 } from '@/core/application/services/tenant';
 import { Arly1MuelleturnoController } from '@/infrastructure/adapters/inbound/http/controllers/tenant/arly-1-muelleturno.controller';
-import { Arly1MuelleturnoRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories';
+import { Arly1MuelleturnoRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/tenant/arly-1-muelleturno-repository.adapter';
 import { Arly1DetalleturnoController } from '@/infrastructure/adapters/inbound/http/controllers/tenant/arly-1-detalleturno.controller';
 
 import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.mapper';

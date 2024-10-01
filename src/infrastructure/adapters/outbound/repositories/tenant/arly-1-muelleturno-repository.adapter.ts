@@ -1,7 +1,7 @@
 import { MuelleTurno } from "@/core/domain/entities";
 import { IArly1MuelleturnoRepositoryPort } from "@/core/domain/ports/outbound";
 
-import { PaginationDto } from "@/infrastructure/dtos/common";
+import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 import { MuelleTurnoEntity } from "@/infrastructure/persistence/tenant/arly1";
 
 import { MuelleTurnoMapper } from "@/infrastructure/utils/mappers/muelleturno.mapper";

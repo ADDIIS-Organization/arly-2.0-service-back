@@ -1,4 +1,4 @@
-import { PaginationDto } from "@/infrastructure/dtos/common";
+import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 import { DetalleTurno } from "../../entities";
 
 export interface IArly1DetalleturnoRepositoryPort {
