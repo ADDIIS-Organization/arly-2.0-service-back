@@ -1,4 +1,5 @@
-import { PaginationDto } from "@/infrastructure/dtos/common";
+
+import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 import { MuelleTurnoResponseDto } from "@/infrastructure/dtos/tenant/arly-1";
 
 
