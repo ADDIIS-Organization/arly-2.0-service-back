@@ -22,7 +22,11 @@ export class Arly1DetalleturnoRepositoryAdapter implements IArly1DetalleturnoRep
       const entities = await this.repository.find({
         skip: offset,
         take: limit,
-        relations: ['muelleTurno'],
+        relations: [
+          'muelleTurno',
+          'muelleTurno.sede',
+          'muelleTurno.colaboradores',
+        ],
       });
       
       console.log(entities);

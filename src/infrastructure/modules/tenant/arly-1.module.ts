@@ -60,7 +60,9 @@ import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.ma
       'ARLY1_DATA_SOURCE',
     ),
   ],
-  controllers: [Arly1MuelleturnoController, Arly1DetalleturnoController],
+  controllers: [
+    // Arly1MuelleturnoController,
+     Arly1DetalleturnoController],
 
   providers: [
     {
