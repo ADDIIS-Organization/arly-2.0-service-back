@@ -1,12 +1,10 @@
-import { Arly1DetalleturnoApplicationService } from '@/core/application/services/tenant';
-import {
-  ApiGetAllOperation,
-  ApiGetByIdOperation,
-} from '@/documentation/swagger/common/api-search.decorator';
-import { PaginationDto } from '@/infrastructure/dtos/common/pagination.dto';
-import { DetalleTurnoResponseDto } from '@/infrastructure/dtos/tenant/arly-1';
-import { Controller, Get, Param, Query } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+
+import { Arly1DetalleturnoApplicationService } from "@/core/application/services/tenant";
+import { ApiGetAllOperation, ApiGetByIdOperation } from "@/documentation/swagger/common/api-search.decorator";
+import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
+import { DetalleTurnoResponseDto } from "@/infrastructure/dtos/tenant/arly-1";
+import { Controller, Get, Param, Query } from "@nestjs/common";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 @ApiTags('arly-1-detalleturno')
 @Controller('arly-1-detalleturno')
 export class Arly1DetalleturnoController {
@@ -14,7 +12,8 @@ export class Arly1DetalleturnoController {
     private readonly arly1DetalleturnoApplicationService: Arly1DetalleturnoApplicationService,
   ) {}
   @Get()
-  @ApiGetAllOperation('DetalleTurno')
+  @ApiOperation({ summary: 'Get all Cedis' })
+  @ApiResponse({ status: 200, description: 'Return all Cedis.' })
   async getAll(
     @Query() paginationDto: PaginationDto,
   ): Promise<DetalleTurnoResponseDto[]> {

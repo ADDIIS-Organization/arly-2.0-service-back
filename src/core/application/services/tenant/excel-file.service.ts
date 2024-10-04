@@ -58,6 +58,7 @@ export class ExcelFileService {
           console.log(`Fila inválida ignorada: ${JSON.stringify(row)}`);
           return null; // Retornamos null para las filas que no deben procesarse
         }
+        console.log(JSON.stringify(row));
 
         const invoice = new DarsecInvoiceEntity();
         invoice.id = row['Número'];
