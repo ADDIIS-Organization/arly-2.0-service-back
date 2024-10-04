@@ -5,11 +5,14 @@ import { Repository } from 'typeorm';
 import { CentralUserEntity } from '@/infrastructure/persistence/central/central-user.entity';
 import { CreateUserDto } from '@/infrastructure/dtos/tenant/user/create-user.dto';
 import { User } from '@/core/domain/entities/user.entity';
+import { ICentralUserRepositoryPort } from '@/core/domain/ports/outbound/central/central-user-repository.port';
 
 @Injectable()
-export class CentralUserRepositoryAdapter {
+export class CentralUserRepositoryAdapter
+  implements ICentralUserRepositoryPort
+{
   constructor(
-    @InjectRepository(CentralUserEntity)  // Asegúrate de agregar @InjectRepository
+    @InjectRepository(CentralUserEntity) // Asegúrate de agregar @InjectRepository
     private readonly centralUserRepository: Repository<CentralUserEntity>,
   ) {}
 

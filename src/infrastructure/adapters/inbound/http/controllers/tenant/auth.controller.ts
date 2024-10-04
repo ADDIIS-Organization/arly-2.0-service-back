@@ -1,13 +1,16 @@
-import { Controller, Post, Body, HttpCode } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, Inject } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-import { AuthApplicationService } from '@/core/application/services/tenant/auth-application.service';
+import { IAuthApplicationPort } from '@/core/application/ports/inbound/auth-application.port';
 import { LoginDto } from '@/infrastructure/dtos/tenant/auth/login.dto';
 
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthApplicationService) {}
+  constructor(
+    @Inject('IAuthApplicationPort')
+    private readonly authApplicationService: IAuthApplicationPort,
+  ) {}
 
   @Post('login')
   @HttpCode(200)
@@ -16,10 +19,10 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Login successful' })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(@Body() loginDto: LoginDto) {
-    const user = await this.authService.validateUser(
+    const user = await this.authApplicationService.validateUser(
       loginDto.username,
       loginDto.password,
     );
-    return this.authService.login(user, loginDto.tenantId);
+    return this.authApplicationService.login(user, loginDto.tenantId);
   }
 }

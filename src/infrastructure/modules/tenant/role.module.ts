@@ -31,7 +31,7 @@ import { RoleEntity } from '@/infrastructure/persistence/tenant/role.entity';
 export class RoleModule {}
 
 /**
- * Cuando se habla de Tokens en NestJS, se refiere a la inyección de dependencias.
+ * Cuando se habla de Tokens en NestJS, se refiere a la inyección de dependencias con inversión de control.
  * Token es un string que se usa para identificar un proveedor o un módulo.
  *
  * Aqui la inversión de control se hace a través de la inyección de dependencias.

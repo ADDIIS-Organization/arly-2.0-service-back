@@ -1,10 +1,10 @@
-
+import { ApiGetByIdOperation } from "@/documentation/swagger/common/api-search.decorator";
 import { Arly1DetalleturnoApplicationService } from "@/core/application/services/tenant";
-import { ApiGetAllOperation, ApiGetByIdOperation } from "@/documentation/swagger/common/api-search.decorator";
-import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 import { DetalleTurnoResponseDto } from "@/infrastructure/dtos/tenant/arly-1";
-import { Controller, Get, Param, Query } from "@nestjs/common";
+import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Controller, Get, Param, Query } from "@nestjs/common";
+
 @ApiTags('arly-1-detalleturno')
 @Controller('arly-1-detalleturno')
 export class Arly1DetalleturnoController {

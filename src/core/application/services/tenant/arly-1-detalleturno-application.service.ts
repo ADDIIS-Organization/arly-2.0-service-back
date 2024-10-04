@@ -4,13 +4,13 @@ import { DetalleTurno } from "@/core/domain/entities";
 
 import { DetalleTurnoResponseDto } from "@/infrastructure/dtos/tenant/arly-1";
 import { Inject, Injectable } from "@nestjs/common";
-import { IArly1DetalleturnoPort, IArlyApplicationPort } from '../../ports/inbound';
+import { IArly1DetalleturnoApplicationPort, IArlyApplicationPort } from '../../ports/inbound';
 import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.mapper';
 import { IArly1DetalleturnoRepositoryPort } from '@/core/domain/ports/outbound/arly-1-detalleturno-repository.port';
 
 @Injectable()
 export class Arly1DetalleturnoApplicationService
-  implements IArly1DetalleturnoPort
+  implements IArly1DetalleturnoApplicationPort
 {
   constructor(
     @Inject('IArly1DetalleturnoRepositoryPort')
