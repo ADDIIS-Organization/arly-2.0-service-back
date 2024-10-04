@@ -15,7 +15,7 @@ export class Arly1MuelleturnoRepositoryAdapter
   implements IArly1MuelleturnoRepositoryPort
 {
   constructor(
-    @InjectRepository(MuelleTurnoEntity) // Inyectamos el repositorio del DataSource secundario
+    @InjectRepository(MuelleTurnoEntity, 'ARLY1_DATA_SOURCE') // Inyectamos el repositorio del DataSource secundario
     private readonly repository: Repository<MuelleTurnoEntity>,
     private readonly muelleTurnoMapper : MuelleTurnoMapper,
   ) {}

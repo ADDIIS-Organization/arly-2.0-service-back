@@ -62,8 +62,8 @@ import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.ma
   ],
   controllers: [
     // Arly1MuelleturnoController,
-     Arly1DetalleturnoController],
-
+    Arly1DetalleturnoController,
+  ],
   providers: [
     {
       provide: 'IArly1MuelleturnoRepositoryPort',

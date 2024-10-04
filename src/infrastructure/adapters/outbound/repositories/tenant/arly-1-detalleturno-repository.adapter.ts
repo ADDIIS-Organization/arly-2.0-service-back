@@ -12,7 +12,7 @@ import { FindOptionsWhere, Repository } from "typeorm";
 @Injectable()
 export class Arly1DetalleturnoRepositoryAdapter implements IArly1DetalleturnoRepositoryPort {
   constructor(
-    @InjectRepository(DetalleTurnoEntity) // Inyectamos el repositorio del DataSource secundario
+    @InjectRepository(DetalleTurnoEntity, 'ARLY1_DATA_SOURCE') // Inyectamos el repositorio del DataSource secundario
     private readonly repository: Repository<DetalleTurnoEntity>,
     private readonly muelleTurnoMapper: MuelleTurnoMapper,
   ) {}  

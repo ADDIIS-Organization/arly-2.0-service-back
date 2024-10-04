@@ -34,9 +34,8 @@ console.log('Arly1Module:', Arly1Module);
     CediRoleUserModule,
     ExcelFileModule,
     ExcelFileModule,
-    // Arly1Module,
+    Arly1Module,
     BankTransactionModule,
-        // AuthModule,
   ]
 })
 export class TenantModule {}

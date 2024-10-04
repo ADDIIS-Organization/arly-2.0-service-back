@@ -10,13 +10,6 @@ import { CentralUserModule } from '../central/central-user.module';
 import { TenantSharedModule } from './tenant-shared.module';
 import { UserModule } from './user.module';
 
-console.log('auth: ConfigModule', ConfigModule);
-console.log('auth: UserModule', UserModule);
-console.log('auth: PassportModule', PassportModule);
-console.log('auth: JwtModule', JwtModule);
-console.log('auth: CentralUserModule', CentralUserModule);
-console.log('auth: TenantSharedModule', TenantSharedModule);
-
 @Module({
   imports: [
     ConfigModule,
