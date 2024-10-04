@@ -1,6 +1,11 @@
+import {
+  BeforeApplicationShutdown,
+  Module,
+  OnModuleDestroy,
+  OnModuleInit,
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module } from '@nestjs/common';
 
 import { createCentralDataSource } from './infrastructure/database/central-data-source';
 import { CentralModule } from './infrastructure/modules/central/central.module';
@@ -20,9 +25,27 @@ import { TenantModule } from './infrastructure/modules/tenant/tenant.module';
         return centralDataSource.options;
       },
     }),
-    // AuthModule,
     CentralModule,
     TenantModule,
   ],
 })
-export class AppModule {}
+export class AppModule
+  implements OnModuleInit, OnModuleDestroy, BeforeApplicationShutdown
+{
+  constructor(private configService: ConfigService) {}
+
+  onModuleInit() {
+    console.log('AppModule initialized');
+    console.log(
+      `Database Name: ${this.configService.get<string>('DATABASE_NAME')}`,
+    );
+  }
+
+  onModuleDestroy() {
+    console.log('AppModule will be destroyed');
+  }
+
+  beforeApplicationShutdown(signal: string) {
+    console.log(`Application is shutting down with signal: ${signal}`);
+  }
+}

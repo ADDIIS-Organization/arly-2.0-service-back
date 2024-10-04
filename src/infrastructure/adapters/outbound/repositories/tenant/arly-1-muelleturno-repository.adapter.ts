@@ -2,7 +2,6 @@ import { MuelleTurno } from "@/core/domain/entities";
 import { IArly1MuelleturnoRepositoryPort } from "@/core/domain/ports/outbound";
 import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 
-import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 import { MuelleTurnoEntity } from "@/infrastructure/persistence/tenant/arly1";
 
 import { MuelleTurnoMapper } from "@/infrastructure/utils/mappers/muelleturno.mapper";
@@ -16,7 +15,7 @@ export class Arly1MuelleturnoRepositoryAdapter
   implements IArly1MuelleturnoRepositoryPort
 {
   constructor(
-    @InjectRepository(MuelleTurnoEntity, 'ARLY1_DATA_SOURCE') // Inyectamos el repositorio del DataSource secundario
+    @InjectRepository(MuelleTurnoEntity) // Inyectamos el repositorio del DataSource secundario
     private readonly repository: Repository<MuelleTurnoEntity>,
     private readonly muelleTurnoMapper : MuelleTurnoMapper,
   ) {}

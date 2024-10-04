@@ -2,7 +2,6 @@ import { DetalleTurno } from "@/core/domain/entities";
 import { IArly1DetalleturnoRepositoryPort } from "@/core/domain/ports/outbound/arly-1-detalleturno-repository.port";
 import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 
-import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 import { DetalleTurnoEntity } from "@/infrastructure/persistence/tenant/arly1";
 
 import { MuelleTurnoMapper } from "@/infrastructure/utils/mappers/muelleturno.mapper";
@@ -13,10 +12,10 @@ import { FindOptionsWhere, Repository } from "typeorm";
 @Injectable()
 export class Arly1DetalleturnoRepositoryAdapter implements IArly1DetalleturnoRepositoryPort {
   constructor(
-    @InjectRepository(DetalleTurnoEntity, 'ARLY1_DATA_SOURCE') // Inyectamos el repositorio del DataSource secundario
+    @InjectRepository(DetalleTurnoEntity) // Inyectamos el repositorio del DataSource secundario
     private readonly repository: Repository<DetalleTurnoEntity>,
     private readonly muelleTurnoMapper: MuelleTurnoMapper,
-  ) {}
+  ) {}  
 
   async findAll(paginationDto: PaginationDto): Promise<DetalleTurno[]> {
       const { offset, limit } = paginationDto;
