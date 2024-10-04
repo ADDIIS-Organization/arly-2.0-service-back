@@ -1,11 +1,11 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { IArlyApplicationPort } from "../../ports/inbound";
 
-import { PaginationDto } from "@/infrastructure/dtos/common";
 import { MuelleTurnoResponseDto } from "@/infrastructure/dtos/tenant/arly-1";
 import { MuelleTurno } from "@/core/domain/entities";
 import { MuelleTurnoMapper } from "@/infrastructure/utils/mappers/muelleturno.mapper";
 import { IArly1MuelleturnoRepositoryPort } from "@/core/domain/ports/outbound";
+import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 
 
 @Injectable()

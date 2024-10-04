@@ -1,6 +1,6 @@
 import { Arly1MuelleturnoApplicationService } from "@/core/application/services/tenant";
 import { ApiGetAllOperation, ApiGetByIdOperation } from "@/documentation/swagger/common/api-search.decorator";
-import { PaginationDto } from "@/infrastructure/dtos/common";
+import { PaginationDto } from "@/infrastructure/dtos/common/pagination.dto";
 import { MuelleTurnoResponseDto } from "@/infrastructure/dtos/tenant/arly-1";
 import { Controller, Get, Param, Query } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
