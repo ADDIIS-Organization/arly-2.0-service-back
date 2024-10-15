@@ -19,13 +19,16 @@ import { Arly1MuelleturnoRepositoryAdapter } from '@/infrastructure/adapters/out
 import { Arly1DetalleturnoController } from '@/infrastructure/adapters/inbound/http/controllers/tenant/arly-1-detalleturno.controller';
 
 import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.mapper';
+import { Arly1MuelleagendaController } from '@/infrastructure/adapters/inbound/http/controllers/tenant/arly-1-muelleagenda.controller';
+import { Arly1MuelleAgendaApplicationService } from '@/core/application/services/tenant/arly-1-muelleagenda-application.service';
+import { Arly1MuelleAgendaRepositoryAdapter } from '@/infrastructure/adapters/outbound/repositories/tenant/arly-1-muelleagenda-repository.adapter';
+import { MuelleAgendaEntity } from '@/infrastructure/persistence/tenant/arly1/arly1-muelleagenda.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // Hacer que ConfigModule sea global
     }),
-
     // Configuración del DataSource para ARLY1 usando TypeOrmModule.forRootAsync
     TypeOrmModule.forRootAsync({
       name: 'ARLY1_DATA_SOURCE', // Nombre del DataSource secundario
@@ -40,10 +43,11 @@ import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.ma
         entities: [
           MuelleTurnoEntity,
           DetalleTurnoEntity,
+          MuelleAgendaEntity,
           Arly1SedeEntity,
           EmpleadoEntity,
           MuelleColaboradorTurnoEntity,
-        ], // Asegúrate de que tus entidades estén bien registradas
+        ],
         synchronize: false,
       }),
     }),
@@ -53,6 +57,7 @@ import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.ma
       [
         MuelleTurnoEntity,
         DetalleTurnoEntity,
+        MuelleAgendaEntity,
         Arly1SedeEntity,
         EmpleadoEntity,
         MuelleColaboradorTurnoEntity,
@@ -63,6 +68,7 @@ import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.ma
   controllers: [
     // Arly1MuelleturnoController,
     Arly1DetalleturnoController,
+    Arly1MuelleagendaController
   ],
   providers: [
     {
@@ -72,6 +78,14 @@ import { MuelleTurnoMapper } from '@/infrastructure/utils/mappers/muelleturno.ma
     {
       provide: 'IArly1DetalleturnoRepositoryPort',
       useClass: Arly1DetalleturnoRepositoryAdapter,
+    },
+    {
+      provide: 'IArly1MuelleAgendaApplicationPort',
+      useClass: Arly1MuelleAgendaApplicationService,
+    },
+    {
+      provide: 'IArly1MuelleAgendaRepositoryPort',
+      useClass: Arly1MuelleAgendaRepositoryAdapter,
     },
     Arly1DetalleturnoApplicationService,
     Arly1MuelleturnoApplicationService,

@@ -1,8 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { DetalleTurnoEntity } from './arly1-detalleturno.entity';
-import { MuelleColaboradorTurnoEntity } from './arly1-muellecolaboradorturno.entity';
-import { Arly1SedeEntity } from './arly1-sede.entity';
 import { EmpleadoEntity } from './arly1-empleado.entity';
+import { Arly1SedeEntity } from './arly1-sede.entity';
 
 
 @Entity('muelleturno') // Nombre de la tabla

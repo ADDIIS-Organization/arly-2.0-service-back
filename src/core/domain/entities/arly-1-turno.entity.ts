@@ -1,4 +1,9 @@
-import { Arly1SedeEntity, DetalleTurnoEntity, EmpleadoEntity, MuelleColaboradorTurnoEntity } from '@/infrastructure/persistence/tenant/arly1';
+import {
+  Arly1SedeEntity,
+  DetalleTurnoEntity,
+  EmpleadoEntity,
+  MuelleColaboradorTurnoEntity,
+} from '@/infrastructure/persistence/tenant/arly1';
 import { Expose } from 'class-transformer';
 import { IsString, IsNumber, IsOptional, IsEmail } from 'class-validator';
 
@@ -209,11 +214,11 @@ export class MuelleTurno {
 
   @Expose()
   public sede: Arly1SedeEntity;
- @Expose()
+  @Expose()
   public colaboradores: EmpleadoEntity[];
 
   @Expose()
-  public detalles : DetalleTurnoEntity[];
+  public detalles: DetalleTurnoEntity[];
   constructor(
     idturno: number | null,
     idcliente: number | null,
@@ -262,7 +267,6 @@ export class MuelleTurno {
     sede: Arly1SedeEntity | null,
     colaboradores: EmpleadoEntity[] | null,
     detalles: DetalleTurnoEntity[] | null,
-    
   ) {
     this.idturno = idturno;
     this.idcliente = idcliente;
