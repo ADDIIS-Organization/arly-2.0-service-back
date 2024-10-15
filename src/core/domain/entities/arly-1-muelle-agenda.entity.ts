@@ -31,7 +31,7 @@ export class MuelleAgenda {
   @Expose()
   @IsOptional()
   @IsNumber()
-  public idusuariocierre: number;
+  public idusuariocerra: number;
 
   @Expose()
   @IsOptional()
@@ -68,7 +68,7 @@ export class MuelleAgenda {
     fechaapertura?: Date,
     fechacierre?: Date,
     idusuarioapertura?: number,
-    idusuariocierre?: number,
+    idusuariocerra?: number,
     idempresa?: number,
     idsede?: number,
     totalcontado?: number,
@@ -80,7 +80,7 @@ export class MuelleAgenda {
     this.fechaapertura = fechaapertura || null;
     this.fechacierre = fechacierre || null;
     this.idusuarioapertura = idusuarioapertura || null;
-    this.idusuariocierre = idusuariocierre || null;
+    this.idusuariocerra = idusuariocerra || null;
     this.idempresa = idempresa || null;
     this.idsede = idsede || null;
     this.totalcontado = totalcontado || null;

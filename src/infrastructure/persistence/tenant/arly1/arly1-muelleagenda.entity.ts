@@ -22,7 +22,7 @@ export class MuelleAgendaEntity {
   idusuarioapertura: number;
 
   @Column({ nullable: true })
-  idusuariocierre: number;
+  idusuariocerra: number;
 
   @Column({ nullable: true })
   idempresa: number;

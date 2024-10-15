@@ -7,11 +7,12 @@ import {
   OnApplicationShutdown,
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { InjectDataSource, TypeOrmModule } from '@nestjs/typeorm';
 
 import { createCentralDataSource } from './infrastructure/database/central-data-source';
 import { CentralModule } from './infrastructure/modules/central/central.module';
 import { TenantModule } from './infrastructure/modules/tenant/tenant.module';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -31,6 +32,14 @@ import { TenantModule } from './infrastructure/modules/tenant/tenant.module';
     CentralModule, // Módulo que maneja las funcionalidades del esquema central
     TenantModule, // Módulo que maneja las funcionalidades relacionadas con los tenants
   ],
+  providers: [
+    {
+      provide: 'CENTRAL_DATA_SOURCE',
+      useFactory: (configService: ConfigService) =>
+        createCentralDataSource(configService),
+      inject: [ConfigService],
+    },
+  ],
 })
 export class AppModule
   implements
@@ -40,8 +49,10 @@ export class AppModule
     OnApplicationBootstrap,
     OnApplicationShutdown
 {
-  constructor(private configService: ConfigService) {}
-
+  constructor(
+    private configService: ConfigService,
+    @InjectDataSource() private dataSource: DataSource,
+  ) {}
   // Método del ciclo de vida que se ejecuta cuando el módulo es inicializado
   onModuleInit() {
     console.log('AppModule initialized');
@@ -70,8 +81,17 @@ export class AppModule
   }
 
   // Método del ciclo de vida que se ejecuta justo antes de que la aplicación se apague completamente
-  onApplicationShutdown(signal: string) {
+  async onApplicationShutdown(signal: string) {
     console.log(`Application shutdown complete with signal: ${signal}`);
-    // Aquí se pueden liberar recursos finales, como cerrar archivos o desconectar servicios externos
+    try {
+      if (this.dataSource && this.dataSource.isInitialized) {
+        await this.dataSource.destroy();
+        console.log('DataSource destroyed successfully');
+      } else {
+        console.log('DataSource was not initialized or already destroyed');
+      }
+    } catch (error) {
+      console.error('Error destroying DataSource:', error);
+    }
   }
 }

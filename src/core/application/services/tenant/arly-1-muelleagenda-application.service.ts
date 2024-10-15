@@ -4,7 +4,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IArly1MuelleAgendaApplicationPort } from '../../ports/inbound/arly-1-muelle-agenda-application.port';
 
 @Injectable()
-export class Arly1MuelleAgendaApplicationService 
+export class Arly1MuelleAgendaApplicationService
   implements IArly1MuelleAgendaApplicationPort
 {
   constructor(
@@ -18,7 +18,15 @@ export class Arly1MuelleAgendaApplicationService
     // query arly datasource to muelleagenda where cediId = cediId
     const muelleAgendas =
       await this.arly1MuelleAgendaRepository.findByCediId(cediId);
-    console.log('muelleAgendas', muelleAgendas);
-    return null;
+    // Iterate muellAgendas to get the total cash amount with attribute totalcontado
+    let totalContado = 0;
+    muelleAgendas.forEach((muelleAgenda) => {
+      totalContado += muelleAgenda.totalcontado;
+    });
+    // Compare the totalContado with the cashAmount
+    if (totalContado === cashAmount) {
+      return { isMatch: true };
+    }
+    return { isMatch: false };
   }
 }
